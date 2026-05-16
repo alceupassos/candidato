@@ -1,0 +1,46 @@
+{
+  "id": 204444,
+  "nome_parlamentar": "Helio Lopes",
+  "nome_civil": "HELIO FERNANDO BARBOSA LOPES",
+  "nome_eleitoral": "Helio Lopes",
+  "cpf": "00891743723",
+  "sexo": "M",
+  "data_nascimento": "1969-03-28",
+  "data_falecimento": null,
+  "uf_nascimento": "RJ",
+  "municipio_nascimento": "Queimados",
+  "escolaridade": "Superior",
+  "partido": "PL",
+  "uf": "RJ",
+  "situacao": "Exercício",
+  "condicao_eleitoral": "Titular",
+  "legislatura": 57,
+  "gabinete": {
+    "numero": "405",
+    "predio": "4",
+    "sala": "405",
+    "andar": "4",
+    "telefone": "3215-5405",
+    "email": "dep.heliolopes@camara.leg.br"
+  },
+  "email": "dep.heliolopes@camara.leg.br",
+  "url_foto": "https://www.camara.leg.br/internet/deputado/bandep/204444.jpg",
+  "url_website": null,
+  "redes_sociais": [
+    "https://twitter.com/depheliolopes",
+    "https://www.facebook.com/depheliolopes",
+    "https://www.instagram.com/depheliolopes"
+  ],
+  "uri_api": "https://dadosabertos.camara.leg.br/api/v2/deputados/204444",
+  "tratamento": "Exmo. Senhor Deputado",
+  "fax": "3215-2405",
+  "endereco": {
+    "descricao": "Câmara dos Deputados, Edifício Anexo",
+    "continuacao": ", gabinete nº",
+    "complemento": "Brasília - DF - CEP 70160-900"
+  },
+  "aniversario": {
+    "mes": 3,
+    "dia": 28
+  }
+}

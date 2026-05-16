@@ -1,0 +1,47 @@
+{
+  "id": 178947,
+  "nome_parlamentar": "Sóstenes Cavalcante",
+  "nome_civil": "SOSTENES SILVA CAVALCANTE",
+  "nome_eleitoral": "Sóstenes Cavalcante",
+  "cpf": "95188100606",
+  "sexo": "M",
+  "data_nascimento": "1975-01-16",
+  "data_falecimento": null,
+  "uf_nascimento": "AL",
+  "municipio_nascimento": "Maceió",
+  "escolaridade": "Superior",
+  "partido": "PL",
+  "uf": "RJ",
+  "situacao": "Exercício",
+  "condicao_eleitoral": "Titular",
+  "legislatura": 57,
+  "gabinete": {
+    "numero": "560",
+    "predio": "4",
+    "sala": "560",
+    "andar": "5",
+    "telefone": "3215-5560",
+    "email": "dep.sostenescavalcante@camara.leg.br"
+  },
+  "email": "dep.sostenescavalcante@camara.leg.br",
+  "url_foto": "https://www.camara.leg.br/internet/deputado/bandep/178947.jpg",
+  "url_website": null,
+  "redes_sociais": [
+    "https://twitter.com/DepSostenes",
+    "https://www.facebook.com/sostenescavalcante",
+    "https://www.instagram.com/sostenescavalcante",
+    "https://youtube.com/channel/UCI2j76o7JyLVSmooEcSvLxA"
+  ],
+  "uri_api": "https://dadosabertos.camara.leg.br/api/v2/deputados/178947",
+  "tratamento": "Exmo. Senhor Deputado",
+  "fax": "3215-2560",
+  "endereco": {
+    "descricao": "Câmara dos Deputados, Edifício Anexo",
+    "continuacao": ", gabinete nº",
+    "complemento": "Brasília - DF - CEP 70160-900"
+  },
+  "aniversario": {
+    "mes": 1,
+    "dia": 16
+  }
+}

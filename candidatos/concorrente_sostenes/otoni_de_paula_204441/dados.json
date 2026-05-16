@@ -1,0 +1,46 @@
+{
+  "id": 204441,
+  "nome_parlamentar": "Otoni de Paula",
+  "nome_civil": "OTONI MOURA DE PAULO JUNIOR",
+  "nome_eleitoral": "Otoni de Paula",
+  "cpf": "07217877709",
+  "sexo": "M",
+  "data_nascimento": "1976-11-22",
+  "data_falecimento": null,
+  "uf_nascimento": "RJ",
+  "municipio_nascimento": "Niterói",
+  "escolaridade": "Superior Incompleto",
+  "partido": "PSD",
+  "uf": "RJ",
+  "situacao": "Exercício",
+  "condicao_eleitoral": "Titular",
+  "legislatura": 57,
+  "gabinete": {
+    "numero": "682",
+    "predio": "3",
+    "sala": "682",
+    "andar": null,
+    "telefone": "3215-5682",
+    "email": "dep.otonidepaula@camara.leg.br"
+  },
+  "email": "dep.otonidepaula@camara.leg.br",
+  "url_foto": "https://www.camara.leg.br/internet/deputado/bandep/204441.jpg",
+  "url_website": null,
+  "redes_sociais": [
+    "https://twitter.com/otonidepfederal",
+    "https://www.facebook.com/OtoniDeputadoFederal",
+    "https://www.instagram.com/otonidepaulaoficial"
+  ],
+  "uri_api": "https://dadosabertos.camara.leg.br/api/v2/deputados/204441",
+  "tratamento": "Exmo. Senhor Deputado",
+  "fax": "3215-2682",
+  "endereco": {
+    "descricao": "Câmara dos Deputados, Edifício Anexo",
+    "continuacao": ", gabinete nº",
+    "complemento": "Brasília - DF - CEP 70160-900"
+  },
+  "aniversario": {
+    "mes": 11,
+    "dia": 22
+  }
+}

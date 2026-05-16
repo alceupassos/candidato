@@ -1,0 +1,47 @@
+{
+  "id": 160512,
+  "nome_parlamentar": "Aureo Ribeiro",
+  "nome_civil": "AUREO LIDIO MOREIRA RIBEIRO",
+  "nome_eleitoral": "Aureo Ribeiro",
+  "cpf": "05355525725",
+  "sexo": "M",
+  "data_nascimento": "1979-02-17",
+  "data_falecimento": null,
+  "uf_nascimento": "RJ",
+  "municipio_nascimento": "Duque de Caxias",
+  "escolaridade": "Superior Incompleto",
+  "partido": "SOLIDARIEDADE",
+  "uf": "RJ",
+  "situacao": "Exercício",
+  "condicao_eleitoral": "Titular",
+  "legislatura": 57,
+  "gabinete": {
+    "numero": "212",
+    "predio": "4",
+    "sala": "212",
+    "andar": "2",
+    "telefone": "3215-5212",
+    "email": "dep.aureoribeiro@camara.leg.br"
+  },
+  "email": "dep.aureoribeiro@camara.leg.br",
+  "url_foto": "https://www.camara.leg.br/internet/deputado/bandep/160512.jpg",
+  "url_website": null,
+  "redes_sociais": [
+    "https://twitter.com/AureoRibeiroRJ",
+    "https://www.facebook.com/AureoRibeiroRJ",
+    "https://www.instagram.com/aureo.ribeiro",
+    "https://youtube.com/AureoRibeiro77"
+  ],
+  "uri_api": "https://dadosabertos.camara.leg.br/api/v2/deputados/160512",
+  "tratamento": "Exmo. Senhor Deputado",
+  "fax": "3215-2212",
+  "endereco": {
+    "descricao": "Câmara dos Deputados, Edifício Anexo",
+    "continuacao": ", gabinete nº",
+    "complemento": "Brasília - DF - CEP 70160-900"
+  },
+  "aniversario": {
+    "mes": 2,
+    "dia": 17
+  }
+}

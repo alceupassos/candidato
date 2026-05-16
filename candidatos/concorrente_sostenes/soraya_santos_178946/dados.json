@@ -1,0 +1,46 @@
+{
+  "id": 178946,
+  "nome_parlamentar": "Soraya Santos",
+  "nome_civil": "SORAYA ALENCAR DOS SANTOS",
+  "nome_eleitoral": "Soraya Santos",
+  "cpf": "49125290797",
+  "sexo": "F",
+  "data_nascimento": "1958-12-04",
+  "data_falecimento": null,
+  "uf_nascimento": "RJ",
+  "municipio_nascimento": "Macaé",
+  "escolaridade": "Superior",
+  "partido": "PL",
+  "uf": "RJ",
+  "situacao": "Exercício",
+  "condicao_eleitoral": "Titular",
+  "legislatura": 57,
+  "gabinete": {
+    "numero": "324",
+    "predio": "4",
+    "sala": "324",
+    "andar": "3",
+    "telefone": "3215-5324",
+    "email": "dep.sorayasantos@camara.leg.br"
+  },
+  "email": "dep.sorayasantos@camara.leg.br",
+  "url_foto": "https://www.camara.leg.br/internet/deputado/bandep/178946.jpg",
+  "url_website": null,
+  "redes_sociais": [
+    "https://twitter.com/https:",
+    "https://www.instagram.com/dep.sorayasantos",
+    "https://www.youtube.com/channel/UCYJ_VrjZS7ISX0Ut0bU_AMA"
+  ],
+  "uri_api": "https://dadosabertos.camara.leg.br/api/v2/deputados/178946",
+  "tratamento": "Exma. Senhora Deputada",
+  "fax": "3215-2324",
+  "endereco": {
+    "descricao": "Câmara dos Deputados, Edifício Anexo",
+    "continuacao": ", gabinete nº",
+    "complemento": "Brasília - DF - CEP 70160-900"
+  },
+  "aniversario": {
+    "mes": 12,
+    "dia": 4
+  }
+}

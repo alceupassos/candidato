@@ -1,0 +1,47 @@
+{
+  "id": 204462,
+  "nome_parlamentar": "Chris Tonietto",
+  "nome_civil": "CHRISTINE NOGUEIRA DOS REIS TONIETTO",
+  "nome_eleitoral": "Chris Tonietto",
+  "cpf": "10448771705",
+  "sexo": "F",
+  "data_nascimento": "1991-05-14",
+  "data_falecimento": null,
+  "uf_nascimento": "RJ",
+  "municipio_nascimento": "Rio de Janeiro",
+  "escolaridade": "Superior",
+  "partido": "PL",
+  "uf": "RJ",
+  "situacao": "Exercício",
+  "condicao_eleitoral": "Titular",
+  "legislatura": 57,
+  "gabinete": {
+    "numero": "446",
+    "predio": "4",
+    "sala": "446",
+    "andar": "4",
+    "telefone": "3215-5446",
+    "email": "dep.christonietto@camara.leg.br"
+  },
+  "email": "dep.christonietto@camara.leg.br",
+  "url_foto": "https://www.camara.leg.br/internet/deputado/bandep/204462.jpg",
+  "url_website": null,
+  "redes_sociais": [
+    "https://twitter.com/ToniettoChris",
+    "https://www.facebook.com/ChrisTonietto",
+    "https://www.instagram.com/christonietto",
+    "https://youtube.com/channel/UCqqG6AaU2hm2vLhMir4Jdlw"
+  ],
+  "uri_api": "https://dadosabertos.camara.leg.br/api/v2/deputados/204462",
+  "tratamento": "Exma. Senhora Deputada",
+  "fax": "3215-2446",
+  "endereco": {
+    "descricao": "Câmara dos Deputados, Edifício Anexo",
+    "continuacao": ", gabinete nº",
+    "complemento": "Brasília - DF - CEP 70160-900"
+  },
+  "aniversario": {
+    "mes": 5,
+    "dia": 14
+  }
+}

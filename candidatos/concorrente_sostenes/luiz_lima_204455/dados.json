@@ -1,0 +1,47 @@
+{
+  "id": 204455,
+  "nome_parlamentar": "Luiz Lima",
+  "nome_civil": "LUIZ EDUARDO CARNEIRO DA SILVA DE SOUZA LIMA",
+  "nome_eleitoral": "Luiz Lima",
+  "cpf": "07616393730",
+  "sexo": "M",
+  "data_nascimento": "1977-12-10",
+  "data_falecimento": null,
+  "uf_nascimento": "RJ",
+  "municipio_nascimento": "Rio de Janeiro",
+  "escolaridade": "Superior",
+  "partido": "NOVO",
+  "uf": "RJ",
+  "situacao": "Exercício",
+  "condicao_eleitoral": "Titular",
+  "legislatura": 57,
+  "gabinete": {
+    "numero": "504",
+    "predio": "4",
+    "sala": "504",
+    "andar": "5",
+    "telefone": "3215-5504",
+    "email": "dep.luizlima@camara.leg.br"
+  },
+  "email": "dep.luizlima@camara.leg.br",
+  "url_foto": "https://www.camara.leg.br/internet/deputado/bandep/204455.jpg",
+  "url_website": null,
+  "redes_sociais": [
+    "https://twitter.com/oficialluizlima",
+    "https://www.facebook.com/oficialluizlima",
+    "https://www.instagram.com/oficialluizlima",
+    "https://youtube.com/oficialluizlima"
+  ],
+  "uri_api": "https://dadosabertos.camara.leg.br/api/v2/deputados/204455",
+  "tratamento": "Exmo. Senhor Deputado",
+  "fax": "3215-2504",
+  "endereco": {
+    "descricao": "Câmara dos Deputados, Edifício Anexo",
+    "continuacao": ", gabinete nº",
+    "complemento": "Brasília - DF - CEP 70160-900"
+  },
+  "aniversario": {
+    "mes": 12,
+    "dia": 10
+  }
+}

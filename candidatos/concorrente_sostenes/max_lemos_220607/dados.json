@@ -1,0 +1,47 @@
+{
+  "id": 220607,
+  "nome_parlamentar": "Max Lemos",
+  "nome_civil": "MAX RODRIGUES LEMOS",
+  "nome_eleitoral": "Max Lemos",
+  "cpf": "75061600720",
+  "sexo": "M",
+  "data_nascimento": "1966-01-17",
+  "data_falecimento": null,
+  "uf_nascimento": "RJ",
+  "municipio_nascimento": "Nova Iguaçu",
+  "escolaridade": "Superior",
+  "partido": "PDT",
+  "uf": "RJ",
+  "situacao": "Exercício",
+  "condicao_eleitoral": "Titular",
+  "legislatura": 57,
+  "gabinete": {
+    "numero": "429",
+    "predio": "4",
+    "sala": "429",
+    "andar": "4",
+    "telefone": "3215-5429",
+    "email": "dep.maxlemos@camara.leg.br"
+  },
+  "email": "dep.maxlemos@camara.leg.br",
+  "url_foto": "https://www.camara.leg.br/internet/deputado/bandep/220607.jpg",
+  "url_website": null,
+  "redes_sociais": [
+    "https://twitter.com/maxlemosoficial",
+    "https://www.facebook.com/maxlemos.com.br",
+    "https://www.instagram.com/maxlemosoficial",
+    "https://youtube.com/@maxlemos9960"
+  ],
+  "uri_api": "https://dadosabertos.camara.leg.br/api/v2/deputados/220607",
+  "tratamento": "Exmo. Senhor Deputado",
+  "fax": "3215-2429",
+  "endereco": {
+    "descricao": "Câmara dos Deputados, Edifício Anexo",
+    "continuacao": ", gabinete nº",
+    "complemento": "Brasília - DF - CEP 70160-900"
+  },
+  "aniversario": {
+    "mes": 1,
+    "dia": 17
+  }
+}

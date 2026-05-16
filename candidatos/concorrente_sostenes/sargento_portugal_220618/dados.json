@@ -1,0 +1,45 @@
+{
+  "id": 220618,
+  "nome_parlamentar": "Sargento Portugal",
+  "nome_civil": "JOSÉ PORTUGAL NETO",
+  "nome_eleitoral": "Sargento Portugal",
+  "cpf": "07296013745",
+  "sexo": "M",
+  "data_nascimento": "1976-08-26",
+  "data_falecimento": null,
+  "uf_nascimento": "RJ",
+  "municipio_nascimento": "Rio de Janeiro",
+  "escolaridade": "Pós-Graduação",
+  "partido": "PODE",
+  "uf": "RJ",
+  "situacao": "Exercício",
+  "condicao_eleitoral": "Titular",
+  "legislatura": 57,
+  "gabinete": {
+    "numero": "527",
+    "predio": "4",
+    "sala": "527",
+    "andar": "5",
+    "telefone": "3215-5527",
+    "email": "dep.sargentoportugal@camara.leg.br"
+  },
+  "email": "dep.sargentoportugal@camara.leg.br",
+  "url_foto": "https://www.camara.leg.br/internet/deputado/bandep/220618.jpg",
+  "url_website": null,
+  "redes_sociais": [
+    "https://twitter.com/sargentoportuga",
+    "https://www.facebook.com/DeputadoFederalSargentoPortugal"
+  ],
+  "uri_api": "https://dadosabertos.camara.leg.br/api/v2/deputados/220618",
+  "tratamento": "Exmo. Senhor Deputado",
+  "fax": "3215-2527",
+  "endereco": {
+    "descricao": "Câmara dos Deputados, Edifício Anexo",
+    "continuacao": ", gabinete nº",
+    "complemento": "Brasília - DF - CEP 70160-900"
+  },
+  "aniversario": {
+    "mes": 8,
+    "dia": 26
+  }
+}

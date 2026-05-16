@@ -1,0 +1,46 @@
+{
+  "id": 204450,
+  "nome_parlamentar": "Doutor Luizinho",
+  "nome_civil": "LUIZ ANTONIO DE SOUZA TEIXEIRA JÚNIOR",
+  "nome_eleitoral": "Doutor Luizinho",
+  "cpf": "02319953779",
+  "sexo": "M",
+  "data_nascimento": "1973-12-15",
+  "data_falecimento": null,
+  "uf_nascimento": "RJ",
+  "municipio_nascimento": "Nova Iguaçu",
+  "escolaridade": "Superior",
+  "partido": "PP",
+  "uf": "RJ",
+  "situacao": "Exercício",
+  "condicao_eleitoral": "Titular",
+  "legislatura": 57,
+  "gabinete": {
+    "numero": "877",
+    "predio": "3",
+    "sala": "877",
+    "andar": null,
+    "telefone": "3215-5877",
+    "email": "dep.doutorluizinho@camara.leg.br"
+  },
+  "email": "dep.doutorluizinho@camara.leg.br",
+  "url_foto": "https://www.camara.leg.br/internet/deputado/bandep/204450.jpg",
+  "url_website": null,
+  "redes_sociais": [
+    "https://twitter.com/Doutorluizinhot",
+    "https://www.facebook.com/doutorluizinho",
+    "https://www.instagram.com/doutorluizinho"
+  ],
+  "uri_api": "https://dadosabertos.camara.leg.br/api/v2/deputados/204450",
+  "tratamento": "Exmo. Senhor Deputado",
+  "fax": "3215-2877",
+  "endereco": {
+    "descricao": "Câmara dos Deputados, Edifício Anexo",
+    "continuacao": ", gabinete nº",
+    "complemento": "Brasília - DF - CEP 70160-900"
+  },
+  "aniversario": {
+    "mes": 12,
+    "dia": 15
+  }
+}

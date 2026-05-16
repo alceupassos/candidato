@@ -1,6 +1,7 @@
 "use client";
 
 import Script from "next/script";
+import { LogOut } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import { candidateDetails, campaignSections, pageTitles } from "@/components/campaign-data";
@@ -76,12 +77,27 @@ function syncCalculatorOutputs() {
   }
 }
 
+async function handleLogout(
+  setAuthStatus: (s: "checking" | "guest" | "authenticated") => void,
+  setOpenLoginOnGuest: (b: boolean) => void
+) {
+  try {
+    await fetch("/api/auth/logout", { method: "POST", credentials: "include" });
+  } catch {
+    // ignore
+  }
+  setAuthStatus("guest");
+  setOpenLoginOnGuest(true);
+}
+
 export function CampaignCockpit() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [authStatus, setAuthStatus] = useState<"checking" | "guest" | "authenticated">("checking");
   const [activeSection, setActiveSection] = useState<SectionId>(DEFAULT_SECTION);
   const [selectedCandidateKey, setSelectedCandidateKey] = useState<CandidateKey>(DEFAULT_CANDIDATE);
   const [lastUpdate, setLastUpdate] = useState("—");
   const [refreshTick, setRefreshTick] = useState(0);
+  const [openLoginOnGuest, setOpenLoginOnGuest] = useState(false);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
   const sectionHostRef = useRef<HTMLDivElement>(null);
 
   const titlePair = pageTitles[activeSection] ?? pageTitles.dashboard;
@@ -90,6 +106,21 @@ export function CampaignCockpit() {
     const sectionMarkup = campaignSections[activeSection as keyof typeof campaignSections] ?? "";
     return sectionMarkup.replace('class="section"', 'class="section active"');
   }, [activeSection]);
+
+  useEffect(() => {
+    const verifySession = async () => {
+      try {
+        const response = await fetch("/api/auth/session", {
+          credentials: "include",
+        });
+        setAuthStatus(response.ok ? "authenticated" : "guest");
+      } catch {
+        setAuthStatus("guest");
+      }
+    };
+
+    void verifySession();
+  }, []);
 
   useEffect(() => {
     window.setTimeout(() => {
@@ -107,7 +138,23 @@ export function CampaignCockpit() {
   }, []);
 
   useEffect(() => {
-    if (!isLoggedIn) return;
+    if (authStatus !== "authenticated") return;
+
+    void fetch("/api/access-log", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        event: "cockpit_section_view",
+        path: `/#${activeSection}`,
+        metadata: {
+          section: activeSection,
+        },
+      }),
+      keepalive: true,
+    }).catch(() => undefined);
 
     const app = document.getElementById("app");
     if (app) app.classList.add("logado");
@@ -126,7 +173,7 @@ export function CampaignCockpit() {
     return () => {
       if (app) app.classList.remove("logado");
     };
-  }, [isLoggedIn, activeSection, refreshTick]);
+  }, [authStatus, activeSection, refreshTick]);
 
   useEffect(() => {
     const host = sectionHostRef.current;
@@ -194,31 +241,73 @@ export function CampaignCockpit() {
         strategy="afterInteractive"
       />
 
-      {!isLoggedIn ? <LoginScreen onLogin={() => setIsLoggedIn(true)} /> : null}
+      {/* LOGOUT CONFIRMATION MODAL */}
+      <div className={`logout-overlay ${showLogoutModal ? 'visible' : ""}`}>
+        <div className="logout-modal">
+          <div className="logout-icon-wrap">
+            <LogOut size={32} />
+          </div>
+          <h3 className="logout-title">Deseja sair do Cockpit?</h3>
+          <p className="logout-text">
+            Sua sessão será encerrada com total segurança.
+          </p>
+          <div className="logout-actions">
+            <button className="btn-cancel" onClick={() => setShowLogoutModal(false)} type="button">
+              CANCELAR
+            </button>
+            <button 
+              className="btn-confirm-logout" 
+              onClick={() => {
+                setShowLogoutModal(false);
+                void handleLogout(setAuthStatus, setOpenLoginOnGuest);
+              }}
+              type="button"
+            >
+              SAIR AGORA
+            </button>
+          </div>
+        </div>
+      </div>
 
-      <div id="app" className={isLoggedIn ? "logado" : undefined}>
+
+
+      {authStatus !== "authenticated" ? (
+        <LoginScreen 
+          onLogin={() => {
+            setAuthStatus("authenticated");
+            setOpenLoginOnGuest(false);
+          }} 
+          defaultOpen={openLoginOnGuest}
+        />
+      ) : null}
+
+      <div id="app" className={authStatus === "authenticated" ? "logado" : undefined}>
         <div id="sidebar">
           <div className="logo-area">
             <div className="logo-box">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className="logo-img" src="renatobrancofundoecuro.png" alt="Renato Araujo do Bolsonaro" />
+              <img className="logo-img" src="sostenesfundoescuro.png" alt="Sostenes" />
             </div>
             <div className="logo-photo-frame">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className="logo-photo" src="candidatos/c8.png" alt="Foto principal de Renato Araujo" />
+              <img className="logo-photo" src="sostenes10.png" alt="Foto principal do candidato" />
             </div>
             <div className="versao">Cockpit v3.0 · 2026</div>
           </div>
+
 
           {navigationGroups.map((group) => (
             <div className="nav-section" key={group.label}>
               <div className="nav-label">{group.label}</div>
               {group.items.map((item) => (
                 <button
+                  className={`nav-item ${activeSection === item.id ? "active" : ""}`}
                   key={item.id}
+                  onClick={() => {
+                    setActiveSection(item.id as SectionId);
+                    setRefreshTick((t) => t + 1);
+                  }}
                   type="button"
-                  className={`nav-item${activeSection === item.id ? " active" : ""}`}
-                  onClick={() => setActiveSection(item.id)}
                 >
                   <span className="nav-icon"><i data-lucide={item.icon} /></span>
                   <span>{item.label}</span>
@@ -226,6 +315,17 @@ export function CampaignCockpit() {
               ))}
             </div>
           ))}
+
+          <div style={{ marginTop: 'auto', padding: '16px' }}>
+            <button 
+              className="nav-item logout-btn premium-btn logout-btn-premium" 
+              onClick={() => setShowLogoutModal(true)}
+              style={{ width: '100%', justifyContent: 'center' }}
+            >
+              <span className="nav-icon"><LogOut size={16} /></span>
+              <span>Sair do Cockpit</span>
+            </button>
+          </div>
 
           <div className="sidebar-footer">
             <div className="sf-label">Última atualização</div>
@@ -244,16 +344,26 @@ export function CampaignCockpit() {
             <div className="topbar-right">
               <div className="badge-live"><div className="dot-live" /> AO VIVO</div>
               <button
-                className="btn-top icon-btn"
+                className="btn-top icon-btn premium-btn"
                 type="button"
                 onClick={() => setRefreshTick((value) => value + 1)}
               >
                 <span className="top-icon"><i data-lucide="refresh-cw" /></span>
                 <span>Atualizar</span>
               </button>
-              <button className="btn-top icon-btn" type="button">
+              <button className="btn-top icon-btn premium-btn" type="button">
                 <span className="top-icon"><i data-lucide="settings-2" /></span>
                 <span>Config</span>
+              </button>
+              <button
+                className="btn-top icon-btn btn-logout premium-btn logout-btn-premium shine-effect"
+                type="button"
+                title="Sair do cockpit"
+                aria-label="Sair"
+                onClick={() => setShowLogoutModal(true)}
+              >
+                <span className="top-icon"><LogOut size={15} /></span>
+                <span>Sair</span>
               </button>
               <div className="avatar">G</div>
             </div>
@@ -267,7 +377,7 @@ export function CampaignCockpit() {
             ) : (
               <div dangerouslySetInnerHTML={{ __html: activeMarkup ?? "" }} suppressHydrationWarning />
             )}
-            <div className="mockup-warning">
+            <div className="mockup-warning" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <strong>MOCKUP DE MODELO A SER CONSTRUÍDO COM DADOS NÃO REAIS</strong>
             </div>
           </div>

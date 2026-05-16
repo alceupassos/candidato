@@ -1,0 +1,46 @@
+{
+  "id": 204459,
+  "nome_parlamentar": "Daniela do Waguinho",
+  "nome_civil": "DANIELA MOTE DE SOUZA CARNEIRO",
+  "nome_eleitoral": "Daniela do Waguinho",
+  "cpf": "07973687793",
+  "sexo": "F",
+  "data_nascimento": "1976-02-10",
+  "data_falecimento": null,
+  "uf_nascimento": "RJ",
+  "municipio_nascimento": "Rio de Janeiro",
+  "escolaridade": "Pós-Graduação",
+  "partido": "REPUBLICANOS",
+  "uf": "RJ",
+  "situacao": "Exercício",
+  "condicao_eleitoral": "Titular",
+  "legislatura": 57,
+  "gabinete": {
+    "numero": "550",
+    "predio": "4",
+    "sala": "550",
+    "andar": "5",
+    "telefone": "3215-5550",
+    "email": "dep.danieladowaguinho@camara.leg.br"
+  },
+  "email": "dep.danieladowaguinho@camara.leg.br",
+  "url_foto": "https://www.camara.leg.br/internet/deputado/bandep/204459.jpg",
+  "url_website": null,
+  "redes_sociais": [
+    "https://twitter.com/https:",
+    "https://www.facebook.com/share",
+    "https://www.instagram.com/danielacarneirooficial"
+  ],
+  "uri_api": "https://dadosabertos.camara.leg.br/api/v2/deputados/204459",
+  "tratamento": "Exma. Senhora Deputada",
+  "fax": "3215-2550",
+  "endereco": {
+    "descricao": "Câmara dos Deputados, Edifício Anexo",
+    "continuacao": ", gabinete nº",
+    "complemento": "Brasília - DF - CEP 70160-900"
+  },
+  "aniversario": {
+    "mes": 2,
+    "dia": 10
+  }
+}

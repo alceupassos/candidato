@@ -1,0 +1,42 @@
+{
+  "id": 204456,
+  "nome_parlamentar": "Gutemberg Reis",
+  "nome_civil": "GUTEMBERG REIS DE OLIVEIRA",
+  "nome_eleitoral": "Gutemberg Reis",
+  "cpf": "07733341736",
+  "sexo": "M",
+  "data_nascimento": "1979-09-09",
+  "data_falecimento": null,
+  "uf_nascimento": "RJ",
+  "municipio_nascimento": "Duque de Caxias",
+  "escolaridade": "Ensino Médio",
+  "partido": "MDB",
+  "uf": "RJ",
+  "situacao": "Exercício",
+  "condicao_eleitoral": "Titular",
+  "legislatura": 57,
+  "gabinete": {
+    "numero": "856",
+    "predio": "4",
+    "sala": "856",
+    "andar": "8",
+    "telefone": "3215-5856",
+    "email": "dep.gutembergreis@camara.leg.br"
+  },
+  "email": "dep.gutembergreis@camara.leg.br",
+  "url_foto": "https://www.camara.leg.br/internet/deputado/bandep/204456.jpg",
+  "url_website": null,
+  "redes_sociais": [],
+  "uri_api": "https://dadosabertos.camara.leg.br/api/v2/deputados/204456",
+  "tratamento": "Exmo. Senhor Deputado",
+  "fax": "3215-2856",
+  "endereco": {
+    "descricao": "Câmara dos Deputados, Edifício Anexo",
+    "continuacao": ", gabinete nº",
+    "complemento": "Brasília - DF - CEP 70160-900"
+  },
+  "aniversario": {
+    "mes": 9,
+    "dia": 9
+  }
+}
