@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useMemo, useState } from "react";
 
 import { EChart } from "@/components/echart";
@@ -188,15 +189,12 @@ export function SocialSection() {
                   className="fig-avatar"
                   style={{ background: espectroColor(r.figure.espectro) }}
                 >
-                  <img
+                  <Image
                     className="fig-avatar-img"
                     src={r.figure.avatarAsset}
                     alt={`Avatar estilizado de ${r.figure.nome}`}
-                    loading="lazy"
-                    onError={(e) => {
-                      (e.currentTarget as HTMLImageElement).style.display =
-                        "none";
-                    }}
+                    width={38}
+                    height={38}
                   />
                 </span>
                 <span className="fig-name">
