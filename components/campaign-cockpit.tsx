@@ -24,6 +24,8 @@ import { PesquisasSection } from "@/components/sections/pesquisas-section";
 import { OrganizadoresSection } from "@/components/sections/organizadores-section";
 import { SocialSection } from "@/components/sections/social-section";
 import { RegionFilter } from "@/components/sections/region-filter";
+import { TopTicker } from "@/components/top-ticker";
+import { ConfigPanel } from "@/components/sections/config-panel";
 import { LoginScreen } from "@/components/login-screen";
 import type { RegionId } from "@/lib/mock/types";
 
@@ -169,6 +171,7 @@ export function CampaignCockpit() {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [activeRegion, setActiveRegion] = useState<RegionId>("all");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showConfig, setShowConfig] = useState(false);
   const sectionHostRef = useRef<HTMLDivElement>(null);
 
   const titlePair = pageTitles[activeSection] ?? pageTitles.dashboard;
@@ -438,6 +441,8 @@ export function CampaignCockpit() {
         </div>
 
         <div id="main">
+          <TopTicker region={activeRegion} />
+          <ConfigPanel open={showConfig} onClose={() => setShowConfig(false)} />
           <div id="topbar">
             <div className="topbar-left">
               <button
@@ -472,7 +477,11 @@ export function CampaignCockpit() {
                 </span>
                 <span>Atualizar</span>
               </button>
-              <button className="btn-top icon-btn premium-btn" type="button">
+              <button
+                className="btn-top icon-btn premium-btn"
+                type="button"
+                onClick={() => setShowConfig(true)}
+              >
                 <span className="top-icon">
                   <i data-lucide="settings-2" />
                 </span>

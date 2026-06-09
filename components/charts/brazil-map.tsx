@@ -11,7 +11,35 @@ type BrazilMapProps = {
   onSelect?: (sigla: string) => void;
 };
 
-let registered = false;
+type EInstance = {
+  setOption: (o: unknown, r?: boolean) => void;
+  resize: () => void;
+  dispose: () => void;
+  on: (e: string, cb: (p: { name?: string }) => void) => void;
+};
+type EModule = {
+  init: (
+    el: HTMLElement,
+    theme?: unknown,
+    opts?: { renderer?: string },
+  ) => EInstance;
+  registerMap: (name: string, geo: unknown) => void;
+};
+
+// Cache de registro de mapa compartilhado entre instâncias (sem corrida).
+const mapReady = new Map<string, Promise<void>>();
+function ensureMap(echarts: EModule, name: string, url: string): Promise<void> {
+  let p = mapReady.get(name);
+  if (!p) {
+    p = fetch(url)
+      .then((r) => r.json())
+      .then((geo) => {
+        echarts.registerMap(name, geo);
+      });
+    mapReady.set(name, p);
+  }
+  return p;
+}
 
 // Mapa coroplético do Brasil (estados) via ECharts + GeoJSON vendorizado.
 export function BrazilMap({
@@ -21,12 +49,7 @@ export function BrazilMap({
   onSelect,
 }: BrazilMapProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const chartRef = useRef<{
-    setOption: (o: unknown, r?: boolean) => void;
-    resize: () => void;
-    dispose: () => void;
-    on: (e: string, cb: (p: { name?: string }) => void) => void;
-  } | null>(null);
+  const chartRef = useRef<EInstance | null>(null);
   const latest = useRef({ data, onSelect, max });
   useEffect(() => {
     latest.current = { data, onSelect, max };
@@ -35,27 +58,42 @@ export function BrazilMap({
   useEffect(() => {
     let disposed = false;
     let ro: ResizeObserver | null = null;
-    (async () => {
-      const echarts = await import("echarts");
-      if (!registered) {
-        const geo = await fetch("/maps/brazil-states.geojson").then((r) =>
-          r.json(),
-        );
-        echarts.registerMap("brazil", geo);
-        registered = true;
+    let raf = 0;
+    let tries = 0;
+
+    const mount = (echarts: EModule) => {
+      if (disposed || !ref.current || chartRef.current) return;
+      const el = ref.current;
+      if ((el.offsetHeight === 0 || el.offsetWidth === 0) && tries++ < 40) {
+        raf = requestAnimationFrame(() => mount(echarts));
+        return;
       }
-      if (disposed || !ref.current) return;
-      const inst = echarts.init(ref.current, undefined, { renderer: "canvas" });
-      chartRef.current = inst as unknown as typeof chartRef.current;
+      const inst = echarts.init(el, undefined, { renderer: "canvas" });
+      chartRef.current = inst;
       inst.setOption(buildOption(latest.current.data, latest.current.max));
-      inst.on("click", (p: { name?: string }) => {
+      inst.on("click", (p) => {
         if (p?.name) latest.current.onSelect?.(p.name);
       });
-      ro = new ResizeObserver(() => inst.resize());
-      ro.observe(ref.current);
+      ro = new ResizeObserver(() => chartRef.current?.resize());
+      ro.observe(el);
+    };
+
+    (async () => {
+      const mod = (await import("echarts")) as unknown as Partial<EModule> & {
+        default?: EModule;
+      };
+      const echarts = (mod.init ? mod : mod.default) as EModule;
+      await ensureMap(echarts, "brazil", "/maps/brazil-states.geojson");
+      mount(echarts);
     })();
+
+    const onWin = () => chartRef.current?.resize();
+    window.addEventListener("resize", onWin);
+
     return () => {
       disposed = true;
+      cancelAnimationFrame(raf);
+      window.removeEventListener("resize", onWin);
       ro?.disconnect();
       chartRef.current?.dispose();
       chartRef.current = null;

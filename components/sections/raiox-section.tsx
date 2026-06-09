@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 
 import { EChart } from "@/components/echart";
+import { useIs3D } from "@/components/charts/use-is-3d";
 import {
   heatmapOption,
   priorityScatterOption,
@@ -21,8 +22,12 @@ export function RaioxSection({ region }: { region: RegionId }) {
   const matrix = useMemo(() => getPriorityMatrix(region), [region]);
   const ranking = useMemo(() => getOpportunityRanking(region), [region]);
 
+  const is3D = useIs3D();
   const scatterOpt = useMemo(() => priorityScatterOption(matrix), [matrix]);
-  const scatter3DOpt = useMemo(() => scatter3DOption(matrix), [matrix]);
+  const scatter3DOpt = useMemo(
+    () => (is3D ? scatter3DOption(matrix) : priorityScatterOption(matrix)),
+    [matrix, is3D],
+  );
   const heatmapOpt = useMemo(() => {
     const temas = getPriorityMatrix(REGIONS[0].id).map((m) => m.tema);
     const regions = REGIONS.map((reg) => reg.nome);
@@ -92,11 +97,12 @@ export function RaioxSection({ region }: { region: RegionId }) {
         <div className="card">
           <div className="card-header">
             <div className="card-title">
-              Cubo 3D — Demanda × Potencial × Satisfação
+              {is3D ? "Cubo 3D" : "Dispersão"} — Demanda × Potencial ×
+              Satisfação
             </div>
-            <span className="card-badge badge-real">3D</span>
+            <span className="card-badge badge-real">{is3D ? "3D" : "2D"}</span>
           </div>
-          <EChart option={scatter3DOpt} use3D height={300} />
+          <EChart option={scatter3DOpt} use3D={is3D} height={300} />
         </div>
       </div>
 

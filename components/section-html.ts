@@ -200,18 +200,59 @@ function concorrentes(region: RegionId): string {
   const r = getRegion(region);
   const posicao = r ? r.posicao : 4;
   const intencao = r ? r.intencaoVoto : M.getDashboardKpis(region)[0].valor;
+  const intStr = typeof intencao === "string" ? intencao : `${intencao}%`;
   const ranking = [
-    ["1°", "Laura Carneiro", "PSD", "10.5%"],
-    ["2°", "Marcelo Crivella", "Republicanos", "9.8%"],
-    ["3°", "Dr. Luizinho", "PSB", "9.1%"],
-    [
-      `${posicao}°`,
-      "Renato Araújo (nós)",
-      "PL",
-      typeof intencao === "string" ? intencao : `${intencao}%`,
-    ],
-    ["6°", "Jorginho Brum", "MDB", "7.4%"],
+    {
+      pos: "1°",
+      nome: "Laura Carneiro",
+      partido: "PSD",
+      int: "10.5%",
+      foto: "candidatos/laura_carneiro_psd.png",
+      nos: false,
+    },
+    {
+      pos: "2°",
+      nome: "Marcelo Crivella",
+      partido: "Republicanos",
+      int: "9.8%",
+      foto: "candidatos/marcelo_crivela_republicanos.png",
+      nos: false,
+    },
+    {
+      pos: "3°",
+      nome: "Dr. Luizinho",
+      partido: "PSB",
+      int: "9.1%",
+      foto: "candidatos/dr_luizinho_psb.png",
+      nos: false,
+    },
+    {
+      pos: `${posicao}°`,
+      nome: "Renato Araújo (nós)",
+      partido: "PL",
+      int: intStr,
+      foto: "candidatos/renato_araujo_PL.png",
+      nos: true,
+    },
+    {
+      pos: "6°",
+      nome: "Jorginho Brum",
+      partido: "MDB",
+      int: "7.4%",
+      foto: "candidatos/jorginho_brum.png",
+      nos: false,
+    },
   ];
+  const rankingHtml = `<div class="conc-list">${ranking
+    .map(
+      (c) => `<div class="conc-row${c.nos ? " nos" : ""}">
+      <span class="conc-pos">${c.pos}</span>
+      <span class="conc-photo-wrap"><img class="conc-photo" src="${c.foto}" alt="${c.nome}" loading="lazy" /></span>
+      <span class="conc-name">${c.nome}<small>${c.partido}</small></span>
+      <span class="conc-int">${c.int}</span>
+    </div>`,
+    )
+    .join("")}</div>`;
   const kpis: Kpi[] = [
     { label: "Concorrentes monitorados", valor: "24", trend: "flat" },
     {
@@ -233,7 +274,7 @@ function concorrentes(region: RegionId): string {
     <div class="grid-7-5" style="margin-top:12px;">
       <div class="card">
         <div class="card-header"><div class="card-title">Ranking — Vaga Federal RJ 2026</div><span class="card-badge badge-real">consolidado</span></div>
-        ${table(["#", "Candidato", "Partido", "Intenção"], ranking)}
+        ${rankingHtml}
       </div>
       ${chartCard("Disputa por Município", "nós × Chico", "cConcor", 240)}
     </div>

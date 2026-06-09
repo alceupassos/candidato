@@ -5,9 +5,11 @@ import { Player } from "@remotion/player";
 
 import { EChart } from "@/components/echart";
 import { BrazilMap } from "@/components/charts/brazil-map";
+import { useIs3D } from "@/components/charts/use-is-3d";
 import {
   barOption,
   bar3DOption,
+  heatmapOption,
   lineOption,
   regionsTreemapOption,
 } from "@/components/echart-options";
@@ -68,14 +70,17 @@ export function NocSection({ region, onRegionChange }: NocProps) {
     return regionsTreemapOption(data);
   }, []);
 
-  const bar3DOpt = useMemo(() => {
+  const is3D = useIs3D();
+  const cubeOpt = useMemo(() => {
     const temas = getPriorityMatrix(REGIONS[0].id).map((m) => m.tema);
     const regions = REGIONS.map((reg) => reg.nome);
     const values = REGIONS.map((reg) =>
       getPriorityMatrix(reg.id).map((m) => m.oportunidade),
     );
-    return bar3DOption(regions, temas, values);
-  }, []);
+    return is3D
+      ? bar3DOption(regions, temas, values)
+      : heatmapOption(regions, temas, values);
+  }, [is3D]);
 
   const presidentialByState = useMemo(() => getPresidentialByState(), []);
   const ranking = getRaceRanking(race, region);
@@ -242,11 +247,13 @@ export function NocSection({ region, onRegionChange }: NocProps) {
         <div className="card">
           <div className="card-header">
             <div className="card-title">
-              Cubo Raio-X 3D — Oportunidade por Região × Tema
+              Cubo Raio-X — Oportunidade por Região × Tema
             </div>
-            <span className="card-badge badge-real">3D</span>
+            <span className="card-badge badge-real">
+              {is3D ? "3D" : "mapa de calor"}
+            </span>
           </div>
-          <EChart option={bar3DOpt} use3D height={320} />
+          <EChart option={cubeOpt} use3D={is3D} height={320} />
         </div>
         <div className="card">
           <div className="card-header">
