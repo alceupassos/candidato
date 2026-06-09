@@ -27,6 +27,7 @@ export const ESPECTROS: { id: Espectro; nome: string; cor: string }[] = [
 export type Figure = {
   id: string;
   nome: string;
+  avatarAsset: string;
   grupo: string;
   espectro: Espectro;
   /** Seguidores por rede, em milhares. */
@@ -42,6 +43,7 @@ export const SOCIAL_FIGURES: Figure[] = [
   {
     id: "lula",
     nome: "Lula",
+    avatarAsset: "/ai/fig-lula.png",
     grupo: "PT",
     espectro: "esquerda",
     redes: { x: 7600, instagram: 9200, youtube: 1200, facebook: 5400 },
@@ -53,6 +55,7 @@ export const SOCIAL_FIGURES: Figure[] = [
   {
     id: "flavio-bolsonaro",
     nome: "Flávio Bolsonaro",
+    avatarAsset: "/ai/fig-flavio-bolsonaro.png",
     grupo: "PL",
     espectro: "direita",
     redes: { x: 3100, instagram: 4200, youtube: 380, facebook: 2600 },
@@ -64,6 +67,7 @@ export const SOCIAL_FIGURES: Figure[] = [
   {
     id: "nikolas-ferreira",
     nome: "Nikolas Ferreira",
+    avatarAsset: "/ai/fig-nikolas-ferreira.png",
     grupo: "PL",
     espectro: "direita",
     redes: { x: 4800, instagram: 11800, youtube: 3400, facebook: 2100 },
@@ -75,6 +79,7 @@ export const SOCIAL_FIGURES: Figure[] = [
   {
     id: "gustavo-gayer",
     nome: "Gustavo Gayer",
+    avatarAsset: "/ai/fig-gustavo-gayer.png",
     grupo: "PL",
     espectro: "direita",
     redes: { x: 2200, instagram: 3100, youtube: 1900, facebook: 980 },
@@ -86,6 +91,7 @@ export const SOCIAL_FIGURES: Figure[] = [
   {
     id: "renan-santos",
     nome: "Renan Santos",
+    avatarAsset: "/ai/fig-renan-santos.png",
     grupo: "MBL",
     espectro: "direita",
     redes: { x: 1400, instagram: 1100, youtube: 720, facebook: 540 },
@@ -97,6 +103,7 @@ export const SOCIAL_FIGURES: Figure[] = [
   {
     id: "carla-zambelli",
     nome: "Carla Zambelli",
+    avatarAsset: "/ai/fig-carla-zambelli.png",
     grupo: "PL",
     espectro: "direita",
     redes: { x: 2600, instagram: 2900, youtube: 410, facebook: 1500 },
@@ -108,6 +115,7 @@ export const SOCIAL_FIGURES: Figure[] = [
   {
     id: "eduardo-bolsonaro",
     nome: "Eduardo Bolsonaro",
+    avatarAsset: "/ai/fig-eduardo-bolsonaro.png",
     grupo: "PL",
     espectro: "direita",
     redes: { x: 3300, instagram: 3000, youtube: 300, facebook: 2200 },
@@ -119,6 +127,7 @@ export const SOCIAL_FIGURES: Figure[] = [
   {
     id: "boulos",
     nome: "Guilherme Boulos",
+    avatarAsset: "/ai/fig-guilherme-boulos.png",
     grupo: "PSOL",
     espectro: "esquerda",
     redes: { x: 2100, instagram: 2400, youtube: 240, facebook: 980 },
@@ -130,6 +139,7 @@ export const SOCIAL_FIGURES: Figure[] = [
   {
     id: "erika-hilton",
     nome: "Erika Hilton",
+    avatarAsset: "/ai/fig-erika-hilton.png",
     grupo: "PSOL",
     espectro: "esquerda",
     redes: { x: 1900, instagram: 2700, youtube: 180, facebook: 620 },
@@ -141,6 +151,7 @@ export const SOCIAL_FIGURES: Figure[] = [
   {
     id: "lindbergh",
     nome: "Lindbergh Farias",
+    avatarAsset: "/ai/fig-lindbergh-farias.png",
     grupo: "PT",
     espectro: "esquerda",
     redes: { x: 1600, instagram: 980, youtube: 120, facebook: 540 },
@@ -152,6 +163,7 @@ export const SOCIAL_FIGURES: Figure[] = [
   {
     id: "gleisi",
     nome: "Gleisi Hoffmann",
+    avatarAsset: "/ai/fig-gleisi-hoffmann.png",
     grupo: "PT",
     espectro: "esquerda",
     redes: { x: 2400, instagram: 1500, youtube: 140, facebook: 1100 },
@@ -163,6 +175,7 @@ export const SOCIAL_FIGURES: Figure[] = [
   {
     id: "tabata",
     nome: "Tábata Amaral",
+    avatarAsset: "/ai/fig-tabata-amaral.png",
     grupo: "PSB",
     espectro: "centro",
     redes: { x: 1300, instagram: 1900, youtube: 210, facebook: 480 },
@@ -174,6 +187,7 @@ export const SOCIAL_FIGURES: Figure[] = [
   {
     id: "reinaldo",
     nome: "Reinaldo Azevedo",
+    avatarAsset: "/ai/fig-reinaldo-azevedo.png",
     grupo: "Colunista",
     espectro: "colunista",
     redes: { x: 2300, instagram: 760, youtube: 320, facebook: 410 },
@@ -185,6 +199,7 @@ export const SOCIAL_FIGURES: Figure[] = [
   {
     id: "augusto-nunes",
     nome: "Augusto Nunes",
+    avatarAsset: "/ai/fig-augusto-nunes.png",
     grupo: "Colunista",
     espectro: "colunista",
     redes: { x: 980, instagram: 220, youtube: 140, facebook: 260 },

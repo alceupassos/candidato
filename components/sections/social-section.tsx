@@ -24,11 +24,6 @@ function fmtK(thousands: number): string {
   return `${thousands}k`;
 }
 
-function initials(nome: string): string {
-  const p = nome.split(" ").filter(Boolean);
-  return ((p[0]?.[0] ?? "") + (p[1]?.[0] ?? "")).toUpperCase();
-}
-
 export function SocialSection() {
   const [net, setNet] = useState<NetSel>("total");
   const [espectro, setEspectro] = useState<Espectro | "todos">("todos");
@@ -193,7 +188,16 @@ export function SocialSection() {
                   className="fig-avatar"
                   style={{ background: espectroColor(r.figure.espectro) }}
                 >
-                  {initials(r.figure.nome)}
+                  <img
+                    className="fig-avatar-img"
+                    src={r.figure.avatarAsset}
+                    alt={`Avatar estilizado de ${r.figure.nome}`}
+                    loading="lazy"
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).style.display =
+                        "none";
+                    }}
+                  />
                 </span>
                 <span className="fig-name">
                   {r.figure.nome}

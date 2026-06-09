@@ -58,7 +58,6 @@ export const navigationGroups = [
 
 export const refreshableSections = new Set([
   "dashboard",
-  "territorios",
   "concorrentes",
   "redes",
   "diario",

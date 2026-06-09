@@ -3,8 +3,17 @@
 // Determinístico. Engajado = clicou no QR do grupo/comunidade e participa de
 // pesquisas/mensageria.
 
-import type { RegionId } from "./types";
+import type { RegionId, Series } from "./types";
 import { REGIONS, getRegion, regionEleitorado } from "./rj-regions";
+
+/** Avatar (imagem gerada) por nível. */
+export const LEVEL_AVATAR: Record<OrganizerLevel, string> = {
+  "church-leader": "/ai/avatar-lider-igreja.png",
+  "regional-manager": "/ai/avatar-gerente-regional.png",
+  "state-deputy": "/ai/avatar-deputado.png",
+  cabo: "/ai/avatar-cabo.png",
+  eleitor: "/ai/avatar-eleitor.png",
+};
 
 export type OrganizerLevel =
   | "church-leader"
@@ -283,5 +292,121 @@ export function getOrgTree(region: RegionId): TreeNode {
           ],
         })),
     })),
+  };
+}
+
+// ── Painel em tempo real ──────────────────────────────────────────────
+
+export type TierSummary = {
+  nivel: OrganizerLevel;
+  nome: string;
+  plural: string;
+  cor: string;
+  avatar: string;
+  lideres: number;
+  cabos: number;
+  eleitores: number;
+  cadastroPct: number;
+  engajadoPct: number;
+  contatosHoje: number;
+  conversao: number;
+  topPerformer: string;
+};
+
+const pct = (a: number, b: number) => (b > 0 ? Math.round((a / b) * 100) : 0);
+
+/** Resumo por tier (3 níveis de liderança) para os cards. */
+export function getTierSummary(region: RegionId): TierSummary[] {
+  const leaders = getOrganizers(region);
+  return LEVELS.slice(0, 3).map((lv) => {
+    const grp = leaders.filter((l) => l.nivel === lv.id);
+    const cabos = grp.reduce((s, l) => s + l.cabos, 0);
+    const eleitores = grp.reduce((s, l) => s + l.eleitores, 0);
+    const metaCad = grp.reduce((s, l) => s + l.meta.cadastro, 0);
+    const atualCad = grp.reduce((s, l) => s + l.atual.cadastro, 0);
+    const metaEng = grp.reduce((s, l) => s + l.meta.engajado, 0);
+    const atualEng = grp.reduce((s, l) => s + l.atual.engajado, 0);
+    const top = [...grp].sort(
+      (a, b) => b.atual.cadastro / b.meta.cadastro - a.atual.cadastro / a.meta.cadastro,
+    )[0];
+    return {
+      nivel: lv.id,
+      nome: lv.nome,
+      plural: lv.plural,
+      cor: lv.cor,
+      avatar: LEVEL_AVATAR[lv.id],
+      lideres: grp.length,
+      cabos,
+      eleitores,
+      cadastroPct: pct(atualCad, metaCad),
+      engajadoPct: pct(atualEng, metaEng),
+      contatosHoje: Math.round(cabos * (3 + seed(lv.id) * 4)),
+      conversao: 38 + Math.round(seed(lv.id + region) * 22),
+      topPerformer: top?.nome ?? "—",
+    };
+  });
+}
+
+const ACOES = [
+  "cadastrou um novo eleitor",
+  "enviou mensagem para o grupo",
+  "registrou engajamento via QR",
+  "atualizou a lista de contatos",
+  "respondeu uma pesquisa",
+  "agendou visita de campo",
+  "confirmou presença em comício",
+  "bateu a meta semanal",
+];
+
+export type FeedItem = { nome: string; acao: string; cor: string; minutosAtras: number };
+
+/** Feed de atividade (determinístico). Em render, a coluna "tempo" é estática. */
+export function getActivityFeed(region: RegionId): FeedItem[] {
+  const leaders = getOrganizers(region);
+  const cor = (n: OrganizerLevel) => LEVELS.find((l) => l.id === n)?.cor ?? "#8a8aaa";
+  const items: FeedItem[] = [];
+  leaders.slice(0, 12).forEach((l, i) => {
+    const s = seed(l.id + i);
+    items.push({
+      nome: l.nome,
+      acao: ACOES[Math.floor(s * ACOES.length) % ACOES.length],
+      cor: cor(l.nivel),
+      minutosAtras: 1 + Math.floor(s * 90),
+    });
+  });
+  return items.sort((a, b) => a.minutosAtras - b.minutosAtras);
+}
+
+/** Cadastro (%) por tier — barra. */
+export function getTierPerformanceSeries(region: RegionId): Series {
+  const tiers = getTierSummary(region);
+  return {
+    labels: tiers.map((t) => t.nome),
+    datasets: [
+      {
+        label: "Cadastro (%)",
+        color: "#22c55e",
+        data: tiers.map((t) => t.cadastroPct),
+        palette: tiers.map((t) => t.cor),
+      },
+    ],
+  };
+}
+
+/** Evolução de cadastros (8 semanas) — linha viva. */
+export function getCadastroEvolution(region: RegionId): Series {
+  const total = getOrgAggregates(region).metas.atual.cadastro;
+  const labels = ["S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8"];
+  const inicio = Math.round(total * 0.42);
+  const passo = (total - inicio) / (labels.length - 1);
+  return {
+    labels,
+    datasets: [
+      {
+        label: "Cadastros acumulados",
+        color: "#22c55e",
+        data: labels.map((_, i) => Math.round(inicio + passo * i)),
+      },
+    ],
   };
 }

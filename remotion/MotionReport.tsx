@@ -72,7 +72,9 @@ export function MotionReport({
     <AbsoluteFill
       style={{
         background:
-          "radial-gradient(1200px 500px at 20% -10%, rgba(34,197,94,0.18), transparent), linear-gradient(150deg, #07140c 0%, #0c0c16 55%, #05111f 100%)",
+          "radial-gradient(1200px 500px at 20% -10%, rgba(34,197,94,0.22), transparent), linear-gradient(150deg, rgba(7,20,12,0.86) 0%, rgba(12,12,22,0.9) 55%, rgba(5,17,31,0.92) 100%), url(/ai/motion-bg.png)",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
         color: "#f8fafc",
         fontFamily: "Inter, Arial, sans-serif",
         padding: 56,

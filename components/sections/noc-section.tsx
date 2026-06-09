@@ -130,6 +130,15 @@ export function NocSection({ region, onRegionChange }: NocProps) {
 
   return (
     <div className="section active">
+      {/* Banner war-room */}
+      <div className="noc-banner-img">
+        <div className="noc-banner-overlay">
+          <div className="noc-banner-title">NOC ao Vivo — War Room</div>
+          <div className="noc-banner-sub">
+            Monitoramento eleitoral · {nomeRegiao}
+          </div>
+        </div>
+      </div>
       {/* Ticker ao vivo */}
       <div className="noc-ticker">
         <span className="noc-live">
