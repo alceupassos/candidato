@@ -1,15 +1,47 @@
 "use client";
 
 import Script from "next/script";
-import { LogOut } from "lucide-react";
+import { LogOut, Menu } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-import { candidateDetails, campaignSections, pageTitles } from "@/components/campaign-data";
+import { candidateDetails, pageTitles } from "@/components/campaign-data";
 import { renderSectionCharts } from "@/components/campaign-charts";
-import { navigationGroups, refreshableSections } from "@/components/campaign-config";
+import {
+  navigationGroups,
+  refreshableSections,
+} from "@/components/campaign-config";
+import { buildSectionHtml } from "@/components/section-html";
 import { CandidateDetail } from "@/components/candidate-detail";
 import { CampaignDownloads } from "@/components/campaign-downloads";
+import { ComunicacaoSection } from "@/components/sections/comunicacao-section";
+import { CrmSection } from "@/components/sections/crm-section";
+import { AgendaSection } from "@/components/sections/agenda-section";
+import { DiarioSection } from "@/components/sections/diario-section";
+import { NocSection } from "@/components/sections/noc-section";
+import { RaioxSection } from "@/components/sections/raiox-section";
+import { MetaSection } from "@/components/sections/meta-section";
+import { PesquisasSection } from "@/components/sections/pesquisas-section";
+import { OrganizadoresSection } from "@/components/sections/organizadores-section";
+import { SocialSection } from "@/components/sections/social-section";
+import { RegionFilter } from "@/components/sections/region-filter";
 import { LoginScreen } from "@/components/login-screen";
+import type { RegionId } from "@/lib/mock/types";
+
+// Seções renderizadas como componentes React (não HTML em string).
+const REACT_SECTIONS = new Set([
+  "candidato-detalhe",
+  "downloads",
+  "comunicacao",
+  "crm",
+  "eventos",
+  "diario",
+  "noc",
+  "raiox",
+  "meta",
+  "pesquisas",
+  "organizadores",
+  "social",
+]);
 
 declare global {
   interface Window {
@@ -25,10 +57,13 @@ const DEFAULT_CANDIDATE: CandidateKey = "renato_araujo";
 
 function formatLastUpdate() {
   const now = new Date();
-  return `${now.toLocaleDateString("pt-BR")} · ${now.toLocaleTimeString("pt-BR", {
-    hour: "2-digit",
-    minute: "2-digit",
-  })}`;
+  return `${now.toLocaleDateString("pt-BR")} · ${now.toLocaleTimeString(
+    "pt-BR",
+    {
+      hour: "2-digit",
+      minute: "2-digit",
+    },
+  )}`;
 }
 
 function updateCountdownElement() {
@@ -37,16 +72,36 @@ function updateCountdownElement() {
 
   const electionDay = new Date("2026-10-04T00:00:00");
   const now = new Date();
-  const diff = Math.ceil((electionDay.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+  const diff = Math.ceil(
+    (electionDay.getTime() - now.getTime()) / (1000 * 60 * 60 * 24),
+  );
   element.textContent = String(Math.max(0, diff));
 }
 
 function syncCalculatorOutputs() {
-  const eleitores = Number((document.getElementById("inp_eleitores") as HTMLInputElement | null)?.value || 12420000);
-  const comp = Number((document.getElementById("inp_comp") as HTMLInputElement | null)?.value || 74) / 100;
-  const invalidos = Number((document.getElementById("inp_invalidos") as HTMLInputElement | null)?.value || 10) / 100;
-  const vagas = Number((document.getElementById("inp_vagas") as HTMLInputElement | null)?.value || 46);
-  const margem = Number((document.getElementById("inp_margem") as HTMLInputElement | null)?.value || 15) / 100;
+  const eleitores = Number(
+    (document.getElementById("inp_eleitores") as HTMLInputElement | null)
+      ?.value || 12420000,
+  );
+  const comp =
+    Number(
+      (document.getElementById("inp_comp") as HTMLInputElement | null)?.value ||
+        74,
+    ) / 100;
+  const invalidos =
+    Number(
+      (document.getElementById("inp_invalidos") as HTMLInputElement | null)
+        ?.value || 10,
+    ) / 100;
+  const vagas = Number(
+    (document.getElementById("inp_vagas") as HTMLInputElement | null)?.value ||
+      46,
+  );
+  const margem =
+    Number(
+      (document.getElementById("inp_margem") as HTMLInputElement | null)
+        ?.value || 15,
+    ) / 100;
   const totalVotos = eleitores * comp;
   const validos = totalVotos * (1 - invalidos);
   const coef = Math.round(validos / vagas);
@@ -57,12 +112,21 @@ function syncCalculatorOutputs() {
   if (resCoef) resCoef.textContent = coef.toLocaleString("pt-BR");
   if (resMeta) resMeta.textContent = meta.toLocaleString("pt-BR");
 
-  const renato = Number((document.getElementById("inp_renato") as HTMLInputElement | null)?.value || 45000);
-  const plTotal = Number((document.getElementById("inp_pl_total") as HTMLInputElement | null)?.value || 1840000);
-  const plCands = Number((document.getElementById("inp_pl_cands") as HTMLInputElement | null)?.value || 28);
+  const renato = Number(
+    (document.getElementById("inp_renato") as HTMLInputElement | null)?.value ||
+      45000,
+  );
+  const plTotal = Number(
+    (document.getElementById("inp_pl_total") as HTMLInputElement | null)
+      ?.value || 1840000,
+  );
+  const plCands = Number(
+    (document.getElementById("inp_pl_cands") as HTMLInputElement | null)
+      ?.value || 28,
+  );
   const vagasPl = Math.floor(plTotal / coef);
   const pct = ((renato / plTotal) * 100).toFixed(1);
-  const pos = Math.ceil((plTotal / plCands) / renato * (plCands * 0.3));
+  const pos = Math.ceil((plTotal / plCands / renato) * (plCands * 0.3));
 
   const resVagasPl = document.getElementById("res_vagas_pl");
   const resPctRenato = document.getElementById("res_pct_renato");
@@ -73,13 +137,14 @@ function syncCalculatorOutputs() {
   if (resPctRenato) resPctRenato.textContent = `${pct}%`;
   if (resPosPl) resPosPl.textContent = renato.toLocaleString("pt-BR");
   if (resRankPl) {
-    resRankPl.textContent = pos <= 3 ? "3° mais votados" : pos <= 5 ? "5 primeiros" : "top 10";
+    resRankPl.textContent =
+      pos <= 3 ? "3° mais votados" : pos <= 5 ? "5 primeiros" : "top 10";
   }
 }
 
 async function handleLogout(
   setAuthStatus: (s: "checking" | "guest" | "authenticated") => void,
-  setOpenLoginOnGuest: (b: boolean) => void
+  setOpenLoginOnGuest: (b: boolean) => void,
 ) {
   try {
     await fetch("/api/auth/logout", { method: "POST", credentials: "include" });
@@ -91,21 +156,26 @@ async function handleLogout(
 }
 
 export function CampaignCockpit() {
-  const [authStatus, setAuthStatus] = useState<"checking" | "guest" | "authenticated">("checking");
-  const [activeSection, setActiveSection] = useState<SectionId>(DEFAULT_SECTION);
-  const [selectedCandidateKey, setSelectedCandidateKey] = useState<CandidateKey>(DEFAULT_CANDIDATE);
+  const [authStatus, setAuthStatus] = useState<
+    "checking" | "guest" | "authenticated"
+  >("checking");
+  const [activeSection, setActiveSection] =
+    useState<SectionId>(DEFAULT_SECTION);
+  const [selectedCandidateKey, setSelectedCandidateKey] =
+    useState<CandidateKey>(DEFAULT_CANDIDATE);
   const [lastUpdate, setLastUpdate] = useState("—");
   const [refreshTick, setRefreshTick] = useState(0);
   const [openLoginOnGuest, setOpenLoginOnGuest] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [activeRegion, setActiveRegion] = useState<RegionId>("all");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const sectionHostRef = useRef<HTMLDivElement>(null);
 
   const titlePair = pageTitles[activeSection] ?? pageTitles.dashboard;
   const activeMarkup = useMemo(() => {
-    if (activeSection === "candidato-detalhe" || activeSection === "downloads") return null;
-    const sectionMarkup = campaignSections[activeSection as keyof typeof campaignSections] ?? "";
-    return sectionMarkup.replace('class="section"', 'class="section active"');
-  }, [activeSection]);
+    if (REACT_SECTIONS.has(activeSection)) return null;
+    return buildSectionHtml(activeSection, activeRegion);
+  }, [activeSection, activeRegion]);
 
   useEffect(() => {
     const verifySession = async () => {
@@ -163,7 +233,7 @@ export function CampaignCockpit() {
       window.lucide?.createIcons();
       updateCountdownElement();
       if (refreshableSections.has(activeSection)) {
-        renderSectionCharts(activeSection);
+        renderSectionCharts(activeSection, activeRegion);
       }
       if (activeSection === "calculadora") {
         syncCalculatorOutputs();
@@ -173,7 +243,7 @@ export function CampaignCockpit() {
     return () => {
       if (app) app.classList.remove("logado");
     };
-  }, [authStatus, activeSection, refreshTick]);
+  }, [authStatus, activeSection, activeRegion, refreshTick]);
 
   useEffect(() => {
     const host = sectionHostRef.current;
@@ -192,7 +262,10 @@ export function CampaignCockpit() {
 
     if (activeSection === "candidatos") {
       host.querySelectorAll<HTMLElement>(".cand-card").forEach((card) => {
-        card.classList.toggle("active-detail", card.dataset.candidateKey === selectedCandidateKey);
+        card.classList.toggle(
+          "active-detail",
+          card.dataset.candidateKey === selectedCandidateKey,
+        );
       });
     }
   }, [activeSection, selectedCandidateKey, refreshTick]);
@@ -209,7 +282,9 @@ export function CampaignCockpit() {
 
     const onClick = (event: Event) => {
       const target = event.target as HTMLElement | null;
-      const candidateTrigger = target?.closest<HTMLElement>("[data-candidate-key]");
+      const candidateTrigger = target?.closest<HTMLElement>(
+        "[data-candidate-key]",
+      );
       if (candidateTrigger) {
         openCandidate(candidateTrigger.dataset.candidateKey);
       }
@@ -218,7 +293,9 @@ export function CampaignCockpit() {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key !== "Enter" && event.key !== " ") return;
       const target = event.target as HTMLElement | null;
-      const candidateTrigger = target?.closest<HTMLElement>("[data-candidate-key]");
+      const candidateTrigger = target?.closest<HTMLElement>(
+        "[data-candidate-key]",
+      );
       if (candidateTrigger) {
         event.preventDefault();
         openCandidate(candidateTrigger.dataset.candidateKey);
@@ -242,7 +319,7 @@ export function CampaignCockpit() {
       />
 
       {/* LOGOUT CONFIRMATION MODAL */}
-      <div className={`logout-overlay ${showLogoutModal ? 'visible' : ""}`}>
+      <div className={`logout-overlay ${showLogoutModal ? "visible" : ""}`}>
         <div className="logout-modal">
           <div className="logout-icon-wrap">
             <LogOut size={32} />
@@ -252,11 +329,15 @@ export function CampaignCockpit() {
             Sua sessão será encerrada com total segurança.
           </p>
           <div className="logout-actions">
-            <button className="btn-cancel" onClick={() => setShowLogoutModal(false)} type="button">
+            <button
+              className="btn-cancel"
+              onClick={() => setShowLogoutModal(false)}
+              type="button"
+            >
               CANCELAR
             </button>
-            <button 
-              className="btn-confirm-logout" 
+            <button
+              className="btn-confirm-logout"
               onClick={() => {
                 setShowLogoutModal(false);
                 void handleLogout(setAuthStatus, setOpenLoginOnGuest);
@@ -269,32 +350,48 @@ export function CampaignCockpit() {
         </div>
       </div>
 
-
-
       {authStatus !== "authenticated" ? (
-        <LoginScreen 
+        <LoginScreen
           onLogin={() => {
             setAuthStatus("authenticated");
             setOpenLoginOnGuest(false);
-          }} 
+          }}
           defaultOpen={openLoginOnGuest}
         />
       ) : null}
 
-      <div id="app" className={authStatus === "authenticated" ? "logado" : undefined}>
+      <div
+        id="app"
+        className={
+          `${authStatus === "authenticated" ? "logado" : ""} ${sidebarOpen ? "sidebar-open" : ""}`.trim() ||
+          undefined
+        }
+      >
+        <div
+          className={`sidebar-overlay ${sidebarOpen ? "visible" : ""}`}
+          onClick={() => setSidebarOpen(false)}
+          aria-hidden="true"
+        />
         <div id="sidebar">
           <div className="logo-area">
             <div className="logo-box">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className="logo-img" src="sostenesfundoescuro.png" alt="Sostenes" />
+              <img
+                className="logo-img"
+                src="sostenesfundoescuro.png"
+                alt="Sostenes"
+              />
             </div>
             <div className="logo-photo-frame">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className="logo-photo" src="sostenes10.png" alt="Foto principal do candidato" />
+              <img
+                className="logo-photo"
+                src="sostenes10.png"
+                alt="Foto principal do candidato"
+              />
             </div>
             <div className="versao">Cockpit v3.0 · 2026</div>
           </div>
-
 
           {navigationGroups.map((group) => (
             <div className="nav-section" key={group.label}>
@@ -306,53 +403,79 @@ export function CampaignCockpit() {
                   onClick={() => {
                     setActiveSection(item.id as SectionId);
                     setRefreshTick((t) => t + 1);
+                    setSidebarOpen(false);
                   }}
                   type="button"
                 >
-                  <span className="nav-icon"><i data-lucide={item.icon} /></span>
+                  <span className="nav-icon">
+                    <i data-lucide={item.icon} />
+                  </span>
                   <span>{item.label}</span>
                 </button>
               ))}
             </div>
           ))}
 
-          <div style={{ marginTop: 'auto', padding: '16px' }}>
-            <button 
-              className="nav-item logout-btn premium-btn logout-btn-premium" 
+          <div style={{ marginTop: "auto", padding: "16px" }}>
+            <button
+              className="nav-item logout-btn premium-btn logout-btn-premium"
               onClick={() => setShowLogoutModal(true)}
-              style={{ width: '100%', justifyContent: 'center' }}
+              style={{ width: "100%", justifyContent: "center" }}
             >
-              <span className="nav-icon"><LogOut size={16} /></span>
+              <span className="nav-icon">
+                <LogOut size={16} />
+              </span>
               <span>Sair do Cockpit</span>
             </button>
           </div>
 
           <div className="sidebar-footer">
             <div className="sf-label">Última atualização</div>
-            <div className="sf-val" id="lastUpdate" suppressHydrationWarning>{lastUpdate}</div>
+            <div className="sf-val" id="lastUpdate" suppressHydrationWarning>
+              {lastUpdate}
+            </div>
           </div>
         </div>
 
         <div id="main">
           <div id="topbar">
             <div className="topbar-left">
+              <button
+                className="hamburger-btn"
+                type="button"
+                aria-label="Abrir menu"
+                onClick={() => setSidebarOpen((v) => !v)}
+              >
+                <Menu size={20} />
+              </button>
               <div>
-                <div className="page-title" id="pageTitle">{titlePair[0]}</div>
-                <div className="page-sub" id="pageSub">{titlePair[1]}</div>
+                <div className="page-title" id="pageTitle">
+                  {titlePair[0]}
+                </div>
+                <div className="page-sub" id="pageSub">
+                  {titlePair[1]}
+                </div>
               </div>
             </div>
             <div className="topbar-right">
-              <div className="badge-live"><div className="dot-live" /> AO VIVO</div>
+              <RegionFilter value={activeRegion} onChange={setActiveRegion} />
+              <div className="badge-live">
+                <div className="dot-live" /> AO VIVO
+              </div>
               <button
                 className="btn-top icon-btn premium-btn"
                 type="button"
                 onClick={() => setRefreshTick((value) => value + 1)}
               >
-                <span className="top-icon"><i data-lucide="refresh-cw" /></span>
+                <span className="top-icon">
+                  <i data-lucide="refresh-cw" />
+                </span>
                 <span>Atualizar</span>
               </button>
               <button className="btn-top icon-btn premium-btn" type="button">
-                <span className="top-icon"><i data-lucide="settings-2" /></span>
+                <span className="top-icon">
+                  <i data-lucide="settings-2" />
+                </span>
                 <span>Config</span>
               </button>
               <button
@@ -362,7 +485,9 @@ export function CampaignCockpit() {
                 aria-label="Sair"
                 onClick={() => setShowLogoutModal(true)}
               >
-                <span className="top-icon"><LogOut size={15} /></span>
+                <span className="top-icon">
+                  <LogOut size={15} />
+                </span>
                 <span>Sair</span>
               </button>
               <div className="avatar">G</div>
@@ -374,11 +499,42 @@ export function CampaignCockpit() {
               <CandidateDetail candidateKey={selectedCandidateKey} />
             ) : activeSection === "downloads" ? (
               <CampaignDownloads />
+            ) : activeSection === "comunicacao" ? (
+              <ComunicacaoSection />
+            ) : activeSection === "crm" ? (
+              <CrmSection />
+            ) : activeSection === "eventos" ? (
+              <AgendaSection />
+            ) : activeSection === "diario" ? (
+              <DiarioSection />
+            ) : activeSection === "noc" ? (
+              <NocSection
+                region={activeRegion}
+                onRegionChange={setActiveRegion}
+              />
+            ) : activeSection === "raiox" ? (
+              <RaioxSection region={activeRegion} />
+            ) : activeSection === "meta" ? (
+              <MetaSection region={activeRegion} />
+            ) : activeSection === "pesquisas" ? (
+              <PesquisasSection region={activeRegion} />
+            ) : activeSection === "organizadores" ? (
+              <OrganizadoresSection region={activeRegion} />
+            ) : activeSection === "social" ? (
+              <SocialSection />
             ) : (
-              <div dangerouslySetInnerHTML={{ __html: activeMarkup ?? "" }} suppressHydrationWarning />
+              <div
+                dangerouslySetInnerHTML={{ __html: activeMarkup ?? "" }}
+                suppressHydrationWarning
+              />
             )}
-            <div className="mockup-warning" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <strong>MOCKUP DE MODELO A SER CONSTRUÍDO COM DADOS NÃO REAIS</strong>
+            <div
+              className="mockup-warning"
+              style={{ display: "flex", flexDirection: "column", gap: "8px" }}
+            >
+              <strong>
+                MOCKUP DE MODELO A SER CONSTRUÍDO COM DADOS NÃO REAIS
+              </strong>
             </div>
           </div>
         </div>

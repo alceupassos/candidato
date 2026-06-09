@@ -1,9 +1,36 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import { readFile } from "node:fs/promises";
+import path from "node:path";
 
 import { appendAccessLog, appendLeadLog } from "@/lib/access-log";
+import { getSession } from "@/lib/api-auth";
 
 const LEAD_EMAIL = "eleicao@angra.io";
+
+// Contagem de leads (autenticada) para o painel de Meta de Votos.
+export async function GET(request: NextRequest) {
+  if (!getSession(request)) {
+    return NextResponse.json(
+      { error: "unauthorized" },
+      { status: 401, headers: { "Cache-Control": "no-store" } },
+    );
+  }
+  let count = 0;
+  try {
+    const content = await readFile(
+      path.join(process.cwd(), "data", "transparency-leads.jsonl"),
+      "utf8",
+    );
+    count = content.split("\n").filter(Boolean).length;
+  } catch {
+    count = 0;
+  }
+  return NextResponse.json(
+    { count },
+    { headers: { "Cache-Control": "no-store" } },
+  );
+}
 
 async function sendLeadEmail(lead: {
   nomeCompleto: string;
@@ -35,13 +62,16 @@ async function sendLeadEmail(lead: {
   formData.set("_template", "table");
   formData.set("_captcha", "false");
 
-  const response = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(LEAD_EMAIL)}`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
+  const response = await fetch(
+    `https://formsubmit.co/ajax/${encodeURIComponent(LEAD_EMAIL)}`,
+    {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+      },
+      body: formData,
     },
-    body: formData,
-  });
+  );
 
   const body = await response.json().catch(() => ({}));
 
@@ -69,7 +99,8 @@ function getSupabaseClient() {
 export async function POST(request: NextRequest) {
   const body = await request.json().catch(() => ({}));
   const lead = {
-    nomeCompleto: typeof body?.nomeCompleto === "string" ? body.nomeCompleto.trim() : "",
+    nomeCompleto:
+      typeof body?.nomeCompleto === "string" ? body.nomeCompleto.trim() : "",
     email: typeof body?.email === "string" ? body.email.trim() : "",
     whatsapp: typeof body?.whatsapp === "string" ? body.whatsapp.trim() : "",
     cidade: typeof body?.cidade === "string" ? body.cidade.trim() : "",
@@ -156,7 +187,9 @@ export async function POST(request: NextRequest) {
           : `email_send_failed_${emailResult.status}`;
 
   await appendAccessLog(request.headers, {
-    event: emailSent ? "transparency_lead_email_sent" : "transparency_lead_email_failed",
+    event: emailSent
+      ? "transparency_lead_email_sent"
+      : "transparency_lead_email_failed",
     path: "/api/transparency-lead",
     metadata: {
       email: lead.email,

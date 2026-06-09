@@ -3,7 +3,10 @@ export const navigationGroups = [
     label: "Principal",
     items: [
       { id: "dashboard", icon: "layout-dashboard", label: "Dashboard" },
+      { id: "noc", icon: "radar", label: "NOC ao Vivo" },
       { id: "pesquisas", icon: "chart-column", label: "Pesquisas" },
+      { id: "raiox", icon: "scan-search", label: "Raio-X Regional" },
+      { id: "meta", icon: "target", label: "Meta de Votos" },
       { id: "territorios", icon: "map", label: "Territórios" },
       { id: "concorrentes", icon: "crosshair", label: "Concorrentes" },
     ],
@@ -11,6 +14,7 @@ export const navigationGroups = [
   {
     label: "Monitoramento",
     items: [
+      { id: "social", icon: "share-2", label: "Ranking Redes" },
       { id: "redes", icon: "smartphone", label: "Redes Sociais" },
       { id: "midia", icon: "radio-tower", label: "Mídia & Imprensa" },
       { id: "influenciadores", icon: "users-round", label: "Influenciadores" },
@@ -27,6 +31,7 @@ export const navigationGroups = [
   {
     label: "Campo",
     items: [
+      { id: "organizadores", icon: "git-fork", label: "Organizadores" },
       { id: "candidatos", icon: "user-round-search", label: "Candidatos" },
       { id: "eventos", icon: "calendar-days", label: "Agenda" },
     ],
@@ -53,7 +58,6 @@ export const navigationGroups = [
 
 export const refreshableSections = new Set([
   "dashboard",
-  "pesquisas",
   "territorios",
   "concorrentes",
   "redes",
@@ -63,4 +67,5 @@ export const refreshableSections = new Set([
   "financeiro",
   "crm",
   "comunicacao",
+  "meta",
 ]);
