@@ -86,6 +86,7 @@ export function NocSection({ region, onRegionChange }: NocProps) {
   const ranking = getRaceRanking(race, region);
   const maxIntencao = Math.max(...ranking.map((c) => c.intencao));
   const oportunidades = getOpportunityRanking(region).slice(0, 5);
+  const regionTops = useMemo(() => getRegionTopOpportunity(), []);
 
   // Números "vivos" — base por região, oscilando com o tick.
   const baseIntencao = r ? r.intencaoVoto : 8.7;
@@ -286,6 +287,43 @@ export function NocSection({ region, onRegionChange }: NocProps) {
               </div>
             ))}
           </div>
+        </div>
+      </div>
+
+      {/* Top oportunidade por ÁREA (todas as regiões de uma vez) */}
+      <div className="card" style={{ marginTop: 12 }}>
+        <div className="card-header">
+          <div className="card-title">
+            Top Oportunidade por Área — Estado Inteiro
+          </div>
+          <span className="card-badge badge-est">
+            clique p/ filtrar a região
+          </span>
+        </div>
+        <div className="opp-area-grid">
+          {regionTops
+            .slice()
+            .sort((a, b) => b.indice - a.indice)
+            .map((rt) => {
+              const id = nameToId.get(rt.nome);
+              return (
+                <button
+                  type="button"
+                  className="opp-area-card"
+                  key={rt.id}
+                  onClick={() => id && onRegionChange(id)}
+                >
+                  <div className="opp-area-top">
+                    <span className="opp-area-reg">{rt.nome}</span>
+                    <span className="opp-idx">{rt.indice}</span>
+                  </div>
+                  <div className="opp-area-tema">{rt.tema}</div>
+                  <div className="opp-bar">
+                    <span style={{ width: `${rt.indice}%` }} />
+                  </div>
+                </button>
+              );
+            })}
         </div>
       </div>
 

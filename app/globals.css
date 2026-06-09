@@ -3734,3 +3734,23 @@ body.cfg-contrast { --texto-sec: #aab; }
 .noc-banner-title { font-size: 22px; font-weight: 800; color: #fff; letter-spacing: .5px; text-shadow: 0 2px 12px rgba(0,0,0,.6); }
 .noc-banner-sub { font-size: 13px; color: #cbd5e1; margin-top: 2px; }
 @media (max-width: 768px) { .noc-banner-img { height: 92px; } .noc-banner-title { font-size: 17px; } }
+
+/* ── Tipografia distinta (v6) ── */
+.page-title, .card-title, .org-tier-name, .noc-banner-title, .cfg-title, .drill-crumb {
+  font-family: var(--font-sora), var(--font-dm-sans), system-ui, sans-serif;
+}
+.page-title { letter-spacing: -0.3px; }
+.kpi-value, .conc-int, .rank-val, .fig-foll, .level-val, .opp-idx, .funnel-count {
+  font-family: var(--font-mono), var(--font-dm-sans), monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Top oportunidade por área ── */
+.opp-area-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.opp-area-card { text-align: left; background: #15151d; border: 1px solid var(--cinza-borda); border-radius: 10px; padding: 10px 12px; cursor: pointer; transition: border-color .15s, transform .15s; }
+.opp-area-card:hover { border-color: rgba(34,197,94,0.3); transform: translateY(-2px); }
+.opp-area-top { display: flex; align-items: center; justify-content: space-between; }
+.opp-area-reg { font-size: 11px; color: var(--texto-sec); font-weight: 600; }
+.opp-area-tema { font-size: 14px; color: var(--branco); font-weight: 700; margin: 3px 0 6px; }
+@media (max-width: 900px) { .opp-area-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .opp-area-grid { grid-template-columns: 1fr; } }

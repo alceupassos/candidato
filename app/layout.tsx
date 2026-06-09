@@ -1,5 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { DM_Sans, Playfair_Display } from "next/font/google";
+import {
+  DM_Sans,
+  Playfair_Display,
+  Sora,
+  JetBrains_Mono,
+} from "next/font/google";
 import "./globals.css";
 import "./landing.css";
 
@@ -15,6 +20,20 @@ const playfair = Playfair_Display({
   weight: ["400", "700"],
   style: ["normal", "italic"],
   variable: "--font-playfair",
+  display: "swap",
+});
+
+const sora = Sora({
+  subsets: ["latin"],
+  weight: ["500", "600", "700", "800"],
+  variable: "--font-sora",
+  display: "swap",
+});
+
+const jetbrains = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["500", "700"],
+  variable: "--font-mono",
   display: "swap",
 });
 
@@ -37,7 +56,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" className={`${dmSans.variable} ${playfair.variable}`}>
+    <html
+      lang="pt-BR"
+      className={`${dmSans.variable} ${playfair.variable} ${sora.variable} ${jetbrains.variable}`}
+    >
       <body>{children}</body>
     </html>
   );
