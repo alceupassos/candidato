@@ -9,3 +9,6 @@ out/
 
 # apresentação gerada
 *.pptx
+
+# pasta aninhada não relacionada (M&A/BPO)
+/sostenes/
