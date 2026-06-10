@@ -3981,3 +3981,38 @@ body.cfg-no-anim #content .kpi-card { animation: none !important; }
 .sen-nome { color: var(--branco); font-weight: 700; font-size: 13px; }
 .sen-part { color: #60a5fa; font-size: 11px; font-weight: 700; }
 .sen-status { grid-column: 1 / 3; font-size: 10px; color: var(--texto-sec); }
+
+/* ── Oráculo (insight de IA) ── */
+.oraculo {
+  display: flex; gap: 12px; align-items: flex-start;
+  margin-top: 12px; padding: 13px 15px; border-radius: 14px;
+  background:
+    radial-gradient(120% 160% at 0% 0%, rgba(139,92,246,0.14), rgba(139,92,246,0) 55%),
+    linear-gradient(160deg, #17141f, #121119);
+  border: 1px solid rgba(139,92,246,0.28);
+  position: relative; overflow: hidden;
+}
+.oraculo::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(60% 120% at 100% 0%, rgba(34,197,94,0.08), transparent 60%);
+}
+.oraculo-orb {
+  flex-shrink: 0; width: 38px; height: 38px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: radial-gradient(circle at 30% 25%, #a78bfa, #6d28d9 70%);
+  box-shadow: 0 0 18px rgba(139,92,246,0.55); color: #fff;
+  animation: oraPulse 3.2s ease-in-out infinite;
+}
+.oraculo-orb i, .oraculo-orb svg { width: 18px; height: 18px; }
+@keyframes oraPulse { 0%,100% { box-shadow: 0 0 12px rgba(139,92,246,0.45); } 50% { box-shadow: 0 0 24px rgba(139,92,246,0.8); } }
+.oraculo-body { flex: 1; min-width: 0; }
+.oraculo-head { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+.oraculo-title { font-family: var(--font-sora, inherit); font-weight: 800; font-size: 13px; color: #c4b5fd; letter-spacing: .3px; }
+.oraculo-tag { font-size: 9px; font-weight: 700; color: #8b5cf6; border: 1px solid rgba(139,92,246,0.4); border-radius: 999px; padding: 1px 7px; text-transform: uppercase; }
+.oraculo-text { font-size: 13px; line-height: 1.45; color: #e7e3f5; }
+.oraculo-skel { display: flex; flex-direction: column; gap: 6px; }
+.oraculo-skel span { height: 9px; border-radius: 5px; background: linear-gradient(90deg, #20202c, #2c2c3a, #20202c); background-size: 200% 100%; animation: oraShimmer 1.2s linear infinite; }
+.oraculo-skel span:first-child { width: 92%; }
+.oraculo-skel span:last-child { width: 64%; }
+@keyframes oraShimmer { to { background-position: -200% 0; } }
+body.cfg-no-anim .oraculo-orb, body.cfg-no-anim .oraculo-skel span { animation: none !important; }

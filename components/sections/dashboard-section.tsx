@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 
 import { EChart } from "@/components/echart";
+import { Oraculo } from "@/components/oraculo";
 import {
   barOption,
   donutOption,
@@ -116,6 +117,8 @@ export function DashboardSection({
           <span className="dot-live" /> ao vivo
         </span>
       </div>
+
+      <Oraculo section="dashboard" context={`Região ${nomeRegiao}`} />
 
       <div className="kpi-row">
         {kpis.map((k, i) => (

@@ -14,6 +14,7 @@ import {
   regionsTreemapOption,
 } from "@/components/echart-options";
 import { MotionReport } from "@/remotion/MotionReport";
+import { Oraculo } from "@/components/oraculo";
 import {
   RACES,
   getPresidentialByState,
@@ -167,6 +168,8 @@ export function NocSection({ region, onRegionChange }: NocProps) {
           </div>
         ))}
       </div>
+
+      <Oraculo section="noc" context={`Cargo ${race}, região ${nomeRegiao}`} />
 
       {/* Abas de cargo */}
       <div className="race-tabs" style={{ marginTop: 12 }}>

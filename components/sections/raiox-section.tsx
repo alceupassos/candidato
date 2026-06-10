@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 
 import { EChart } from "@/components/echart";
+import { Oraculo } from "@/components/oraculo";
 import { useIs3D } from "@/components/charts/use-is-3d";
 import {
   heatmapOption,
@@ -51,6 +52,8 @@ export function RaioxSection({ region }: { region: RegionId }) {
         <i data-lucide="scan-search" /> <strong>Raio-X Regional</strong> ·{" "}
         {nomeRegiao} — o que a população precisa e o que dá mais votos
       </div>
+
+      <Oraculo section="raiox" context={`Região ${nomeRegiao}`} />
 
       <div className="kpi-row">
         <div className="kpi-card">

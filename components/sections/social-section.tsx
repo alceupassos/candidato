@@ -7,6 +7,7 @@ import { EChart } from "@/components/echart";
 import { BrazilMap } from "@/components/charts/brazil-map";
 import { barOption, donutOption } from "@/components/echart-options";
 import { HoverPost, useHoverPost } from "@/components/hover-post";
+import { Oraculo } from "@/components/oraculo";
 import {
   ESPECTROS,
   NETWORKS,
@@ -93,6 +94,8 @@ export function SocialSection() {
           dados demonstrativos
         </span>
       </div>
+
+      <Oraculo section="social" context="Ranking nacional de redes" />
 
       {/* Alternador de ranking */}
       <div className="modo-toggle" style={{ marginTop: 8 }}>

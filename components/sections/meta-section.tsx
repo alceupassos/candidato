@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 
 import { EChart } from "@/components/echart";
+import { Oraculo } from "@/components/oraculo";
 import { funnelOption, gaugeOption } from "@/components/echart-options";
 import { getMetaBaseline } from "@/lib/mock/campaign-metrics";
 import { getRegion } from "@/lib/mock/rj-regions";
@@ -137,6 +138,8 @@ export function MetaSection({ region }: { region: RegionId }) {
       <div className="region-banner">
         <i data-lucide="target" /> <strong>Meta de Votos</strong> · {nomeRegiao}
       </div>
+
+      <Oraculo section="meta" context={`Região ${nomeRegiao}`} />
 
       <div className="kpi-row">
         <div className="kpi-card">
