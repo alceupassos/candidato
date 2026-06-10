@@ -290,3 +290,29 @@ export function buildLiveResult(
     idade: [16, 24, 28, 20, 12].map((v) => Math.round(v + jitter(v))),
   };
 }
+
+// Histórico de pesquisas próprias já realizadas (demonstrativo).
+export type SurveyHistoryItem = {
+  id: string;
+  at: string;
+  templateNome: string;
+  baseNome: string;
+  alcance: number;
+  respostas: number;
+  resultadoLider: string;
+  resultadoPct: number;
+  status: string;
+};
+
+export const SURVEY_HISTORY: SurveyHistoryItem[] = [
+  { id: "h10", at: "2026-06-02T09:00:00", templateNome: "Aprovação Geral", baseNome: "Toda a base mobilizada", alcance: 141000, respostas: 49200, resultadoLider: "Ótimo+Bom 63%", resultadoPct: 63, status: "concluída" },
+  { id: "h09", at: "2026-05-26T09:00:00", templateNome: "Intenção de Voto", baseNome: "Indecisos", alcance: 38000, respostas: 12800, resultadoLider: "Renato 28%", resultadoPct: 28, status: "concluída" },
+  { id: "h08", at: "2026-05-19T09:00:00", templateNome: "Pauta Jovem", baseNome: "Cabos Eleitorais", alcance: 42800, respostas: 15600, resultadoLider: "Emprego 38%", resultadoPct: 38, status: "concluída" },
+  { id: "h07", at: "2026-05-12T09:00:00", templateNome: "Pauta das Mulheres", baseNome: "Gerentes Regionais", alcance: 26200, respostas: 9100, resultadoLider: "Saúde 36%", resultadoPct: 36, status: "concluída" },
+  { id: "h06", at: "2026-05-05T09:00:00", templateNome: "Base Evangélica", baseNome: "Líderes de Igreja", alcance: 18400, respostas: 8700, resultadoLider: "Família 41%", resultadoPct: 41, status: "concluída" },
+  { id: "h05", at: "2026-04-28T09:00:00", templateNome: "Empreendedores", baseNome: "Comunidades WhatsApp", alcance: 22600, respostas: 6900, resultadoLider: "Menos impostos 44%", resultadoPct: 44, status: "concluída" },
+  { id: "h04", at: "2026-04-21T09:00:00", templateNome: "Aprovação Geral", baseNome: "Costa Verde", alcance: 31000, respostas: 11200, resultadoLider: "Ótimo+Bom 66%", resultadoPct: 66, status: "concluída" },
+  { id: "h03", at: "2026-04-14T09:00:00", templateNome: "Intenção de Voto", baseNome: "Metropolitana", alcance: 52000, respostas: 14300, resultadoLider: "Renato 24%", resultadoPct: 24, status: "concluída" },
+  { id: "h02", at: "2026-04-07T09:00:00", templateNome: "Pauta Jovem", baseNome: "Toda a base mobilizada", alcance: 141000, respostas: 38400, resultadoLider: "Emprego 40%", resultadoPct: 40, status: "concluída" },
+  { id: "h01", at: "2026-03-31T09:00:00", templateNome: "Aprovação Geral", baseNome: "Deputados Estaduais", alcance: 31000, respostas: 10100, resultadoLider: "Ótimo+Bom 59%", resultadoPct: 59, status: "concluída" },
+];

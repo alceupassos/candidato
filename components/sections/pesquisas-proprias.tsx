@@ -12,6 +12,7 @@ import {
 } from "@/components/echart-options";
 import {
   SURVEY_CALENDAR,
+  SURVEY_HISTORY,
   SURVEY_TEMPLATES,
   TARGET_MODES,
   buildLiveResult,
@@ -449,6 +450,42 @@ export function PesquisasProprias() {
             </table>
           </div>
         )}
+      </div>
+
+      {/* Histórico de pesquisas anteriores (10) */}
+      <div className="card" style={{ marginTop: 12 }}>
+        <div className="card-header">
+          <div className="card-title">Histórico — Últimas 10 Pesquisas</div>
+          <span className="card-badge badge-est">{SURVEY_HISTORY.length}</span>
+        </div>
+        <div style={{ overflowX: "auto" }}>
+          <table className="tbl">
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Pesquisa</th>
+                <th>Base</th>
+                <th>Respostas</th>
+                <th>Resultado</th>
+              </tr>
+            </thead>
+            <tbody>
+              {SURVEY_HISTORY.map((h) => (
+                <tr key={h.id}>
+                  <td>{new Date(h.at).toLocaleDateString("pt-BR")}</td>
+                  <td>{h.templateNome}</td>
+                  <td>{h.baseNome}</td>
+                  <td>{nf(h.respostas)}</td>
+                  <td>
+                    <span style={{ color: "#22c55e", fontWeight: 700 }}>
+                      {h.resultadoLider}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

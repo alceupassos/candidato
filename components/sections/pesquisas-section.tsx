@@ -26,7 +26,7 @@ import { PesquisasProprias } from "@/components/sections/pesquisas-proprias";
 const INSTITUTOS = ["Datafolha", "Quaest", "IBOPE", "Atlas", "Paraná"];
 
 export function PesquisasSection({ region }: { region: RegionId }) {
-  const [aba, setAba] = useState<"institutos" | "proprias">("institutos");
+  const [aba, setAba] = useState<"institutos" | "proprias">("proprias");
   const [race, setRace] = useState<RaceId>("dep-federal");
   const [recorte, setRecorte] = useState<Recorte>("idade");
   const [instituto, setInstituto] = useState(INSTITUTOS[0]);
@@ -99,21 +99,21 @@ export function PesquisasSection({ region }: { region: RegionId }) {
         {nomeRegiao}
       </div>
 
-      {/* Abas: Institutos × Pesquisas Próprias */}
+      {/* Abas: Pesquisas Próprias (1ª) × Pesquisas Oficiais */}
       <div className="modo-toggle" style={{ marginTop: 8 }}>
-        <button
-          type="button"
-          className={`modo-btn ${aba === "institutos" ? "active" : ""}`}
-          onClick={() => setAba("institutos")}
-        >
-          Institutos
-        </button>
         <button
           type="button"
           className={`modo-btn ${aba === "proprias" ? "active" : ""}`}
           onClick={() => setAba("proprias")}
         >
           Pesquisas Próprias (ao vivo)
+        </button>
+        <button
+          type="button"
+          className={`modo-btn ${aba === "institutos" ? "active" : ""}`}
+          onClick={() => setAba("institutos")}
+        >
+          Pesquisas Oficiais
         </button>
       </div>
 
