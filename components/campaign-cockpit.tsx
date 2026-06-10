@@ -1,7 +1,16 @@
 "use client";
 
 import Script from "next/script";
-import { LogOut, Menu } from "lucide-react";
+import {
+  LogOut,
+  Menu,
+  LayoutDashboard,
+  Radar,
+  BarChart3,
+  Target,
+  RadioTower,
+  type LucideIcon,
+} from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import { candidateDetails, pageTitles } from "@/components/campaign-data";
@@ -259,6 +268,12 @@ export function CampaignCockpit() {
       if (app) app.classList.remove("logado");
     };
   }, [authStatus, activeSection, activeRegion, refreshTick]);
+
+  // Ao trocar de seção, volta ao topo (mobile rola o documento; desktop rola #content).
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "auto" });
+    sectionHostRef.current?.scrollTo({ top: 0, behavior: "auto" });
+  }, [activeSection]);
 
   useEffect(() => {
     const host = sectionHostRef.current;
@@ -584,24 +599,24 @@ export function CampaignCockpit() {
           <nav className="mobile-bottom-nav" aria-label="Navegação rápida">
             {(
               [
-                { id: "dashboard", icon: "layout-dashboard", label: "Painel" },
-                { id: "noc", icon: "radar", label: "NOC" },
-                { id: "pesquisas", icon: "bar-chart-3", label: "Pesquisas" },
-                { id: "meta", icon: "target", label: "Meta" },
-                { id: "social", icon: "radio-tower", label: "Redes" },
-              ] as { id: SectionId; icon: string; label: string }[]
-            ).map((it) => (
+                { id: "dashboard", Icon: LayoutDashboard, label: "Painel" },
+                { id: "noc", Icon: Radar, label: "NOC" },
+                { id: "pesquisas", Icon: BarChart3, label: "Pesquisas" },
+                { id: "meta", Icon: Target, label: "Meta" },
+                { id: "social", Icon: RadioTower, label: "Redes" },
+              ] as { id: SectionId; Icon: LucideIcon; label: string }[]
+            ).map(({ id, Icon, label }) => (
               <button
-                key={it.id}
+                key={id}
                 type="button"
-                className={`mbn-item ${activeSection === it.id ? "active" : ""}`}
+                className={`mbn-item ${activeSection === id ? "active" : ""}`}
                 onClick={() => {
-                  setActiveSection(it.id);
+                  setActiveSection(id);
                   setSidebarOpen(false);
                 }}
               >
-                <i data-lucide={it.icon} />
-                <span>{it.label}</span>
+                <Icon size={20} aria-hidden />
+                <span>{label}</span>
               </button>
             ))}
           </nav>
