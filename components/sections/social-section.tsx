@@ -6,6 +6,7 @@ import { useMemo, useState } from "react";
 import { EChart } from "@/components/echart";
 import { BrazilMap } from "@/components/charts/brazil-map";
 import { barOption, donutOption } from "@/components/echart-options";
+import { HoverPost, useHoverPost } from "@/components/hover-post";
 import {
   ESPECTROS,
   NETWORKS,
@@ -13,12 +14,14 @@ import {
   espectroColor,
   getMentionsByState,
   getSpectrumSplit,
+  getUltimoPost,
   totalFollowers,
   type Espectro,
   type Network,
 } from "@/lib/mock/social-figures";
 
 type NetSel = Network | "total";
+type Modo = "seguidores" | "engajamento";
 
 function fmtK(thousands: number): string {
   if (thousands >= 1000) return `${(thousands / 1000).toFixed(1)}M`;
@@ -28,18 +31,21 @@ function fmtK(thousands: number): string {
 export function SocialSection() {
   const [net, setNet] = useState<NetSel>("total");
   const [espectro, setEspectro] = useState<Espectro | "todos">("todos");
+  const [modo, setModo] = useState<Modo>("seguidores");
+  const { hover, show, hide } = useHoverPost();
 
   const ranking = useMemo(() => {
     const filtered = SOCIAL_FIGURES.filter(
       (f) => espectro === "todos" || f.espectro === espectro,
     );
-    return filtered
-      .map((f) => ({
-        figure: f,
-        followers: net === "total" ? totalFollowers(f) : f.redes[net],
-      }))
-      .sort((a, b) => b.followers - a.followers);
-  }, [net, espectro]);
+    const mapped = filtered.map((f) => ({
+      figure: f,
+      followers: net === "total" ? totalFollowers(f) : f.redes[net],
+    }));
+    return modo === "engajamento"
+      ? mapped.sort((a, b) => b.figure.engajamento - a.figure.engajamento)
+      : mapped.sort((a, b) => b.followers - a.followers);
+  }, [net, espectro, modo]);
 
   const lider = ranking[0];
   const sentimentoMedio = Math.round(
@@ -87,8 +93,27 @@ export function SocialSection() {
         </span>
       </div>
 
+      {/* Alternador de ranking */}
+      <div className="modo-toggle" style={{ marginTop: 8 }}>
+        <button
+          type="button"
+          className={`modo-btn ${modo === "seguidores" ? "active" : ""}`}
+          onClick={() => setModo("seguidores")}
+        >
+          Por Seguidores
+        </button>
+        <button
+          type="button"
+          className={`modo-btn ${modo === "engajamento" ? "active" : ""}`}
+          onClick={() => setModo("engajamento")}
+        >
+          Por Engajamento
+        </button>
+        <span className="modo-hint">passe o mouse para ver o último post</span>
+      </div>
+
       {/* Abas de rede */}
-      <div className="race-tabs" style={{ marginTop: 4 }}>
+      <div className="race-tabs" style={{ marginTop: 8 }}>
         <button
           type="button"
           className={`race-tab ${net === "total" ? "active" : ""}`}
@@ -182,36 +207,62 @@ export function SocialSection() {
             <span className="card-badge badge-real">{ranking.length}</span>
           </div>
           <div className="fig-list">
-            {ranking.map((r, i) => (
-              <div className="fig-row" key={r.figure.id}>
-                <span className="fig-pos">{i + 1}</span>
-                <span
-                  className="fig-avatar"
-                  style={{ background: espectroColor(r.figure.espectro) }}
+            {ranking.map((r, i) => {
+              const hi = {
+                titulo: r.figure.nome,
+                subtitulo: r.figure.grupo,
+                foto: r.figure.avatarAsset,
+                cor: espectroColor(r.figure.espectro),
+                post: getUltimoPost(r.figure),
+              };
+              return (
+                <div
+                  className="fig-row hoverable"
+                  key={r.figure.id}
+                  onMouseEnter={(e) => show(hi, e)}
+                  onMouseMove={(e) => show(hi, e)}
+                  onMouseLeave={hide}
+                  onTouchStart={(e) =>
+                    show(hi, {
+                      clientX: e.touches[0].clientX,
+                      clientY: e.touches[0].clientY,
+                    })
+                  }
                 >
-                  <Image
-                    className="fig-avatar-img"
-                    src={r.figure.avatarAsset}
-                    alt={`Avatar estilizado de ${r.figure.nome}`}
-                    width={38}
-                    height={38}
-                  />
-                </span>
-                <span className="fig-name">
-                  {r.figure.nome}
-                  <small>{r.figure.grupo}</small>
-                </span>
-                <span className="fig-foll">{fmtK(r.followers)}</span>
-                <span
-                  className="fig-growth"
-                  style={{
-                    color: r.figure.crescimento7d >= 1 ? "#22c55e" : "#8a8aaa",
-                  }}
-                >
-                  ▲ {r.figure.crescimento7d}%
-                </span>
-              </div>
-            ))}
+                  <span className="fig-pos">{i + 1}</span>
+                  <span
+                    className="fig-avatar"
+                    style={{ background: espectroColor(r.figure.espectro) }}
+                  >
+                    <Image
+                      className="fig-avatar-img"
+                      src={r.figure.avatarAsset}
+                      alt={`Avatar estilizado de ${r.figure.nome}`}
+                      width={38}
+                      height={38}
+                    />
+                  </span>
+                  <span className="fig-name">
+                    {r.figure.nome}
+                    <small>{r.figure.grupo}</small>
+                  </span>
+                  <span className="fig-foll">
+                    {modo === "engajamento"
+                      ? `${r.figure.engajamento}%`
+                      : fmtK(r.followers)}
+                  </span>
+                  <span
+                    className="fig-growth"
+                    style={{
+                      color:
+                        r.figure.crescimento7d >= 1 ? "#22c55e" : "#8a8aaa",
+                    }}
+                  >
+                    ▲ {r.figure.crescimento7d}%
+                  </span>
+                </div>
+              );
+            })}
           </div>
         </div>
         <div className="card">
@@ -239,6 +290,8 @@ export function SocialSection() {
           <BrazilMap data={mentions} max={100} height={300} />
         </div>
       </div>
+
+      <HoverPost hover={hover} />
     </div>
   );
 }

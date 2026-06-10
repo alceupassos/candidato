@@ -2,6 +2,8 @@
 // DADOS DEMONSTRATIVOS (mock) para o produto de inteligência de campanha.
 // Avatares são estilizados (iniciais + cor), nunca fotos reais.
 
+import type { UltimoPost } from "./types";
+
 export type Network = "x" | "instagram" | "youtube" | "facebook";
 export type Espectro = "direita" | "esquerda" | "centro" | "colunista";
 
@@ -288,4 +290,64 @@ export function getMentionsByState(): { sigla: string; value: number }[] {
     const big = uf === "SP" || uf === "RJ" || uf === "MG" || uf === "DF";
     return { sigla: uf, value: Math.round((big ? 70 : 30) + (h / 100) * 28) };
   });
+}
+
+// ── Último post (link real do perfil; texto plausível) ──────────────
+const PERFIL: Record<string, string> = {
+  lula: "https://x.com/LulaOficial",
+  "flavio-bolsonaro": "https://x.com/FlavioBolsonaro",
+  "nikolas-ferreira": "https://www.instagram.com/nikolasferreiradm/",
+  "gustavo-gayer": "https://www.instagram.com/gustavogayer/",
+  "renan-santos": "https://x.com/renansantosmbl",
+  "carla-zambelli": "https://x.com/CarlaZambelli38",
+  "eduardo-bolsonaro": "https://x.com/BolsonaroSP",
+  boulos: "https://www.instagram.com/guilhermeboulos.oficial/",
+  "erika-hilton": "https://www.instagram.com/erikahilton/",
+  lindbergh: "https://x.com/lindberghfarias",
+  gleisi: "https://x.com/gleisi",
+  tabata: "https://www.instagram.com/tabataamaralsp/",
+  reinaldo: "https://x.com/reinaldoazevedo",
+  "augusto-nunes": "https://x.com/AugustoNunes",
+};
+
+const POST_TXT: Record<Espectro, string[]> = {
+  direita: [
+    "Liberdade, família e segurança. Vamos pra cima! 🇧🇷",
+    "O povo brasileiro não aceita mais retrocesso. Conto com vocês!",
+    "Trabalho, fé e patriotismo. Nosso compromisso é com você.",
+  ],
+  esquerda: [
+    "Pelo povo trabalhador e por mais direitos. Juntos somos mais fortes! ✊",
+    "Investir em saúde e educação é cuidar de quem mais precisa.",
+    "Democracia, justiça social e oportunidade para todos.",
+  ],
+  centro: [
+    "Diálogo e propostas concretas para o Brasil avançar.",
+    "Menos polarização, mais soluções. É disso que o país precisa.",
+    "Educação de qualidade é o caminho para o futuro.",
+  ],
+  colunista: [
+    "Minha análise sobre o cenário político desta semana.",
+    "Os bastidores que explicam o jogo eleitoral de 2026.",
+    "O que os números das pesquisas realmente dizem.",
+  ],
+};
+
+export function getUltimoPost(f: Figure): UltimoPost {
+  const order: Network[] = ["instagram", "x", "youtube", "facebook"];
+  const topNet = order.sort((a, b) => f.redes[b] - f.redes[a])[0];
+  const redeNome = NETWORKS.find((n) => n.id === topNet)?.nome ?? "Rede";
+  const sN = f.id.length + f.nome.length;
+  const txts = POST_TXT[f.espectro];
+  const base = totalFollowers(f) * 1000;
+  const curtidas = Math.round((base * f.engajamento) / 100 * 0.6);
+  return {
+    rede: redeNome,
+    texto: txts[sN % txts.length],
+    data: `há ${1 + (sN % 9)}h`,
+    curtidas,
+    comentarios: Math.round(curtidas * 0.08),
+    compartilhamentos: Math.round(curtidas * 0.05),
+    link: PERFIL[f.id] ?? `https://www.google.com/search?q=${encodeURIComponent(f.nome)}`,
+  };
 }

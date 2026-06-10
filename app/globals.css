@@ -3754,3 +3754,58 @@ body.cfg-contrast { --texto-sec: #aab; }
 .opp-area-tema { font-size: 14px; color: var(--branco); font-weight: 700; margin: 3px 0 6px; }
 @media (max-width: 900px) { .opp-area-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 480px) { .opp-area-grid { grid-template-columns: 1fr; } }
+
+/* ── Hover "último post" ── */
+.hoverable { cursor: pointer; }
+.hp-card {
+  position: fixed; z-index: 300;
+  background: linear-gradient(165deg, #1d1d28, #14141c);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px; padding: 13px;
+  box-shadow: 0 26px 60px -20px rgba(0,0,0,0.85);
+  pointer-events: none;
+}
+.hp-head { display: flex; align-items: center; gap: 9px; margin-bottom: 9px; }
+.hp-foto { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.hp-foto-fallback { display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px; color: #0f0f13; }
+.hp-id { flex: 1; display: flex; flex-direction: column; line-height: 1.2; }
+.hp-id strong { color: var(--branco); font-size: 13px; }
+.hp-id small { color: var(--texto-sec); font-size: 10px; }
+.hp-rede { font-size: 11px; font-weight: 700; }
+.hp-texto { color: #e6e6f0; font-size: 13px; line-height: 1.4; background: rgba(255,255,255,0.03); border-left: 2px solid rgba(34,197,94,0.5); border-radius: 6px; padding: 8px 10px; margin-bottom: 8px; }
+.hp-meta { display: flex; align-items: center; justify-content: space-between; font-size: 10px; color: var(--texto-sec); }
+.hp-stats { display: flex; gap: 9px; }
+.hp-link { display: inline-block; margin-top: 8px; font-size: 11px; font-weight: 700; color: #22c55e; pointer-events: auto; }
+
+/* ── Alternador de ranking ── */
+.modo-toggle { display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.modo-btn { padding: 6px 14px; border-radius: 999px; border: 1px solid var(--cinza-borda); background: #15151d; color: var(--texto-sec); font-size: 12px; font-weight: 700; cursor: pointer; transition: all .15s; }
+.modo-btn:hover { color: var(--branco); }
+.modo-btn.active { background: rgba(34,197,94,0.12); border-color: rgba(34,197,94,0.35); color: #22c55e; }
+.modo-hint { font-size: 11px; color: var(--texto-sec); margin-left: 6px; }
+
+/* ── Grade de candidatos ── */
+.cand-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.cand-card { display: flex; gap: 12px; align-items: center; background: #15151d; border: 1px solid var(--cinza-borda); border-radius: 12px; padding: 11px; cursor: pointer; transition: transform .18s, border-color .18s; }
+.cand-card:hover { transform: translateY(-3px); border-color: rgba(34,197,94,0.3); }
+.cand-photo { width: 56px; height: 56px; border-radius: 12px; object-fit: cover; object-position: top center; flex-shrink: 0; background: #2a2a38; }
+.cand-info { min-width: 0; }
+.cand-nome { color: var(--branco); font-weight: 700; font-size: 13px; }
+.cand-part { color: var(--texto-sec); font-size: 11px; margin-bottom: 5px; }
+.cand-meta { display: flex; flex-wrap: wrap; gap: 4px; }
+@media (max-width: 900px) { .cand-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .cand-grid { grid-template-columns: 1fr; } }
+
+/* ── Pesquisas Próprias ── */
+.cal-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+.cal-card { text-align: left; background: #15151d; border: 1px solid var(--cinza-borda); border-radius: 10px; padding: 10px; cursor: pointer; transition: all .15s; }
+.cal-card:hover { transform: translateY(-2px); border-color: rgba(34,197,94,0.3); }
+.cal-card.active { border-color: rgba(34,197,94,0.45); background: rgba(34,197,94,0.08); }
+.cal-top { display: flex; justify-content: space-between; align-items: baseline; }
+.cal-top strong { color: var(--branco); font-size: 12px; }
+.cal-top span { color: var(--texto-sec); font-size: 9px; }
+.cal-tema { color: #22c55e; font-weight: 700; font-size: 12px; margin: 4px 0 2px; }
+.cal-obj { color: var(--texto-sec); font-size: 10px; line-height: 1.3; }
+.survey-q { background: rgba(255,255,255,0.03); border-left: 3px solid #22c55e; border-radius: 8px; padding: 10px 12px; color: var(--branco); font-size: 14px; font-weight: 600; }
+@media (max-width: 900px) { .cal-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 520px) { .cal-grid { grid-template-columns: repeat(2, 1fr); } }

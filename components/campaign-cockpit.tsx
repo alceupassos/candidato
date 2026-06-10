@@ -25,6 +25,9 @@ import { OrganizadoresSection } from "@/components/sections/organizadores-sectio
 import { SocialSection } from "@/components/sections/social-section";
 import { TerritoriosSection } from "@/components/sections/territorios-section";
 import { DashboardSection } from "@/components/sections/dashboard-section";
+import { InfluenciadoresSection } from "@/components/sections/influenciadores-section";
+import { CandidatosSection } from "@/components/sections/candidatos-section";
+import { MidiaSection } from "@/components/sections/midia-section";
 import { RegionFilter } from "@/components/sections/region-filter";
 import { TopTicker } from "@/components/top-ticker";
 import { ConfigPanel } from "@/components/sections/config-panel";
@@ -47,6 +50,9 @@ const REACT_SECTIONS = new Set([
   "social",
   "territorios",
   "dashboard",
+  "influenciadores",
+  "candidatos",
+  "midia",
 ]);
 
 declare global {
@@ -545,6 +551,12 @@ export function CampaignCockpit() {
               />
             ) : activeSection === "dashboard" ? (
               <DashboardSection region={activeRegion} />
+            ) : activeSection === "influenciadores" ? (
+              <InfluenciadoresSection />
+            ) : activeSection === "candidatos" ? (
+              <CandidatosSection />
+            ) : activeSection === "midia" ? (
+              <MidiaSection />
             ) : (
               <div
                 dangerouslySetInnerHTML={{ __html: activeMarkup ?? "" }}

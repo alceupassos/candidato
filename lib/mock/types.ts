@@ -108,6 +108,18 @@ export type MatrixPoint = Priority & {
   oportunidade: number;
 };
 
+/** Último post de uma figura/influenciador/candidato ou matéria de imprensa. */
+export type UltimoPost = {
+  rede: string;
+  texto: string;
+  data: string;
+  curtidas?: number;
+  comentarios?: number;
+  compartilhamentos?: number;
+  visualizacoes?: number;
+  link: string;
+};
+
 /** Valor que oscila "ao vivo" na NOC. */
 export type LiveTick = {
   label: string;
