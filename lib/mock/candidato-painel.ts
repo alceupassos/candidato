@@ -1,10 +1,7 @@
 // Painel do Candidato: "vou me eleger?" (quociente × projeção), momentum e head-to-head.
 // Reusa dados existentes. Determinístico. Quociente é ESTIMATIVA (não oficial).
 
-import {
-  getExpectedVotesByRegion,
-  getIntencaoEvolution,
-} from "./campaign-metrics";
+import { getIntencaoEvolution } from "./campaign-metrics";
 import { totalEleitorado } from "./rj-regions";
 import { getRaceRanking } from "./races";
 import type { RegionId } from "./types";
@@ -33,14 +30,23 @@ export type CandidatoPainel = {
 };
 
 export function getCandidatoPainel(region: RegionId): CandidatoPainel {
-  // Projeção de votos (estadual — eleição de federal é estadual).
-  const votosProjetados = getExpectedVotesByRegion().total;
-
   // Quociente eleitoral estimado: válidos / vagas, com fator de coligação.
   const comparecimento = 0.8;
   const validade = 0.9;
   const validos = totalEleitorado() * comparecimento * validade;
   const votosParaEleger = Math.round((validos / VAGAS_FEDERAIS_RJ) * 0.62);
+
+  // Ranking da vaga (federal) — base para projeção e head-to-head.
+  const ranking = getRaceRanking("dep-federal", region);
+  const idxAlvo = ranking.findIndex((c) => c.nome === ALVO);
+  const posicao = idxAlvo >= 0 ? idxAlvo + 1 : ranking.length;
+
+  // Projeção do candidato: intenção do alvo vs. a intenção que garante a vaga.
+  // (o líder ~ corresponde ao quociente). Gera tensão realista "faltam X".
+  const alvoIntencao = (idxAlvo >= 0 ? ranking[idxAlvo].intencao : 8) || 8;
+  const refIntencao = (ranking[0]?.intencao ?? 11) * 0.96;
+  const fatorVaga = Math.max(0.55, Math.min(1.2, alvoIntencao / refIntencao));
+  const votosProjetados = Math.round(votosParaEleger * fatorVaga);
 
   const dentro = votosProjetados >= votosParaEleger;
   const faltam = Math.max(0, votosParaEleger - votosProjetados);
@@ -54,11 +60,7 @@ export function getCandidatoPainel(region: RegionId): CandidatoPainel {
   const delta = Number((last - prev).toFixed(1));
   const dir = delta > 0.05 ? "up" : delta < -0.05 ? "down" : "flat";
 
-  // Head-to-head na vaga de Dep. Federal.
-  const ranking = getRaceRanking("dep-federal", region);
-  const idxAlvo = ranking.findIndex((c) => c.nome === ALVO);
-  const posicao = idxAlvo >= 0 ? idxAlvo + 1 : ranking.length;
-  // Pega o alvo + vizinhos diretos (acima e abaixo) e o líder.
+  // Head-to-head: alvo + vizinhos diretos (acima e abaixo) e o líder.
   const set = new Set<number>([0, 1]);
   if (idxAlvo >= 0) {
     set.add(idxAlvo);
