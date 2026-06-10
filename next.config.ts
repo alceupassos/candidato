@@ -9,6 +9,13 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: process.cwd(),
   },
+  // Páginas de marketing estáticas (servidas de public/) com URL limpa.
+  async rewrites() {
+    return [
+      { source: "/cta", destination: "/cta.html" },
+      { source: "/info", destination: "/info.html" },
+    ];
+  },
   // Não cachear o HTML das páginas do app (os chunks /_next/static seguem
   // imutáveis/hasheados). Garante que cada deploy chegue ao usuário no reload.
   async headers() {

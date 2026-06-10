@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>COCKPIT Eleições 2026 — Inteligência eleitoral com rigor analítico | Strategy Partners</title>
+<meta name="description" content="Central de comando eleitoral com pesquisas internas em tempo real, monitor de adversários e influencers, simulação de cenários e compliance TSE. Por Strategy Partners.">
+<meta name="theme-color" content="#05070a">
+<link rel="canonical" href="https://candidato.angra.io/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%2305070a'/%3E%3Cpath d='M4 13h4l3-7 4 13 3-7h2' fill='none' stroke='%2322c55e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://candidato.angra.io/">
+<meta property="og:title" content="COCKPIT Eleições 2026 — Inteligência eleitoral com rigor analítico">
+<meta property="og:description" content="Pesquisas internas ao vivo, monitor de adversários rede a rede e simulação de cenários — a sala de guerra da sua campanha, por Strategy Partners.">
+<meta property="og:site_name" content="COCKPIT Eleições 2026">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root{
+  --bg:#0f0f13; --lbg:#05070a; --surface:#16161d; --card:#1e1e28; --border:#2a2a38;
+  --text:#f0f0f0; --muted:#8a8aaa;
+  --green:#22c55e; --red:#ef4444; --warn:#f59e0b; --blue:#60a5fa; --purple:#8b5cf6;
+  --yp:#F0C030; --wa:#25D366;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+section,header[id]{scroll-margin-top:84px}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .rv{opacity:1;transform:none;transition:none}
+  .fab{animation:none}
+  .live i{animation:none}
+}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--lbg);color:var(--text);overflow-x:hidden;line-height:1.6}
+img{max-width:100%}
+a{color:inherit}
+section{padding:96px 24px;position:relative}
+.wrap{max-width:1100px;margin:0 auto}
+.center{text-align:center}
+.i{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+/* reveal */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.4,0,.2,1),transform .7s cubic-bezier(.4,0,.2,1)}
+.rv.on{opacity:1;transform:none}
+/* tags & titles */
+.tag{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:800;letter-spacing:.14em;padding:6px 14px;border-radius:8px;border:1px solid;margin-bottom:18px}
+.tag.g{color:var(--green);border-color:rgba(34,197,94,.4);background:rgba(34,197,94,.08)}
+.tag.y{color:var(--yp);border-color:rgba(240,192,48,.4);background:rgba(240,192,48,.08)}
+.tag.b{color:var(--blue);border-color:rgba(96,165,250,.4);background:rgba(96,165,250,.08)}
+.tag.p{color:var(--purple);border-color:rgba(139,92,246,.4);background:rgba(139,92,246,.08)}
+.tag.r{color:var(--red);border-color:rgba(239,68,68,.4);background:rgba(239,68,68,.08)}
+h2.sec{font-size:clamp(30px,4.5vw,46px);font-weight:900;line-height:1.08;margin-bottom:16px;letter-spacing:-.01em}
+h2.sec .g{color:var(--green)} h2.sec .y{color:var(--yp)} h2.sec .b{color:var(--blue)} h2.sec .r{color:var(--red)} h2.sec .p{color:var(--purple)}
+p.lead{font-size:17px;color:var(--muted);max-width:720px;margin-bottom:36px}
+.center p.lead{margin-left:auto;margin-right:auto}
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;font-weight:800;font-size:16px;padding:16px 32px;border-radius:14px;text-decoration:none;transition:.2s;cursor:pointer;border:1px solid transparent}
+.btn.wa{background:var(--wa);color:#04130a;box-shadow:0 10px 36px rgba(37,211,102,.35)}
+.btn.wa:hover{transform:translateY(-3px);box-shadow:0 16px 44px rgba(37,211,102,.5)}
+.btn.ghost{background:rgba(30,30,40,.6);border-color:var(--border);color:var(--text)}
+.btn.ghost:hover{border-color:var(--green);color:var(--green)}
+/* floating WhatsApp */
+.fab{position:fixed;right:20px;bottom:20px;z-index:99;width:60px;height:60px;border-radius:50%;background:var(--wa);display:flex;align-items:center;justify-content:center;box-shadow:0 12px 36px rgba(37,211,102,.5);animation:bob 2.6s ease-in-out infinite;text-decoration:none}
+@keyframes bob{50%{transform:translateY(-7px)}}
+.fab svg{width:32px;height:32px;fill:#04130a;stroke:none}
+/* nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:90;backdrop-filter:blur(16px);background:rgba(5,7,10,.84);border-bottom:1px solid var(--border)}
+nav .in{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 24px}
+nav .logo{font-weight:900;font-size:16px;text-decoration:none}
+nav .logo .g{color:var(--green)} nav .logo .y{color:var(--yp)}
+nav .logo small{display:block;font-size:9px;font-weight:600;letter-spacing:.18em;color:var(--muted)}
+nav .links{display:flex;gap:22px;font-size:13px;color:var(--muted)}
+nav .links a{text-decoration:none;transition:.15s}
+nav .links a:hover{color:var(--green)}
+nav .cta{font-size:13px;font-weight:800;background:var(--wa);color:#04130a;padding:9px 18px;border-radius:10px;text-decoration:none}
+nav .burger{display:none;background:none;border:1px solid var(--border);border-radius:9px;color:var(--text);width:38px;height:38px;align-items:center;justify-content:center;cursor:pointer}
+nav .burger svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.mmenu{display:none;flex-direction:column;border-top:1px solid var(--border);background:rgba(5,7,10,.97);padding:10px 24px 16px}
+.mmenu a{text-decoration:none;color:var(--muted);font-size:14px;padding:11px 2px;border-bottom:1px solid var(--border)}
+.mmenu a:last-child{border-bottom:none}
+.mmenu.open{display:flex}
+@media(max-width:860px){nav .links{display:none}nav .burger{display:flex}}
+/* hero */
+.hero{min-height:100vh;display:flex;align-items:center;padding-top:130px;background:
+  radial-gradient(1100px 600px at 80% -5%,rgba(34,197,94,.13),transparent 60%),
+  radial-gradient(800px 500px at -5% 90%,rgba(240,192,48,.08),transparent 60%),var(--lbg)}
+.hero .grid{display:grid;grid-template-columns:1.08fr .92fr;gap:54px;align-items:center}
+.hero .brand{font-size:11px;font-weight:800;letter-spacing:.28em;color:var(--green);margin-bottom:20px}
+.hero .brand span{color:var(--muted);letter-spacing:.1em;font-weight:600}
+.hero h1{font-size:clamp(40px,5.8vw,72px);font-weight:900;line-height:.98;letter-spacing:-.015em;padding-left:22px;border-left:6px solid var(--green);margin-bottom:20px}
+.hero h1 .g{color:var(--green)} .hero h1 .y{color:var(--yp)}
+.hero .tagline{font-size:clamp(16px,2vw,20px);color:var(--muted);margin-bottom:24px;padding-left:28px;max-width:560px}
+.hero .tagline b{color:var(--text)}
+.hero .badges{display:flex;flex-wrap:wrap;gap:10px;padding-left:28px;margin-bottom:28px}
+.hero .ctas{display:flex;flex-wrap:wrap;gap:14px;padding-left:28px;margin-bottom:22px}
+.hero .micro{padding-left:28px;font-size:13px;color:var(--muted)}
+.hero .micro b{color:var(--green)}
+.count{display:flex;gap:12px;margin-top:24px;padding-left:28px;flex-wrap:wrap}
+.count .c{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:13px 16px;text-align:center;min-width:72px}
+.count .c b{display:block;font-size:26px;font-weight:900;color:var(--yp)}
+.count .c span{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+/* device mockups */
+.device{background:var(--surface);border:1px solid var(--border);border-radius:22px;padding:16px;box-shadow:0 40px 100px rgba(0,0,0,.7);width:100%}
+.device .dbar{display:flex;gap:6px;margin-bottom:12px}
+.device .dbar span{width:9px;height:9px;border-radius:50%;background:var(--border)}
+.device .dbar span:nth-child(1){background:var(--red)} .device .dbar span:nth-child(2){background:var(--warn)} .device .dbar span:nth-child(3){background:var(--green)}
+.mock{background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:16px;font-size:11px}
+.live{display:inline-flex;align-items:center;gap:7px;font-size:9.5px;font-weight:800;letter-spacing:.1em;color:var(--red);background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.35);border-radius:99px;padding:4px 11px;margin-bottom:12px}
+.live i{width:7px;height:7px;border-radius:50%;background:var(--red);animation:pulse 1.2s infinite}
+@keyframes pulse{50%{opacity:.25}}
+.kgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:11px}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:10px}
+.kpi .l{color:var(--muted);font-size:8.5px;text-transform:uppercase;letter-spacing:.07em}
+.kpi .v{font-size:19px;font-weight:900;margin:3px 0}
+.kpi .d{font-size:9px}
+.up{color:var(--green)} .down{color:var(--red)} .wn{color:var(--warn)}
+.prow{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:11px}
+.panel .t{font-size:8.5px;font-weight:800;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin-bottom:9px}
+.rl{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--border);font-size:10px}
+.rl:last-child{border:none}
+.rl .nm{color:#d0d0e0;font-weight:600}
+.pill{font-size:8px;padding:2px 8px;border-radius:99px;font-weight:800}
+.pill.g{background:rgba(34,197,94,.15);color:var(--green)} .pill.r{background:rgba(239,68,68,.15);color:var(--red)} .pill.y{background:rgba(240,192,48,.15);color:var(--yp)} .pill.b{background:rgba(96,165,250,.15);color:var(--blue)}
+/* trustbar */
+.trust{border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:rgba(22,22,29,.5);padding:26px 24px}
+.trust .in{max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:center;gap:14px 40px;font-size:13px;color:var(--muted)}
+.trust b{color:var(--text)}
+.trust .it{display:flex;align-items:center;gap:9px}
+.trust .it svg{width:16px;height:16px;color:var(--green)}
+/* pain cards */
+.pains{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px}
+.pain{background:var(--card);border:1px solid var(--border);border-left:4px solid var(--red);border-radius:14px;padding:24px}
+.pain .ph{display:flex;align-items:center;gap:11px;margin-bottom:10px}
+.pain .ph svg{color:var(--red)}
+.pain h3{font-size:16px;color:#f0d0d0}
+.pain p{font-size:13.5px;color:var(--muted)}
+/* flagship */
+.flag{display:grid;grid-template-columns:1fr 1fr;gap:54px;align-items:center}
+.flag.rev .txt{order:2}.flag.rev .vis{order:1}
+ul.feat{list-style:none;display:flex;flex-direction:column;gap:14px;margin-bottom:24px}
+ul.feat li{font-size:15px;color:#c8c8d8;padding-left:24px;position:relative}
+ul.feat li::before{content:"";position:absolute;left:2px;top:9px;width:8px;height:8px;border-radius:2px;background:var(--green);transform:rotate(45deg)}
+ul.feat li b{color:var(--text)}
+.ex{border-left:3px solid var(--yp);background:rgba(240,192,48,.05);border-radius:0 12px 12px 0;padding:14px 18px;font-size:14px;color:#ddd6bd;margin-bottom:14px}
+.ex .lb{font-size:10px;font-weight:900;letter-spacing:.12em;color:var(--yp);display:block;margin-bottom:5px}
+.ex b{color:var(--yp)}
+.ben{border:1px solid rgba(34,197,94,.45);background:rgba(34,197,94,.06);border-radius:13px;padding:14px 18px;font-size:14.5px}
+.ben .lb{font-size:10px;font-weight:900;letter-spacing:.12em;color:var(--green);margin-right:9px}
+/* methodology cards */
+.meth{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin-bottom:48px}
+.mcd{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px}
+.mcd .ic{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;background:rgba(34,197,94,.1);color:var(--green)}
+.mcd:nth-child(2) .ic{background:rgba(240,192,48,.1);color:var(--yp)}
+.mcd:nth-child(3) .ic{background:rgba(96,165,250,.1);color:var(--blue)}
+.mcd:nth-child(4) .ic{background:rgba(139,92,246,.1);color:var(--purple)}
+.mcd h3{font-size:15.5px;margin-bottom:8px}
+.mcd p{font-size:13px;color:var(--muted)}
+/* charts */
+.chartbox{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px}
+.chartbox .ct{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.chartbox .cs{font-size:12.5px;color:var(--muted);margin-top:10px}
+.legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:11px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.legend i{width:14px;height:3px;border-radius:2px;display:inline-block}
+/* scenario cards */
+.scens{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+.scen{background:linear-gradient(165deg,var(--card),var(--surface));border:1px solid var(--border);border-radius:18px;padding:28px;display:flex;flex-direction:column;gap:14px}
+.scen .num{font-size:11px;font-weight:900;letter-spacing:.14em;color:var(--yp)}
+.scen h3{font-size:18px;line-height:1.3}
+.scen .step{font-size:13px;color:#c8c8d8;border-left:2px solid var(--border);padding:2px 0 2px 14px}
+.scen .step b{display:block;font-size:9.5px;font-weight:900;letter-spacing:.12em;color:var(--muted);margin-bottom:3px}
+.scen .step.res{border-color:var(--green)}
+.scen .step.res b{color:var(--green)}
+/* modules */
+.blocos{display:flex;flex-wrap:wrap;justify-content:center;gap:9px;margin:-14px auto 44px;max-width:760px}
+.blocos span{font-size:11px;font-weight:800;letter-spacing:.06em;padding:7px 15px;border-radius:99px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.3);color:var(--green)}
+.mods{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+.mod{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:26px;transition:.25s}
+.mod:hover{border-color:var(--green);transform:translateY(-4px);box-shadow:0 18px 50px rgba(0,0,0,.45)}
+.mod .ic{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.ic.g{background:rgba(34,197,94,.12);color:var(--green)} .ic.y{background:rgba(240,192,48,.12);color:var(--yp)} .ic.b{background:rgba(96,165,250,.12);color:var(--blue)} .ic.p{background:rgba(139,92,246,.12);color:var(--purple)} .ic.r{background:rgba(239,68,68,.12);color:var(--red)}
+.mod h3{font-size:17px;margin-bottom:9px}
+.mod p{font-size:13.5px;color:var(--muted);margin-bottom:12px}
+.mod .mex{font-size:12.5px;color:#ddd6bd;background:rgba(240,192,48,.05);border-left:3px solid var(--yp);padding:9px 13px;border-radius:0 9px 9px 0}
+.mod .mex b{color:var(--yp);font-size:9.5px;letter-spacing:.1em;display:block;margin-bottom:3px}
+/* personas */
+.personas{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.persona{background:linear-gradient(160deg,var(--card),var(--surface));border:1px solid var(--border);border-radius:18px;padding:30px;position:relative;overflow:hidden}
+.persona::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--green),var(--yp))}
+.persona .role{font-size:11px;font-weight:900;letter-spacing:.12em;color:var(--green);margin-bottom:12px}
+.persona h3{font-size:19px;margin-bottom:14px;line-height:1.25}
+.persona ul{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
+.persona li{font-size:13.5px;color:#c8c8d8;padding-left:24px;position:relative}
+.persona li svg{position:absolute;left:0;top:3px;width:15px;height:15px;color:var(--green)}
+.persona .quote{font-size:13px;font-style:italic;color:var(--muted);border-top:1px solid var(--border);padding-top:14px}
+/* timeline */
+.tl{max-width:780px;margin:0 auto}
+.ts{display:grid;grid-template-columns:84px 26px 1fr;align-items:stretch}
+.ts .h{font-size:15px;font-weight:900;color:var(--yp);padding-top:16px;text-align:right;padding-right:14px}
+.ts .ln{position:relative}
+.ts .ln::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:2px;background:var(--border)}
+.ts .ln::after{content:"";position:absolute;left:50%;top:22px;width:12px;height:12px;border-radius:50%;background:var(--green);transform:translateX(-50%);box-shadow:0 0 0 5px rgba(34,197,94,.15)}
+.ts .bx{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:15px 20px;margin:8px 0 8px 16px;font-size:14.5px;color:#c8c8d8}
+.ts .bx b{color:var(--text)}
+/* compare */
+table.cmp{width:100%;border-collapse:collapse;font-size:14px;background:var(--card);border-radius:16px;overflow:hidden;border:1px solid var(--border)}
+table.cmp th,table.cmp td{padding:15px 18px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
+table.cmp th{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);background:var(--surface)}
+table.cmp tr:last-child td{border-bottom:none}
+table.cmp td:nth-child(2){color:#c9a3a3}
+table.cmp td:nth-child(3){color:#c9eccd;font-weight:600}
+/* strategy partners */
+.sp{background:radial-gradient(900px 500px at 50% -10%,rgba(139,92,246,.08),transparent 60%),var(--bg)}
+.spstats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin:44px 0}
+.spstat{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;text-align:center}
+.spstat b{display:block;font-size:34px;font-weight:900;color:var(--text)}
+.spstat span{font-size:12px;color:var(--muted)}
+.people{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:10px}
+.person{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:28px;display:grid;grid-template-columns:120px 1fr;gap:22px;align-items:start}
+.person img{width:120px;height:120px;object-fit:cover;border-radius:14px;border:1px solid var(--border)}
+.person h3{font-size:19px;margin-bottom:2px}
+.person .pr{font-size:12px;font-weight:700;color:var(--green);margin-bottom:10px}
+.person p{font-size:13px;color:var(--muted);margin-bottom:12px}
+.person .chips{display:flex;flex-wrap:wrap;gap:7px}
+.person .chip{font-size:10.5px;font-weight:700;padding:4px 11px;border-radius:99px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:var(--green)}
+.person .plink{display:inline-flex;align-items:center;gap:7px;margin-top:12px;font-size:12.5px;font-weight:700;color:var(--blue);text-decoration:none}
+.person .plink:hover{text-decoration:underline}
+.logos{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:28px 44px;margin-top:44px;opacity:.55}
+.logos img{height:26px;filter:grayscale(1) brightness(2.2)}
+.logos-cap{text-align:center;font-size:11.5px;color:var(--muted);margin-top:16px;letter-spacing:.06em}
+/* security */
+.secs{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.sec1{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;display:flex;gap:15px;align-items:flex-start}
+.sec1 .ic{flex:0 0 40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center}
+.sec1 h4{font-size:15px;margin-bottom:4px}
+.sec1 p{font-size:13px;color:var(--muted)}
+/* FAQ */
+.faq{max-width:760px;margin:0 auto}
+.faq details{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:12px}
+.faq summary{font-weight:700;font-size:15.5px;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:14px;cursor:pointer}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";color:var(--green);font-size:22px;font-weight:400}
+.faq details[open] summary::after{content:"−"}
+.faq details p{margin-top:12px;font-size:14px;color:var(--muted)}
+/* final */
+.final{background:radial-gradient(900px 500px at 50% 0%,rgba(34,197,94,.14),transparent 65%),var(--lbg);text-align:center}
+.final .box{max-width:760px;margin:0 auto;border:1px solid rgba(34,197,94,.5);background:rgba(22,22,29,.85);backdrop-filter:blur(16px);border-radius:24px;padding:60px 40px;box-shadow:0 40px 100px rgba(0,0,0,.6)}
+.final h2{font-size:clamp(30px,4.5vw,46px);font-weight:900;margin-bottom:16px}
+.final p{font-size:17px;color:var(--muted);margin-bottom:34px}
+.final .sub2{margin-top:22px;font-size:13px;color:var(--muted)}
+footer{border-top:1px solid var(--border);padding:34px 24px;text-align:center;font-size:12.5px;color:var(--muted);line-height:2}
+footer b{color:var(--green)}
+footer a{color:var(--blue);text-decoration:none}
+@media(max-width:880px){
+  section{padding:64px 18px}
+  .hero .grid,.flag{grid-template-columns:1fr;gap:34px}
+  .flag.rev .txt{order:1}.flag.rev .vis{order:2}
+  .hero h1{padding-left:16px;border-width:5px}
+  .hero .tagline,.hero .badges,.hero .ctas,.hero .micro,.count{padding-left:16px}
+  .people{grid-template-columns:1fr}
+  .person{grid-template-columns:96px 1fr;gap:16px}
+  .person img{width:96px;height:96px}
+  .ts{grid-template-columns:64px 22px 1fr}
+  table.cmp{font-size:12.5px}
+  table.cmp th,table.cmp td{padding:11px 12px}
+}
+</style>
+</head>
+<body>
+
+<!-- ICON SPRITE -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="i-pulse" viewBox="0 0 24 24"><path d="M3 12h4l3-8 4 16 3-8h4"/></symbol>
+<symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 19.5c0-3.2 2.9-5.3 6.5-5.3s6.5 2.1 6.5 5.3"/><circle cx="17.5" cy="9" r="2.6"/><path d="M16.5 14.4c2.9.3 5 2.2 5 4.8"/></symbol>
+<symbol id="i-map" viewBox="0 0 24 24"><path d="M12 21.5S5 15.6 5 10a7 7 0 0 1 14 0c0 5.6-7 11.5-7 11.5z"/><circle cx="12" cy="10" r="2.6"/></symbol>
+<symbol id="i-msg" viewBox="0 0 24 24"><path d="M21 11.5a8 8 0 0 1-8.5 8H6l-3 2.5 1-4.5A8 8 0 1 1 21 11.5z"/></symbol>
+<symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 4v17M7 21h10M5 7h14M5 7l-2.6 6a3.1 3.1 0 0 0 5.2 0L5 7zM19 7l-2.6 6a3.1 3.1 0 0 0 5.2 0L19 7z"/></symbol>
+<symbol id="i-film" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M8 5v14M16 5v14M3 10h5M3 14h5M16 10h5M16 14h5"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.4 7.9-8 9-4.6-1.1-8-4-8-9V6z"/><path d="M8.8 12l2.2 2.2 4.2-4.4"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+<symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14.5 14.5 0 0 1 0 18M12 3a14.5 14.5 0 0 0 0 18"/></symbol>
+<symbol id="i-rocket" viewBox="0 0 24 24"><path d="M5 15l-1.8 5.8L9 19M14 4.5c3 0 5.5 2.5 5.5 5.5L10 19.5 4.5 14 14 4.5z"/><circle cx="14.5" cy="9.5" r="1.6"/></symbol>
+<symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M5 20v-8M11 20V5M17 20v-5M3 20h18"/></symbol>
+<symbol id="i-trend" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.5-4.5"/></symbol>
+<symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3.5L22 20.5H2L12 3.5z"/><path d="M12 10v4.5M12 17.6h.01"/></symbol>
+<symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13.5l9 5 9-5"/></symbol>
+<symbol id="i-calc" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 7.5h6M9 12h.01M12 12h.01M15 12h.01M9 16h.01M12 16h.01M15 16h.01"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.2l2.7 2.8L16 9.5"/></symbol>
+<symbol id="i-sigma" viewBox="0 0 24 24"><path d="M17.5 5H7l6.5 7L7 19h10.5M17.5 5v2M17.5 17v2"/></symbol>
+<symbol id="i-cross" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></symbol>
+<symbol id="i-gauge" viewBox="0 0 24 24"><path d="M5 19a9 9 0 1 1 14 0"/><path d="M12 13.5L16 9"/><circle cx="12" cy="14" r="1.4"/></symbol>
+<symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6V3z"/><path d="M14.5 3v4.5H19M9 12h6M9 16h6"/></symbol>
+<symbol id="i-phone" viewBox="0 0 24 24"><rect x="8" y="2.5" width="8" height="19" rx="2"/><path d="M11.5 18.5h1"/></symbol>
+<symbol id="i-radio" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><path d="M7.7 7.7a6 6 0 0 0 0 8.6M16.3 7.7a6 6 0 0 1 0 8.6M5 5a10 10 0 0 0 0 14M19 5a10 10 0 0 1 0 14"/></symbol>
+<symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.5 14.1c-.2.7-1.3 1.3-1.8 1.4-.5 0-1 .2-3.4-.7-2.9-1.1-4.7-4-4.9-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.5.5c-.2.2-.3.4-.1.7.2.3.9 1.5 2 2.4 1.4 1.2 2.5 1.6 2.9 1.7.3.2.5.1.7-.1l1-1.1c.2-.3.5-.2.7-.1l2.2 1c.3.2.5.3.5.4.1.1.1.7-.1 1.3z"/></symbol>
+</svg>
+
+<!-- NAV -->
+<nav>
+  <div class="in">
+    <a class="logo" href="#topo">COCKPIT <span class="g">Eleições</span> <span class="y">2026</span><small>BY STRATEGY PARTNERS</small></a>
+    <div class="links">
+      <a href="#pesquisas">Pesquisas ao vivo</a>
+      <a href="#metodo">Metodologia</a>
+      <a href="#adversarios">Adversários</a>
+      <a href="#cenarios">Cenários</a>
+      <a href="#modulos">Módulos</a>
+      <a href="#sp">Quem somos</a>
+    </div>
+    <a class="cta" href="https://wa.me/5511972322293?text=Ol%C3%A1%20Alceu!%20Quero%20conhecer%20o%20COCKPIT%20Elei%C3%A7%C3%B5es%202026." target="_blank" rel="noopener">Falar no WhatsApp</a>
+    <button class="burger" id="burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="mmenu">
+      <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+  </div>
+  <div class="mmenu" id="mmenu">
+    <a href="#pesquisas">Pesquisas ao vivo</a>
+    <a href="#metodo">Metodologia</a>
+    <a href="#adversarios">Adversários</a>
+    <a href="#cenarios">Cenários</a>
+    <a href="#modulos">Módulos</a>
+    <a href="#sp">Quem somos</a>
+  </div>
+</nav>
+
+<!-- FAB -->
+<a class="fab" href="https://wa.me/5511972322293?text=Ol%C3%A1%20Alceu!%20Quero%20uma%20demonstra%C3%A7%C3%A3o%20do%20COCKPIT%20Elei%C3%A7%C3%B5es%202026." target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><use href="#i-wa"/></svg>
+</a>
+
+<!-- HERO -->
+<header class="hero" id="topo">
+  <div class="wrap grid">
+    <div>
+      <div class="brand">COCKPIT ELEIÇÕES 2026 <span>· uma solução Strategy Partners</span></div>
+      <h1>Inteligência<br>eleitoral com<br><span class="g">rigor</span> <span class="y">analítico</span></h1>
+      <div class="tagline">A central de comando que mostra <b>onde está o voto</b>, o que o <b>adversário está fazendo</b> e o que sua <b>equipe entregou hoje</b> — com a disciplina analítica de quem estrutura decisões de M&A bilionárias.</div>
+      <div class="badges">
+        <span class="tag g" style="margin:0">PESQUISAS INTERNAS AO VIVO</span>
+        <span class="tag b" style="margin:0">MONITOR DE ADVERSÁRIOS</span>
+        <span class="tag y" style="margin:0">SIMULAÇÃO DE CENÁRIOS</span>
+      </div>
+      <div class="ctas">
+        <a class="btn wa" href="https://wa.me/5511972322293?text=Ol%C3%A1%20Alceu!%20Quero%20ver%20o%20COCKPIT%20funcionando%20na%20minha%20campanha." target="_blank" rel="noopener">
+          <svg class="i" style="width:22px;height:22px"><use href="#i-wa"/></svg>
+          Agendar demonstração
+        </a>
+        <a class="btn ghost" href="#pesquisas">Ver o método ↓</a>
+      </div>
+      <div class="micro">Conversa direta com <b>Alceu Passos</b>, COO · (11) 97232-2293 · sem formulário, sem fila comercial</div>
+      <div class="count" id="count">
+        <div class="c"><b id="cd">—</b><span>dias</span></div>
+        <div class="c"><b id="ch">—</b><span>horas</span></div>
+        <div class="c"><b id="cm">—</b><span>min</span></div>
+        <div class="c" style="border-color:rgba(240,192,48,.4)"><b style="font-size:13px;line-height:1.3;padding-top:6px">até a<br>eleição</b><span>04/10/2026</span></div>
+      </div>
+    </div>
+    <div class="rv">
+      <div class="device">
+        <div class="dbar"><span></span><span></span><span></span></div>
+        <div class="mock">
+          <span class="live"><i></i> NOC AO VIVO · SALA DE GUERRA</span>
+          <div class="kgrid">
+            <div class="kpi"><div class="l">Intenção · interna</div><div class="v up">31,2%</div><div class="d up">▲ +1,4pt · IC95% ±1,8</div></div>
+            <div class="kpi"><div class="l">Engajados</div><div class="v" style="color:var(--yp)">18.940</div><div class="d up">▲ 312 hoje</div></div>
+            <div class="kpi"><div class="l">Prob. de vitória</div><div class="v" style="color:var(--blue)">64%</div><div class="d">cenário base</div></div>
+          </div>
+          <div class="prow">
+            <div class="panel"><div class="t">Pesquisa interna · agora</div>
+              <div class="rl"><span class="nm">Você</span><span class="up">31,2% ▲</span></div>
+              <div class="rl"><span class="nm">Adversário A</span><span class="down">27,8% ▼</span></div>
+              <div class="rl"><span class="nm">Adversário B</span><span class="wn">14,1% =</span></div>
+            </div>
+            <div class="panel"><div class="t">Redes · adversários</div>
+              <div class="rl"><span class="nm">Adv. A · YouTube</span><span class="pill r">SUBINDO</span></div>
+              <div class="rl"><span class="nm">Influencer regional</span><span class="pill y">CITOU VOCÊ</span></div>
+              <div class="rl"><span class="nm">Emprego jovem</span><span class="pill g">ESPAÇO LIVRE</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- TRUSTBAR -->
+<div class="trust">
+  <div class="in">
+    <span class="it"><svg class="i"><use href="#i-check"/></svg><b>Strategy Partners</b>&nbsp;· decisões críticas desde 2008</span>
+    <span class="it"><svg class="i"><use href="#i-check"/></svg><b>18+ anos</b>&nbsp;de experiência em M&A e advisory</span>
+    <span class="it"><svg class="i"><use href="#i-check"/></svg><b>92 municípios</b>&nbsp;do RJ já mapeados</span>
+    <span class="it"><svg class="i"><use href="#i-check"/></svg><b>LGPD</b>&nbsp;e compliance TSE de fábrica</span>
+  </div>
+</div>
+
+<!-- PROBLEMA -->
+<section id="problema">
+  <div class="wrap">
+    <div class="center rv">
+      <span class="tag r">A REALIDADE DE 2026</span>
+      <h2 class="sec">Campanha sem dado não perde no dia da eleição.<br><span class="r">Perde semanas antes — sem perceber.</span></h2>
+      <p class="lead">Em 2026, o eleitor decide em ciclos de dias, pautado por redes sociais. A campanha que opera com pesquisa de 3 semanas atrás e planilha de cabo desatualizada está, na prática, dirigindo olhando pelo retrovisor.</p>
+    </div>
+    <div class="pains">
+      <div class="pain rv"><div class="ph"><svg class="i"><use href="#i-eye"/></svg><h3>Defasagem de informação</h3></div><p>O instituto publica a queda 3 semanas depois que ela começou. A janela de correção já fechou — e a verba do período foi gasta na estratégia errada.</p></div>
+      <div class="pain rv"><div class="ph"><svg class="i"><use href="#i-radio"/></svg><h3>Tabuleiro digital invisível</h3></div><p>O adversário cresce no YouTube com uma bandeira sua e influencers regionais pautam a opinião do seu eleitorado — sem que sua equipe tenha um número sequer sobre isso.</p></div>
+      <div class="pain rv"><div class="ph"><svg class="i"><use href="#i-users"/></svg><h3>Estrutura sem accountability</h3></div><p>Líderes e cabos "trabalhando muito", mas sem meta individual, sem conversão medida e sem rastreio. Impossível saber quem produz voto e quem produz relatório.</p></div>
+      <div class="pain rv"><div class="ph"><svg class="i"><use href="#i-scale"/></svg><h3>Risco regulatório e desperdício</h3></div><p>Prazos do TSE administrados de memória e verba alocada por pressão política, não por retorno em voto. O custo aparece em multa — ou em derrota.</p></div>
+    </div>
+    <div class="center rv" style="margin-top:44px">
+      <a class="btn wa" href="https://wa.me/5511972322293?text=Alceu%2C%20minha%20campanha%20precisa%20de%20comando%20e%20dados.%20Quero%20conhecer%20o%20COCKPIT." target="_blank" rel="noopener"><svg class="i"><use href="#i-wa"/></svg>Quero comando e dados na minha campanha</a>
+    </div>
+  </div>
+</section>
+
+<!-- FLAGSHIP 1: PESQUISAS -->
+<section id="pesquisas" style="background:radial-gradient(900px 500px at 15% 20%,rgba(34,197,94,.09),transparent 60%),var(--bg)">
+  <div class="wrap">
+    <div class="center rv" style="margin-bottom:54px">
+      <span class="tag g"><svg class="i" style="width:15px;height:15px"><use href="#i-pulse"/></svg>DESTAQUE Nº 1</span>
+      <h2 class="sec">PESQUISAS INTERNAS<br><span class="g">EM TEMPO REAL</span></h2>
+      <p class="lead">O instituto entrega uma fotografia mensal. O COCKPIT entrega o <b style="color:var(--text)">filme diário</b>: sua base engajada — grupos, comunidades, QRs e mensageria — vira um painel amostral contínuo, com tratamento estatístico sério: ponderação, margem de erro e intervalo de confiança visíveis em cada número.</p>
+    </div>
+    <div class="flag">
+      <div class="txt rv">
+        <ul class="feat">
+          <li><b>Coleta contínua, 24/7</b> — perguntas distribuídas pela mensageria; cada resposta atualiza a série em tempo real.</li>
+          <li><b>Amostra calibrada</b> — ponderação por região, sexo e faixa etária para corrigir o viés natural da base própria.</li>
+          <li><b>Recorte em segundos</b> — intenção e rejeição por município, bairro e perfil demográfico, sem esperar relatório de instituto.</li>
+          <li><b>Série histórica comparada</b> — sua curva interna plotada contra as pesquisas públicas (cargo × instituto × região), para calibrar a leitura.</li>
+          <li><b>Alerta de inflexão</b> — quando um indicador sai do intervalo esperado, o NOC notifica a coordenação no celular.</li>
+        </ul>
+        <div class="ex"><span class="lb">CENÁRIO DE USO</span>Terça, 9h: a série interna acusa <b>rejeição +4,2pt entre mulheres de 35–50 na Zona Oeste</b> (fora do IC de 95%), correlacionada a um corte de vídeo distorcido. Antes do almoço a resposta está gravada e segmentada para o recorte exato. <b>Na sexta, o indicador retorna à linha de base.</b> Pelo ciclo dos institutos, a detecção levaria 3 a 4 semanas.</div>
+        <div class="ben"><span class="lb">A TESE</span>Eleição se ganha na velocidade do ciclo de correção. Quem mede diariamente corrige em <b>horas</b>; quem espera instituto corrige em <b>semanas</b> — quando corrige.</div>
+      </div>
+      <div class="vis rv">
+        <div class="device">
+          <div class="dbar"><span></span><span></span><span></span></div>
+          <div class="mock">
+            <span class="live"><i></i> SÉRIE INTERNA · INTERVALO DE CONFIANÇA 95%</span>
+            <svg viewBox="0 0 320 150" style="width:100%;display:block">
+              <g stroke="#2a2a38" stroke-width="1">
+                <line x1="34" y1="14" x2="34" y2="122"/><line x1="34" y1="122" x2="312" y2="122"/>
+                <line x1="34" y1="40" x2="312" y2="40" stroke-dasharray="3 4" opacity=".5"/>
+                <line x1="34" y1="80" x2="312" y2="80" stroke-dasharray="3 4" opacity=".5"/>
+              </g>
+              <g fill="#8a8aaa" font-size="8" font-family="inherit">
+                <text x="8" y="43">34%</text><text x="8" y="83">30%</text><text x="8" y="124">26%</text>
+                <text x="36" y="135">D-30</text><text x="160" y="135">D-15</text><text x="290" y="135">Hoje</text>
+              </g>
+              <polygon points="34,96 90,90 146,98 202,76 258,62 312,46 312,66 258,80 202,94 146,114 90,106 34,112" fill="rgba(34,197,94,.13)"/>
+              <polyline points="34,104 90,98 146,106 202,85 258,71 312,56" fill="none" stroke="#22c55e" stroke-width="2.4"/>
+              <polyline points="34,100 118,96 202,92 312,84" fill="none" stroke="#60a5fa" stroke-width="1.6" stroke-dasharray="5 4"/>
+              <circle cx="312" cy="56" r="3.4" fill="#22c55e"/>
+              <circle cx="202" cy="85" r="2.6" fill="#F0C030"/>
+              <text x="196" y="74" fill="#F0C030" font-size="7.5">alerta D-15</text>
+            </svg>
+            <div class="legend">
+              <span><i style="background:#22c55e"></i>Pesquisa interna (diária)</span>
+              <span><i style="background:rgba(34,197,94,.3);height:8px"></i>IC 95%</span>
+              <span><i style="background:#60a5fa"></i>Institutos públicos</span>
+            </div>
+            <div class="prow" style="margin-top:11px">
+              <div class="panel"><div class="t">Recorte · Zona Oeste · M 35–50</div>
+                <div class="rl"><span class="nm">Intenção</span><span class="up">28,1% ±2,1</span></div>
+                <div class="rl"><span class="nm">Rejeição</span><span class="down">19,4% ▲ fora do IC</span></div>
+              </div>
+              <div class="panel"><div class="t">Amostra · hoje</div>
+                <div class="rl"><span class="nm">Respostas</span><span class="up">2.847</span></div>
+                <div class="rl"><span class="nm">Ponderação</span><span class="pill g">CALIBRADA</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METODOLOGIA -->
+<section id="metodo">
+  <div class="wrap">
+    <div class="center rv" style="margin-bottom:48px">
+      <span class="tag p"><svg class="i" style="width:15px;height:15px"><use href="#i-sigma"/></svg>NÍVEL DE ANÁLISE</span>
+      <h2 class="sec">O rigor que valida um M&A bilionário,<br><span class="p">aplicado ao voto</span></h2>
+      <p class="lead">O COCKPIT não é um painel bonito com números soltos. É um sistema de decisão construído pela Strategy Partners — com a mesma disciplina analítica que a firma aplica para sustentar transações e reestruturações de grandes empresas desde 2008.</p>
+    </div>
+    <div class="meth">
+      <div class="mcd rv"><div class="ic"><svg class="i"><use href="#i-sigma"/></svg></div><h3>Margem de erro explícita</h3><p>Todo indicador exibe intervalo de confiança e tamanho amostral. Sua coordenação nunca confunde ruído com tendência — nem celebra variação que não existe.</p></div>
+      <div class="mcd rv"><div class="ic"><svg class="i"><use href="#i-gauge"/></svg></div><h3>Ponderação amostral</h3><p>A base própria é naturalmente enviesada. O sistema calibra por região, sexo e faixa etária para que a leitura interna seja comparável à do eleitorado real.</p></div>
+      <div class="mcd rv"><div class="ic"><svg class="i"><use href="#i-layers"/></svg></div><h3>Simulação de cenários</h3><p>Otimista, base e pessimista — com premissas explícitas e probabilidade de vitória recalculada a cada dado novo. A mesma lógica de valuation aplicada à eleição.</p></div>
+      <div class="mcd rv"><div class="ic"><svg class="i"><use href="#i-cross"/></svg></div><h3>Índice de oportunidade</h3><p>Demanda × potencial de conversão × satisfação atual, por tema e região. Um ranking objetivo do que merece verba, agenda e discurso — e do que não merece.</p></div>
+    </div>
+    <div class="chartbox rv">
+      <div class="ct">Projeção de votos · três cenários com premissas explícitas</div>
+      <svg viewBox="0 0 640 210" style="width:100%;display:block">
+        <g stroke="#2a2a38" stroke-width="1">
+          <line x1="56" y1="16" x2="56" y2="172"/><line x1="56" y1="172" x2="620" y2="172"/>
+          <line x1="56" y1="52" x2="620" y2="52" stroke-dasharray="4 5" opacity=".5"/>
+          <line x1="56" y1="98" x2="620" y2="98" stroke-dasharray="4 5" opacity=".5"/>
+          <line x1="56" y1="135" x2="620" y2="135" stroke-dasharray="4 5" opacity=".5"/>
+        </g>
+        <g fill="#8a8aaa" font-size="10">
+          <text x="6" y="56">100k</text><text x="12" y="102">85k</text><text x="14" y="139">70k</text>
+          <text x="58" y="188">Hoje</text><text x="240" y="188">Jul</text><text x="400" y="188">Ago</text><text x="540" y="188">Set</text><text x="596" y="188">Out</text>
+        </g>
+        <line x1="56" y1="52" x2="620" y2="52" stroke="#F0C030" stroke-width="1.4" stroke-dasharray="7 5" opacity=".8"/>
+        <text x="500" y="46" fill="#F0C030" font-size="10" font-weight="700">META · quociente seguro</text>
+        <path d="M56 150 C 220 132, 420 84, 620 34" fill="none" stroke="#22c55e" stroke-width="2.6"/>
+        <path d="M56 150 C 220 138, 420 104, 620 62" fill="none" stroke="#60a5fa" stroke-width="2.2"/>
+        <path d="M56 150 C 220 144, 420 126, 620 96" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="6 5"/>
+        <circle cx="56" cy="150" r="4" fill="#f0f0f0"/>
+        <text x="586" y="30" fill="#22c55e" font-size="10" font-weight="700">104k</text>
+        <text x="588" y="60" fill="#60a5fa" font-size="10" font-weight="700">89k</text>
+        <text x="590" y="94" fill="#ef4444" font-size="10" font-weight="700">74k</text>
+      </svg>
+      <div class="legend">
+        <span><i style="background:#22c55e"></i>Otimista · estrutura completa + bandeiras priorizadas</span>
+        <span><i style="background:#60a5fa"></i>Base · ritmo atual de conversão</span>
+        <span><i style="background:#ef4444"></i>Pessimista · sem correção de rota</span>
+      </div>
+      <div class="cs">Ilustrativo. Na plataforma, as curvas são recalculadas diariamente a partir do funil real (inscritos → cadastrados → engajados) e da série de pesquisas internas — e a probabilidade de atingir o quociente é atualizada a cada interação.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FLAGSHIP 2: ADVERSÁRIOS -->
+<section id="adversarios" style="background:radial-gradient(900px 500px at 85% 20%,rgba(96,165,250,.09),transparent 60%),var(--lbg)">
+  <div class="wrap">
+    <div class="center rv" style="margin-bottom:54px">
+      <span class="tag b"><svg class="i" style="width:15px;height:15px"><use href="#i-radio"/></svg>DESTAQUE Nº 2</span>
+      <h2 class="sec">MONITORAMENTO DE <span class="b">ADVERSÁRIOS</span><br>E <span class="b">INFLUENCERS</span>, REDE A REDE</h2>
+      <p class="lead">X, Instagram, YouTube e Facebook das principais figuras políticas e dos influenciadores que pautam opinião no seu estado — quantificados, comparados e acompanhados lado a lado com os seus números.</p>
+    </div>
+    <div class="flag rev">
+      <div class="txt rv">
+        <ul class="feat">
+          <li><b>Ranking quantificado</b> — seguidores, engajamento, sentimento e taxa de crescimento de candidatos e influencers, nas 4 redes.</li>
+          <li><b>Leitura por espectro</b> — direita, esquerda, centro e colunistas: quem está pautando quem, e com qual narrativa.</li>
+          <li><b>Alerta de menção</b> — adversário ou influencer citou você ou suas bandeiras? O ticker acende e a coordenação é notificada.</li>
+          <li><b>Buzz georreferenciado</b> — volume de menções políticas por estado e os temas em aceleração em cada região.</li>
+          <li><b>Detector de espaço livre</b> — benchmark que aponta combinações tema × rede sem ocupação relevante: território digital disponível.</li>
+        </ul>
+        <div class="ex"><span class="lb">CENÁRIO DE USO</span>O painel quantifica: <b>Adversário A com +6,8% de crescimento semanal no YouTube</b> em conteúdos de segurança, amplificado por um influencer de 800 mil seguidores. No mesmo dia, sua equipe fecha colaboração com dois influencers do mesmo nicho ainda <b>sem alinhamento político declarado</b> — e ocupa "emprego jovem", combinação que o detector apontou com ocupação zero e demanda em alta de 41%.</div>
+        <div class="ben" style="border-color:rgba(96,165,250,.45);background:rgba(96,165,250,.06)"><span class="lb" style="color:var(--blue)">A TESE</span>Em 2026 a disputa é digital antes de ser de rua. Quem mede o tabuleiro inteiro <b>escolhe onde lutar</b>; quem não mede, luta onde o adversário escolheu.</div>
+      </div>
+      <div class="vis rv">
+        <div class="device">
+          <div class="dbar"><span></span><span></span><span></span></div>
+          <div class="mock">
+            <span class="live"><i></i> MONITOR DE REDES · 4 PLATAFORMAS</span>
+            <div class="panel" style="margin-bottom:9px"><div class="t">Crescimento semanal · share de atenção RJ</div>
+              <svg viewBox="0 0 290 96" style="width:100%;display:block">
+                <g font-size="9" fill="#8a8aaa">
+                  <text x="0" y="16">Adv. A</text><text x="0" y="40">Você</text><text x="0" y="64">Adv. B</text><text x="0" y="88">Adv. C</text>
+                </g>
+                <rect x="52" y="7" width="196" height="12" rx="6" fill="rgba(239,68,68,.7)"/>
+                <rect x="52" y="31" width="158" height="12" rx="6" fill="rgba(34,197,94,.85)"/>
+                <rect x="52" y="55" width="84" height="12" rx="6" fill="rgba(240,192,48,.6)"/>
+                <rect x="52" y="79" width="48" height="12" rx="6" fill="rgba(96,165,250,.5)"/>
+                <g font-size="9" font-weight="700">
+                  <text x="252" y="17" fill="#ef4444">+6,8%</text>
+                  <text x="214" y="41" fill="#22c55e">+4,2%</text>
+                  <text x="140" y="65" fill="#F0C030">+0,9%</text>
+                  <text x="104" y="89" fill="#60a5fa">-1,1%</text>
+                </g>
+              </svg>
+            </div>
+            <div class="prow" style="margin-bottom:9px">
+              <div class="panel"><div class="t">Influencers · estado</div>
+                <div class="rl"><span class="nm">Perfil regional · 800k</span><span class="pill r">CITOU ADV. A</span></div>
+                <div class="rl"><span class="nm">Perfil Baixada · 420k</span><span class="pill g">SEM ALINHAMENTO</span></div>
+                <div class="rl"><span class="nm">Perfil jovem · 310k</span><span class="pill g">SEM ALINHAMENTO</span></div>
+              </div>
+              <div class="panel"><div class="t">Sentimento · sua marca</div>
+                <div class="rl"><span class="nm">Positivo</span><span class="up">58%</span></div>
+                <div class="rl"><span class="nm">Neutro</span><span style="color:var(--muted)">31%</span></div>
+                <div class="rl"><span class="nm">Negativo</span><span class="down">11%</span></div>
+              </div>
+            </div>
+            <div class="panel"><div class="t">Espaço livre detectado</div>
+              <div class="rl"><span class="nm">Emprego jovem · YouTube · demanda +41%</span><span class="pill g">OCUPAÇÃO ZERO</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CENÁRIOS -->
+<section id="cenarios" style="background:var(--bg)">
+  <div class="wrap">
+    <div class="center rv" style="margin-bottom:54px">
+      <span class="tag y"><svg class="i" style="width:15px;height:15px"><use href="#i-layers"/></svg>CENÁRIOS REAIS DE CAMPANHA</span>
+      <h2 class="sec">Três situações que <span class="y">decidem mandatos</span> —<br>e como o COCKPIT resolve cada uma</h2>
+    </div>
+    <div class="scens">
+      <div class="scen rv">
+        <div class="num">CENÁRIO 01 · PROPORCIONAL</div>
+        <h3>A estagnação silenciosa que custaria a cadeira</h3>
+        <div class="step"><b>SITUAÇÃO</b>Campanha de deputado federal "indo bem" na percepção da equipe; meta de 85 mil votos.</div>
+        <div class="step"><b>O QUE O PAINEL MOSTRA</b>O funil cruzado com o mapa revela: 62% do déficit de votos concentrado em apenas 2 regiões, onde a conversão estagnou há 3 semanas — mascarada pela média geral positiva.</div>
+        <div class="step"><b>DECISÃO</b>Realocação de 30% da verba digital, 2 novos gerentes regionais e bandeira de saúde (índice de oportunidade 92) nas duas regiões.</div>
+        <div class="step res"><b>RESULTADO PROJETADO</b>+9.400 votos no cenário base em 45 dias — diferença entre ficar na suplência e assumir a cadeira.</div>
+      </div>
+      <div class="scen rv">
+        <div class="num">CENÁRIO 02 · GESTÃO DE CRISE</div>
+        <h3>O corte distorcido que viraliza num fim de semana</h3>
+        <div class="step"><b>SITUAÇÃO</b>Sexta à noite, um corte de vídeo fora de contexto começa a circular, amplificado por um perfil adversário.</div>
+        <div class="step"><b>O QUE O PAINEL MOSTRA</b>Sábado, 8h: alerta de menção + rejeição saindo do intervalo de confiança no recorte exato atingido (mulheres 35–50, Zona Oeste). Dano localizado, não generalizado.</div>
+        <div class="step"><b>DECISÃO</b>Resposta gravada e disparada apenas para o recorte afetado — sem amplificar a crise para quem nem a viu. Influencers aliados acionados no mesmo nicho.</div>
+        <div class="step res"><b>RESULTADO PROJETADO</b>Indicador de volta à linha de base em 4 dias. Pelo ciclo de institutos, a detecção levaria 3 semanas — com o estrago consolidado.</div>
+      </div>
+      <div class="scen rv">
+        <div class="num">CENÁRIO 03 · DIRETOR DE PARTIDO</div>
+        <h3>Onde cada real do fundo rende mais voto</h3>
+        <div class="step"><b>SITUAÇÃO</b>Direção estadual precisa alocar fundo eleitoral entre 14 candidaturas — sob pressão política de todas elas.</div>
+        <div class="step"><b>O QUE O PAINEL MOSTRA</b>Visão consolidada: pesquisa interna, funil de votos, eficiência da estrutura e custo por voto convertido, candidatura por candidatura — incluindo a calculadora de quociente partidário.</div>
+        <div class="step"><b>DECISÃO</b>Alocação técnica e defensável: reforço em 4 candidaturas com alta conversão e gap de verba; plano de correção de 30 dias para outras 3.</div>
+        <div class="step res"><b>RESULTADO PROJETADO</b>+2 cadeiras no cenário base versus alocação uniforme — com prestação de contas íntegra e critério documentado.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MÓDULOS -->
+<section id="modulos">
+  <div class="wrap">
+    <div class="center rv" style="margin-bottom:54px">
+      <span class="tag g"><svg class="i" style="width:15px;height:15px"><use href="#i-layers"/></svg>PLATAFORMA COMPLETA</span>
+      <h2 class="sec">Um sistema integrado.<br><span class="g">Cada módulo alimenta os demais.</span></h2>
+      <p class="lead">A pesquisa interna calibra o índice de oportunidade; o mapa direciona a estrutura; a mensageria gera dado novo para a pesquisa. No computador e no celular.</p>
+    </div>
+    <div class="blocos rv">
+      <span>PRINCIPAL · onde estamos</span>
+      <span>MONITORAMENTO · o que o ambiente diz</span>
+      <span>INTELIGÊNCIA · o que isso significa</span>
+      <span>CAMPO · quem se move e onde</span>
+      <span>OPERACIONAL · como a máquina roda</span>
+      <span>GESTÃO &amp; JURÍDICO · verba, lei e matemática</span>
+    </div>
+    <div class="mods">
+      <div class="mod rv"><div class="ic g"><svg class="i"><use href="#i-target"/></svg></div><h3>Meta de Votos — funil vivo</h3><p>Meta por região e funil real: Inscritos → Cadastrados → Engajados (via QR). Distância até a vitória, atualizada a cada interação.</p>
+        <div class="mex"><b>EXEMPLO</b>Meta 85.000 · faltam 66.100 · 62% do déficit em 2 regiões. A operação acelera exatamente onde o número manda.</div></div>
+      <div class="mod rv"><div class="ic p"><svg class="i"><use href="#i-users"/></svg></div><h3>Organizadores de Eleitores</h3><p>Líderes de igreja, gerentes regionais e deputados → cabos → eleitores. Metas individuais, ranking diário e cobrança com 1 clique.</p>
+        <div class="mex"><b>EXEMPLO</b>Gerente a 35% da meta recebe cobrança automática; a tática de quem bateu 110% é documentada e replicada.</div></div>
+      <div class="mod rv"><div class="ic g"><svg class="i"><use href="#i-msg"/></svg></div><h3>Mensageria + Agente de IA</h3><p>Disparos segmentados por bairro, comunidades com QR e agente de IA (via API: Grok, DeepSeek, OpenAI) que responde o eleitor com contexto local.</p>
+        <div class="mex"><b>EXEMPLO</b>Eleitor pergunta do posto de saúde; a IA responde com a proposta daquele bairro e registra "tema: saúde" no CRM.</div></div>
+      <div class="mod rv"><div class="ic b"><svg class="i"><use href="#i-map"/></svg></div><h3>Mapas Drill-Down</h3><p>Brasil → estado → região → município, com cobertura, intenção e oportunidade na cor de cada área. Clique e todo o painel filtra.</p>
+        <div class="mex"><b>EXEMPLO</b>Região Serrana: 40% de cobertura e 3 cidades sem organizador. Próximo comício e 2 gerentes vão para lá.</div></div>
+      <div class="mod rv"><div class="ic y"><svg class="i"><use href="#i-scale"/></svg></div><h3>Compliance TSE + Verba</h3><p>Checklist com alertas de prazo, execução por rubrica e calculadora eleitoral: coeficiente, quociente e metas derivadas.</p>
+        <div class="mex"><b>EXEMPLO</b>5 dias para a prestação parcial: alerta lista 3 pendências e sugere realocar verba de gráfica para digital.</div></div>
+      <div class="mod rv"><div class="ic r"><svg class="i"><use href="#i-film"/></svg></div><h3>IA Generativa + Motion Report</h3><p>Resumo diário da disputa, rascunhos de mensagem, artes na identidade da campanha e vídeo-resumo semanal automático.</p>
+        <div class="mex"><b>EXEMPLO</b>Toda sexta, 21h: o Motion Report chega pronto no grupo da coordenação. Ninguém montou nada.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PARA QUEM -->
+<section id="casos" style="background:var(--lbg)">
+  <div class="wrap">
+    <div class="center rv" style="margin-bottom:54px">
+      <span class="tag y"><svg class="i" style="width:15px;height:15px"><use href="#i-users"/></svg>PARA QUEM É</span>
+      <h2 class="sec">Desenhado para quem <span class="y">responde pelo resultado</span></h2>
+    </div>
+    <div class="personas">
+      <div class="persona rv">
+        <div class="role">DIRETOR DE PARTIDO</div>
+        <h3>Todas as candidaturas, um painel, um critério</h3>
+        <ul>
+          <li><svg viewBox="0 0 24 24" class="i"><use href="#i-check"/></svg>Visão consolidada: Senado, Federal e Estadual lado a lado</li>
+          <li><svg viewBox="0 0 24 24" class="i"><use href="#i-check"/></svg>Custo por voto convertido, candidatura por candidatura</li>
+          <li><svg viewBox="0 0 24 24" class="i"><use href="#i-check"/></svg>Alocação de fundo com critério técnico e documentado</li>
+          <li><svg viewBox="0 0 24 24" class="i"><use href="#i-check"/></svg>Compliance TSE centralizado: nenhum prazo estoura</li>
+        </ul>
+        <div class="quote">"A alocação do fundo deixou de ser disputa interna e virou decisão técnica — com número na mesa e critério defensável."</div>
+      </div>
+      <div class="persona rv">
+        <div class="role">CANDIDATO MAJORITÁRIO</div>
+        <h3>Senado e Governo: ciclo de correção em horas</h3>
+        <ul>
+          <li><svg viewBox="0 0 24 24" class="i"><use href="#i-check"/></svg>Pesquisa interna diária com recorte demográfico fino</li>
+          <li><svg viewBox="0 0 24 24" class="i"><use href="#i-check"/></svg>Monitor de adversários e influencers nas 4 redes</li>
+          <li><svg viewBox="0 0 24 24" class="i"><use href="#i-check"/></svg>Raio-X regional: a bandeira certa em cada microrregião</li>
+          <li><svg viewBox="0 0 24 24" class="i"><use href="#i-check"/></svg>Sala de guerra completa no celular, na agenda de rua</li>
+        </ul>
+        <div class="quote">"O ticker mostrou o adversário subindo com 'segurança' no interior na quinta. Na sexta a agenda de sábado já estava reposicionada."</div>
+      </div>
+      <div class="persona rv">
+        <div class="role">DEPUTADO FEDERAL / ESTADUAL</div>
+        <h3>Proporcional se ganha com estrutura medida</h3>
+        <ul>
+          <li><svg viewBox="0 0 24 24" class="i"><use href="#i-check"/></svg>Funil de votos por bairro: meta → cadastro → engajado</li>
+          <li><svg viewBox="0 0 24 24" class="i"><use href="#i-check"/></svg>Cada líder e cabo com meta individual e ranking diário</li>
+          <li><svg viewBox="0 0 24 24" class="i"><use href="#i-check"/></svg>Mensageria com IA conversando com a base 24/7</li>
+          <li><svg viewBox="0 0 24 24" class="i"><use href="#i-check"/></svg>Calculadora de quociente: o número exato da cadeira</li>
+        </ul>
+        <div class="quote">"Cada líder sabe o número dele e eu sei o meu. Acabou o 'estamos trabalhando muito' sem voto no fim."</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- UM DIA -->
+<section style="background:var(--bg)">
+  <div class="wrap">
+    <div class="center rv" style="margin-bottom:54px">
+      <span class="tag g"><svg class="i" style="width:15px;height:15px"><use href="#i-pulse"/></svg>NA PRÁTICA</span>
+      <h2 class="sec">Um dia de campanha <span class="g">com o COCKPIT</span></h2>
+    </div>
+    <div class="tl">
+      <div class="ts rv"><div class="h">07h30</div><div class="ln"></div><div class="bx"><b>Briefing da IA no celular:</b> variações fora do intervalo esperado, buzz dos adversários e as 3 prioridades do dia — gerados automaticamente.</div></div>
+      <div class="ts rv"><div class="h">09h00</div><div class="ln"></div><div class="bx"><b>Pesquisa interna acusa inflexão:</b> rejeição fora do IC num recorte específico. Resposta gravada e segmentada antes do almoço.</div></div>
+      <div class="ts rv"><div class="h">12h00</div><div class="ln"></div><div class="bx"><b>Monitor de redes:</b> influencer regional em alta e sem alinhamento político. A colaboração é fechada no mesmo dia.</div></div>
+      <div class="ts rv"><div class="h">15h00</div><div class="ln"></div><div class="bx"><b>Cabos em campo:</b> 312 cadastros via QR entram no funil ao vivo; quem está abaixo da meta recebe cobrança automática.</div></div>
+      <div class="ts rv"><div class="h">18h00</div><div class="ln"></div><div class="bx"><b>Disparo segmentado:</b> mensagem personalizada por bairro para 9.400 engajados; o agente de IA absorve as respostas.</div></div>
+      <div class="ts rv"><div class="h">21h00</div><div class="ln"></div><div class="bx"><b>Fechamento:</b> Motion Report em vídeo para a coordenação e cenários recalculados com os dados do dia. Amanhã começa com vantagem.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARATIVO -->
+<section>
+  <div class="wrap">
+    <div class="center rv" style="margin-bottom:44px">
+      <span class="tag y"><svg class="i" style="width:15px;height:15px"><use href="#i-scale"/></svg>A ESCOLHA</span>
+      <h2 class="sec">Campanha tradicional <span class="r">×</span> Campanha <span class="g">com COCKPIT</span></h2>
+    </div>
+    <div class="rv" style="overflow-x:auto">
+    <table class="cmp">
+      <thead><tr><th scope="col">Dimensão</th><th scope="col">Sem COCKPIT</th><th scope="col">Com COCKPIT</th></tr></thead>
+      <tbody>
+      <tr><td><b>Leitura de pesquisa</b></td><td>Fotografia mensal do instituto, 3+ semanas de defasagem</td><td>Série diária interna com IC 95%, recorte por bairro em segundos</td></tr>
+      <tr><td><b>Movimento do adversário</b></td><td>Percepção anedótica, descoberta tardia</td><td>Ranking quantificado nas 4 redes + alerta de menção imediato</td></tr>
+      <tr><td><b>Influencers regionais</b></td><td>Mapa inexistente; oportunidades perdidas</td><td>Alcance, crescimento e alinhamento de cada perfil relevante</td></tr>
+      <tr><td><b>Alocação de verba e agenda</b></td><td>Intuição e pressão de aliados</td><td>Índice de oportunidade + projeção de cenários por região</td></tr>
+      <tr><td><b>Estrutura de campo</b></td><td>Planilhas soltas, esforço sem medida</td><td>Metas individuais, conversão rastreada, cobrança com 1 clique</td></tr>
+      <tr><td><b>Relacionamento com eleitor</b></td><td>Disparo manual, sem resposta, sem rastreio</td><td>Segmentação por bairro com IA respondendo e tudo medido</td></tr>
+      <tr><td><b>TSE e prestação de contas</b></td><td>Gestão de memória, risco de multa</td><td>Checklist com alertas, execução por rubrica, trilha de auditoria</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="center rv" style="margin-top:40px">
+      <a class="btn wa" href="https://wa.me/5511972322293?text=Alceu%2C%20vi%20o%20comparativo.%20Quero%20o%20COCKPIT%20na%20minha%20campanha." target="_blank" rel="noopener"><svg class="i"><use href="#i-wa"/></svg>Quero estar do lado certo da tabela</a>
+    </div>
+  </div>
+</section>
+
+<!-- STRATEGY PARTNERS -->
+<section id="sp" class="sp">
+  <div class="wrap">
+    <div class="center rv" style="margin-bottom:10px">
+      <span class="tag p"><svg class="i" style="width:15px;height:15px"><use href="#i-shield"/></svg>QUEM ESTÁ POR TRÁS</span>
+      <h2 class="sec">Uma solução <span class="p">Strategy Partners</span></h2>
+      <p class="lead">O COCKPIT não nasceu numa agência de marketing político. Nasceu na <b style="color:var(--text)">Strategy Partners</b> — firma independente de advisory que, desde 2008, estrutura decisões de alta consequência para CEOs, conselhos e investidores: M&A, reestruturações e reposicionamentos de grandes empresas. A mesma disciplina de premissas claras, cenários testados e riscos explícitos, agora aplicada à disputa eleitoral.</p>
+    </div>
+    <div class="spstats rv">
+      <div class="spstat"><b>18+</b><span>anos em decisões críticas de negócio</span></div>
+      <div class="spstat"><b>40+</b><span>mandatos de advisory concluídos</span></div>
+      <div class="spstat"><b>26</b><span>profissionais entre sócios e operação</span></div>
+      <div class="spstat"><b>8</b><span>setores regulados e capital-intensivos</span></div>
+    </div>
+    <div class="people">
+      <div class="person rv">
+        <img src="https://strategy.angra.io/alexandre.png" alt="Alexandre Bonfim de Azevedo" loading="lazy" onerror="this.style.visibility='hidden'">
+        <div>
+          <h3>Alexandre Bonfim de Azevedo</h3>
+          <div class="pr">Founder &amp; CEO · Strategy Partners</div>
+          <p>Referência institucional da firma, com longa experiência em M&A de grandes empresas, reestruturações e governança através de múltiplos ciclos econômicos. Traz ao COCKPIT a mesma disciplina de decisão que sustenta transações bilionárias.</p>
+          <div class="chips"><span class="chip">M&A complexo</span><span class="chip">Reestruturação</span><span class="chip">Governança</span><span class="chip">Conselhos</span></div>
+          <a class="plink" href="https://www.strategypartners.com.br" target="_blank" rel="noopener">www.strategypartners.com.br ↗</a>
+        </div>
+      </div>
+      <div class="person rv">
+        <img src="https://strategy.angra.io/alceu.png" alt="Alceu Passos" loading="lazy" onerror="this.style.visibility='hidden'">
+        <div>
+          <h3>Alceu Passos</h3>
+          <div class="pr">COO · Decisão, dados e operações</div>
+          <p>Constrói as estruturas de decisão e dados da firma, com experiência em telecom, mídia, tecnologia e processos de M&A — integrando advisory tradicional com disciplina analítica e IA. É quem conduz pessoalmente a implantação do COCKPIT em cada campanha.</p>
+          <div class="chips"><span class="chip">Sistemas de decisão</span><span class="chip">Data &amp; AI</span><span class="chip">TMT</span><span class="chip">Operações</span></div>
+          <a class="plink" href="https://www.linkedin.com/in/alceupassos" target="_blank" rel="noopener">LinkedIn · Alceu Passos ↗</a>
+        </div>
+      </div>
+    </div>
+    <div class="logos rv">
+      <img src="https://strategy.angra.io/logos/michelin.png" alt="Michelin" loading="lazy" onerror="this.remove()">
+      <img src="https://strategy.angra.io/logos/semco.png" alt="Semco" loading="lazy" onerror="this.remove()">
+      <img src="https://strategy.angra.io/logos/anhanguera.png" alt="Anhanguera" loading="lazy" onerror="this.remove()">
+      <img src="https://strategy.angra.io/logos/pitney.png" alt="Pitney Bowes" loading="lazy" onerror="this.remove()">
+      <img src="https://strategy.angra.io/logos/elis.png" alt="Elis" loading="lazy" onerror="this.remove()">
+      <img src="https://strategy.angra.io/logos/atmosfera.png" alt="Atmosfera" loading="lazy" onerror="this.remove()">
+    </div>
+    <div class="logos-cap rv">Empresas do portfólio de mandatos da Strategy Partners em decisões críticas · operações sob NDA preservadas</div>
+    <div class="center rv" style="margin-top:40px">
+      <a class="btn wa" href="https://wa.me/5511972322293?text=Alceu%2C%20quero%20conversar%20sobre%20o%20COCKPIT%20com%20o%20rigor%20da%20Strategy%20Partners." target="_blank" rel="noopener"><svg class="i"><use href="#i-wa"/></svg>Falar com o Alceu · (11) 97232-2293</a>
+    </div>
+  </div>
+</section>
+
+<!-- SEGURANÇA -->
+<section style="background:var(--lbg)">
+  <div class="wrap">
+    <div class="center rv" style="margin-bottom:44px">
+      <span class="tag b"><svg class="i" style="width:15px;height:15px"><use href="#i-lock"/></svg>CONFIANÇA</span>
+      <h2 class="sec">Segurança, LGPD e implantação <span class="b">sem fricção</span></h2>
+    </div>
+    <div class="secs">
+      <div class="sec1 rv"><div class="ic" style="background:rgba(34,197,94,.12);color:var(--green)"><svg class="i"><use href="#i-lock"/></svg></div><div><h4>Acesso protegido</h4><p>Login com verificação anti-robô (ALTCHA) e sessão segura. Credenciais por equipe, com validade e limite de dispositivos.</p></div></div>
+      <div class="sec1 rv"><div class="ic" style="background:rgba(34,197,94,.12);color:var(--green)"><svg class="i"><use href="#i-shield"/></svg></div><div><h4>LGPD de fábrica</h4><p>Captação de eleitores com consentimento explícito e trilha de auditoria completa — proteção jurídica para o candidato e para o partido.</p></div></div>
+      <div class="sec1 rv"><div class="ic" style="background:rgba(96,165,250,.12);color:var(--blue)"><svg class="i"><use href="#i-globe"/></svg></div><div><h4>Hospedagem dedicada</h4><p>Domínio próprio da campanha, HTTPS e atualização contínua. Seus dados não se misturam com os de terceiros.</p></div></div>
+      <div class="sec1 rv"><div class="ic" style="background:rgba(240,192,48,.12);color:var(--yp)"><svg class="i"><use href="#i-rocket"/></svg></div><div><h4>Implantação em dias</h4><p>Identidade visual, regiões e estrutura personalizadas, com onboarding conduzido pela equipe da Strategy Partners.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section>
+  <div class="wrap">
+    <div class="center rv" style="margin-bottom:44px">
+      <span class="tag g"><svg class="i" style="width:15px;height:15px"><use href="#i-search"/></svg>PERGUNTAS DIRETAS</span>
+      <h2 class="sec">O que todo diretor pergunta</h2>
+    </div>
+    <div class="faq rv">
+      <details><summary>Qual é o rigor por trás dos números?</summary><p>A plataforma aplica ponderação amostral, intervalos de confiança e premissas explícitas de cenário de forma automática e transparente — você vê a margem de erro junto de cada indicador. E o COCKPIT nasceu na Strategy Partners, firma com longa experiência em M&A e decisões corporativas de alta consequência: a mesma disciplina de premissas claras e riscos explícitos.</p></details>
+      <details><summary>As pesquisas internas substituem os institutos?</summary><p>Complementam. O instituto dá a fotografia oficial e comparável publicamente; a série interna dá o filme diário da sua operação, com recorte fino. O painel plota as duas curvas juntas — e a leitura combinada é mais robusta que qualquer uma isolada.</p></details>
+      <details><summary>Minha equipe não é técnica. Vai conseguir usar?</summary><p>Sim. O painel foi desenhado para ser auto-explicável: a coordenação entende em minutos, e líderes e cabos usam telas simples de meta e cadastro no celular. A implantação inclui onboarding conduzido pela nossa equipe.</p></details>
+      <details><summary>Funciona para o partido inteiro ou só para um candidato?</summary><p>Os dois. O diretor de partido tem visão consolidada de todas as candidaturas — pesquisa interna, funil, eficiência de estrutura e custo por voto de cada uma — ideal para alocação de fundo eleitoral com critério técnico e documentado.</p></details>
+      <details><summary>E a conformidade com o TSE e a LGPD?</summary><p>O módulo de compliance traz checklist, prazos e alertas; a captação de dados exige consentimento e mantém trilha de auditoria. A plataforma foi desenhada para reduzir risco regulatório, não para criá-lo.</p></details>
+      <details><summary>Quanto tempo para começar a medir?</summary><p>Dias. Personalizamos identidade, regiões e estrutura, emitimos as credenciais e sua campanha começa a coletar na mesma semana. Cada semana de antecipação é mais série histórica — e série histórica é vantagem que o adversário não compra depois.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final">
+  <div class="box rv">
+    <span class="tag g">A DECISÃO MAIS FÁCIL DA CAMPANHA</span>
+    <h2>Coloque a campanha<br>no comando.</h2>
+    <p><b><span style="color:var(--green)">COCKPIT</span> <span style="color:var(--yp)">Eleições 2026</span></b>, por Strategy Partners — a vantagem que separa quem vence de quem assiste. Cada semana sem medir é série histórica que o adversário acumula e você não.</p>
+    <a class="btn wa" href="https://wa.me/5511972322293?text=Alceu%2C%20quero%20agendar%20a%20demonstra%C3%A7%C3%A3o%20do%20COCKPIT%20Elei%C3%A7%C3%B5es%202026." target="_blank" rel="noopener" style="font-size:18px;padding:18px 40px">
+      <svg class="i" style="width:24px;height:24px"><use href="#i-wa"/></svg>
+      Agendar demonstração no WhatsApp
+    </a>
+    <div class="sub2">Direto com Alceu Passos, COO · <b style="color:var(--text)">(11) 97232-2293</b> · resposta no mesmo dia<br><a href="mailto:eleicao@angra.io" style="color:var(--blue);text-decoration:none">eleicao@angra.io</a> · <a href="https://candidato.angra.io" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:none">candidato.angra.io</a> · <a href="https://www.strategypartners.com.br" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:none">strategypartners.com.br</a></div>
+  </div>
+</section>
+
+<footer>
+  <b>COCKPIT</b> Eleições 2026 · uma solução <a href="https://www.strategypartners.com.br" target="_blank" rel="noopener">Strategy Partners</a> · São Paulo / Rio de Janeiro, Brasil<br>
+  Plataforma em conformidade com LGPD e legislação eleitoral · Valores e projeções de cenário são ilustrativos e recalculados com os dados reais de cada campanha
+</footer>
+
+<script>
+// Reveal on scroll
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+// Menu mobile
+const burger=document.getElementById('burger'),mmenu=document.getElementById('mmenu');
+burger.addEventListener('click',()=>{
+  const open=mmenu.classList.toggle('open');
+  burger.setAttribute('aria-expanded',open);
+});
+mmenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{mmenu.classList.remove('open');burger.setAttribute('aria-expanded','false')}));
+
+// Countdown até o 1º turno (04/10/2026, horário de Brasília)
+const tgt=new Date('2026-10-04T08:00:00-03:00');
+const cd=document.getElementById('cd'),ch=document.getElementById('ch'),cm=document.getElementById('cm');
+function tick(){
+  const d=tgt-new Date();
+  if(d<=0){cd.textContent='0';ch.textContent='0';cm.textContent='0';clearInterval(timer);return}
+  cd.textContent=Math.floor(d/864e5);
+  ch.textContent=Math.floor(d%864e5/36e5);
+  cm.textContent=Math.floor(d%36e5/6e4);
+}
+tick();
+const timer=setInterval(tick,30000);
+</script>
+<noscript><style>.rv{opacity:1;transform:none}</style></noscript>
+</body>
+</html>
