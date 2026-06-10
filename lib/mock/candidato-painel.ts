@@ -6,7 +6,7 @@ import { totalEleitorado } from "./rj-regions";
 import { getRaceRanking } from "./races";
 import type { RegionId } from "./types";
 
-const ALVO = "Renato Araújo";
+const ALVO = "Sóstenes Cavalcante";
 const VAGAS_FEDERAIS_RJ = 46;
 
 export type HeadToHead = {
