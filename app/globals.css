@@ -4032,3 +4032,19 @@ body.cfg-no-anim .oraculo-orb, body.cfg-no-anim .oraculo-skel span { animation: 
 .reg-news-tema { display: inline-block; font-size: 9px; font-weight: 800; color: #60a5fa; text-transform: uppercase; letter-spacing: .4px; margin-bottom: 3px; }
 .reg-news-tit { display: block; color: var(--branco); font-size: 13px; font-weight: 600; line-height: 1.35; }
 .reg-news-veic { display: block; font-size: 10px; color: var(--texto-sec); margin-top: 3px; }
+
+/* ── Situação por Região (Territórios) ── */
+.situacao-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.situacao-card { text-align: left; background: #15151d; border: 1px solid var(--cinza-borda); border-top: 3px solid #22c55e; border-radius: 12px; padding: 11px 12px; cursor: pointer; transition: transform .15s, box-shadow .15s; }
+.situacao-card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px -16px rgba(0,0,0,.7); }
+.sit-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 7px; }
+.sit-nome { color: var(--branco); font-weight: 800; font-size: 12px; }
+.sit-badge { font-size: 9px; font-weight: 800; text-transform: uppercase; border: 1px solid; border-radius: 999px; padding: 1px 7px; }
+.sit-bar { height: 6px; background: #2a2a38; border-radius: 3px; overflow: hidden; margin-bottom: 6px; }
+.sit-bar span { display: block; height: 100%; border-radius: 3px; }
+.sit-metrics { display: flex; justify-content: space-between; font-size: 11px; color: var(--texto-sec); margin-bottom: 7px; }
+.sit-foot { display: flex; flex-direction: column; gap: 2px; }
+.sit-votos { font-family: var(--font-mono, monospace); font-weight: 700; color: #22c55e; font-size: 13px; }
+.sit-tema { font-size: 10px; color: var(--texto-sec); }
+@media (max-width: 900px) { .situacao-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .situacao-grid { grid-template-columns: 1fr; } }

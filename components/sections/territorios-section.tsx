@@ -3,12 +3,24 @@
 import { useMemo } from "react";
 
 import { EChart } from "@/components/echart";
+import { Oraculo } from "@/components/oraculo";
 import { RegionDrillMap } from "@/components/charts/region-drill-map";
 import { barOption, lineOption } from "@/components/echart-options";
-import { getTerritoriosIdade, getFlutuacao } from "@/lib/mock/campaign-metrics";
+import {
+  getExpectedVotesByRegion,
+  getTerritoriosIdade,
+  getFlutuacao,
+} from "@/lib/mock/campaign-metrics";
+import { getOpportunityRanking } from "@/lib/mock/priorities";
 import { getPresidentialByState } from "@/lib/mock/races";
 import { REGIONS, getRegion, regionEleitorado } from "@/lib/mock/rj-regions";
 import type { RegionId } from "@/lib/mock/types";
+
+function statusRegiao(cob: number): { label: string; cor: string } {
+  if (cob >= 70) return { label: "forte", cor: "#22c55e" };
+  if (cob >= 50) return { label: "atenção", cor: "#f0c030" };
+  return { label: "crítica", cor: "#ef4444" };
+}
 
 const nf = (n: number) => n.toLocaleString("pt-BR");
 
@@ -37,6 +49,22 @@ export function TerritoriosSection({
     : REGIONS.reduce((s, x) => s + regionEleitorado(x), 0);
 
   const brasil = useMemo(() => getPresidentialByState(), []);
+  const situacao = useMemo(() => {
+    const exp = getExpectedVotesByRegion().regioes;
+    return REGIONS.map((reg) => {
+      const e = exp.find((x) => x.id === reg.id);
+      const top = getOpportunityRanking(reg.id)[0];
+      return {
+        id: reg.id as RegionId,
+        nome: reg.nome,
+        cobertura: reg.cobertura,
+        intencao: reg.intencaoVoto,
+        votos: e?.votos ?? 0,
+        tema: top?.tema ?? "—",
+        st: statusRegiao(reg.cobertura),
+      };
+    }).sort((a, b) => b.votos - a.votos);
+  }, []);
   const idadeOpt = useMemo(
     () => barOption(getTerritoriosIdade(region)),
     [region],
@@ -51,6 +79,52 @@ export function TerritoriosSection({
       <div className="region-banner">
         <i data-lucide="map" /> <strong>Territórios e Bairros</strong> ·{" "}
         {nomeRegiao}
+      </div>
+
+      <Oraculo section="territorios" context={`Região ${nomeRegiao}`} />
+
+      {/* Situação por Região */}
+      <div className="card" style={{ marginTop: 12 }}>
+        <div className="card-header">
+          <div className="card-title">
+            Situação por Região — como está cada uma
+          </div>
+          <span className="card-badge badge-real">clique para focar</span>
+        </div>
+        <div className="situacao-grid">
+          {situacao.map((s) => (
+            <button
+              type="button"
+              className="situacao-card"
+              key={s.id}
+              style={{ borderTopColor: s.st.cor }}
+              onClick={() => onRegionChange(s.id)}
+            >
+              <div className="sit-top">
+                <span className="sit-nome">{s.nome}</span>
+                <span
+                  className="sit-badge"
+                  style={{ color: s.st.cor, borderColor: s.st.cor }}
+                >
+                  {s.st.label}
+                </span>
+              </div>
+              <div className="sit-bar">
+                <span
+                  style={{ width: `${s.cobertura}%`, background: s.st.cor }}
+                />
+              </div>
+              <div className="sit-metrics">
+                <span>{s.cobertura}% cobertura</span>
+                <span>{s.intencao}% intenção</span>
+              </div>
+              <div className="sit-foot">
+                <span className="sit-votos">{nf(s.votos)} votos</span>
+                <span className="sit-tema">foco: {s.tema}</span>
+              </div>
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="kpi-row">
