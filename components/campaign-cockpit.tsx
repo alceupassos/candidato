@@ -572,6 +572,32 @@ export function CampaignCockpit() {
               </strong>
             </div>
           </div>
+
+          {/* Bottom-nav mobile — mini-NOC de bolso */}
+          <nav className="mobile-bottom-nav" aria-label="Navegação rápida">
+            {(
+              [
+                { id: "dashboard", icon: "layout-dashboard", label: "Painel" },
+                { id: "noc", icon: "radar", label: "NOC" },
+                { id: "pesquisas", icon: "bar-chart-3", label: "Pesquisas" },
+                { id: "meta", icon: "target", label: "Meta" },
+                { id: "social", icon: "radio-tower", label: "Redes" },
+              ] as { id: SectionId; icon: string; label: string }[]
+            ).map((it) => (
+              <button
+                key={it.id}
+                type="button"
+                className={`mbn-item ${activeSection === it.id ? "active" : ""}`}
+                onClick={() => {
+                  setActiveSection(it.id);
+                  setSidebarOpen(false);
+                }}
+              >
+                <i data-lucide={it.icon} />
+                <span>{it.label}</span>
+              </button>
+            ))}
+          </nav>
         </div>
       </div>
     </>

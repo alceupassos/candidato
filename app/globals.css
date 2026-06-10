@@ -3847,3 +3847,41 @@ body.cfg-contrast { --texto-sec: #aab; }
   /* trava o fundo só quando o drawer está aberto */
   #app.sidebar-open { overflow: hidden; }
 }
+
+/* ── Bottom-nav mobile (mini-NOC de bolso) ── */
+.mobile-bottom-nav { display: none; }
+@media (max-width: 900px) {
+  .mobile-bottom-nav {
+    display: flex;
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 80;
+    padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+    gap: 4px;
+    background: linear-gradient(180deg, rgba(14,15,20,0.86), rgba(8,9,13,0.98));
+    backdrop-filter: blur(14px);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 -10px 30px -12px rgba(0,0,0,0.7);
+  }
+  .mbn-item {
+    flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px;
+    padding: 7px 2px; border: none; background: transparent; cursor: pointer;
+    color: var(--texto-sec); font-size: 10px; font-weight: 700; border-radius: 12px;
+    transition: color .15s, background .15s, transform .15s;
+  }
+  .mbn-item i, .mbn-item svg { width: 20px; height: 20px; }
+  .mbn-item.active {
+    color: #22c55e;
+    background: radial-gradient(120% 100% at 50% 0%, rgba(34,197,94,0.16), rgba(34,197,94,0) 70%);
+  }
+  .mbn-item.active i, .mbn-item.active svg { filter: drop-shadow(0 0 6px rgba(34,197,94,0.6)); }
+  .mbn-item:active { transform: scale(0.92); }
+  /* topbar compacto premium no bolso */
+  #topbar { padding: 10px 12px !important; gap: 8px; }
+  .badge-live { font-size: 9px; padding: 3px 7px; }
+  .avatar { display: none; }
+}
+@media (max-width: 480px) {
+  /* esconder botões de texto do topo, manter só ícones essenciais */
+  .topbar-right .btn-logout span:not(.top-icon),
+  .topbar-right .premium-btn span:not(.top-icon) { display: none; }
+  .mbn-item span { font-size: 9px; }
+}
