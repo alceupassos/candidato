@@ -4088,3 +4088,10 @@ body.cfg-no-anim .oraculo-orb, body.cfg-no-anim .oraculo-skel span { animation: 
 .painel-cand.compact .pc-mom-delta { font-size: 24px; }
 @media (max-width: 1100px) { .painel-cand { grid-template-columns: 1fr; } }
 body.cfg-no-anim .pc-arrow { animation: none !important; }
+
+/* ════════════════════════════════════════════════════════════
+   HOTFIX — overlay do drawer não pode capturar toque quando invisível
+   (senão engole TODOS os cliques no mobile: bottom-nav e botões/menus)
+   ════════════════════════════════════════════════════════════ */
+.sidebar-overlay { pointer-events: none; }
+.sidebar-overlay.visible { pointer-events: auto; }
