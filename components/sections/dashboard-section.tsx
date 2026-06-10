@@ -3,29 +3,43 @@
 import { useEffect, useMemo, useState } from "react";
 
 import { EChart } from "@/components/echart";
-import { useIs3D } from "@/components/charts/use-is-3d";
 import {
-  bar3DOption,
+  barOption,
   donutOption,
-  heatmapOption,
   lineOption,
 } from "@/components/echart-options";
 import {
   getDashboardKpis,
+  getExpectedVotesByRegion,
   getFaixaEtaria,
   getIntencaoEvolution,
 } from "@/lib/mock/campaign-metrics";
-import { getPriorityMatrix } from "@/lib/mock/priorities";
+import { getOpportunityRanking } from "@/lib/mock/priorities";
 import { REGIONS, getRegion, regionEleitorado } from "@/lib/mock/rj-regions";
 import type { RegionId } from "@/lib/mock/types";
 
 const KPI_COLORS = ["#22c55e", "#60a5fa", "#f0c030", "#8b5cf6"];
+const REGION_COLORS = [
+  "#22c55e",
+  "#3b82f6",
+  "#f0c030",
+  "#8b5cf6",
+  "#ef4444",
+  "#06b6d4",
+  "#ec4899",
+  "#f97316",
+];
 const nf = (n: number) => n.toLocaleString("pt-BR");
 
-export function DashboardSection({ region }: { region: RegionId }) {
+export function DashboardSection({
+  region,
+  onRegionChange,
+}: {
+  region: RegionId;
+  onRegionChange?: (id: RegionId) => void;
+}) {
   const r = getRegion(region);
   const nomeRegiao = r?.nome ?? "Todo o RJ";
-  const is3D = useIs3D();
   const [tick, setTick] = useState(0);
   useEffect(() => {
     const id = setInterval(() => setTick((t) => t + 1), 3500);
@@ -48,16 +62,36 @@ export function DashboardSection({ region }: { region: RegionId }) {
       ),
     [faixa],
   );
-  const cubeOpt = useMemo(() => {
-    const temas = getPriorityMatrix(REGIONS[0].id).map((m) => m.tema);
-    const regions = REGIONS.map((reg) => reg.nome);
-    const values = REGIONS.map((reg) =>
-      getPriorityMatrix(reg.id).map((m) => m.oportunidade),
-    );
-    return is3D
-      ? bar3DOption(regions, temas, values)
-      : heatmapOption(regions, temas, values);
-  }, [is3D]);
+  const expected = useMemo(() => getExpectedVotesByRegion(), []);
+  const expectedBarOpt = useMemo(
+    () =>
+      barOption(
+        {
+          labels: expected.regioes.map((x) => x.nome),
+          datasets: [
+            {
+              label: "Votos esperados",
+              color: "#22c55e",
+              data: expected.regioes.map((x) => x.votos),
+              palette: expected.regioes.map(
+                (_, i) => REGION_COLORS[i % REGION_COLORS.length],
+              ),
+            },
+          ],
+        },
+        { horizontal: true },
+      ),
+    [expected],
+  );
+  const temasByRegion = useMemo(() => {
+    const map: Record<string, { tema: string; oportunidade: number }[]> = {};
+    for (const reg of REGIONS) {
+      map[reg.id] = getOpportunityRanking(reg.id)
+        .slice(0, 3)
+        .map((o) => ({ tema: o.tema, oportunidade: o.oportunidade }));
+    }
+    return map;
+  }, []);
 
   const municipios = r
     ? r.municipios
@@ -104,16 +138,91 @@ export function DashboardSection({ region }: { region: RegionId }) {
         ))}
       </div>
 
+      {/* Votos esperados por região */}
+      <div className="grid-7-5" style={{ marginTop: 12 }}>
+        <div className="card">
+          <div className="card-header">
+            <div className="card-title">Votos Esperados por Região</div>
+            <span className="card-badge badge-real">
+              total {nf(expected.total)}
+            </span>
+          </div>
+          <EChart option={expectedBarOpt} height={320} />
+        </div>
+        <div className="card">
+          <div className="card-header">
+            <div className="card-title">Maiores Praças</div>
+            <span className="card-badge badge-est">ordenado</span>
+          </div>
+          <div className="detail-list">
+            {expected.regioes.slice(0, 8).map((x, i) => (
+              <div className="detail-row" key={x.id}>
+                <span>
+                  <span
+                    className="chip-dot"
+                    style={{
+                      background: REGION_COLORS[i % REGION_COLORS.length],
+                    }}
+                  />{" "}
+                  {x.nome}
+                </span>
+                <span style={{ color: "var(--branco)", fontWeight: 700 }}>
+                  {nf(x.votos)}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Raio-X por região — cards claros */}
       <div className="card" style={{ marginTop: 12 }}>
         <div className="card-header">
           <div className="card-title">
-            Raio-X Estadual — Oportunidade por Região × Tema
+            Raio-X por Região — votos esperados & temas que dão voto
           </div>
-          <span className="card-badge badge-real">
-            {is3D ? "3D animado" : "mapa de calor"}
-          </span>
+          <span className="card-badge badge-real">clique para focar</span>
         </div>
-        <EChart option={cubeOpt} use3D={is3D} height={360} />
+        <div className="raiox-region-grid">
+          {expected.regioes.map((x, i) => {
+            const cor = REGION_COLORS[i % REGION_COLORS.length];
+            const temas = temasByRegion[x.id] ?? [];
+            const maxOp = Math.max(1, ...temas.map((t) => t.oportunidade));
+            return (
+              <button
+                type="button"
+                className="raiox-rcard"
+                key={x.id}
+                onClick={() => onRegionChange?.(x.id)}
+              >
+                <div className="rrc-top">
+                  <span className="rrc-nome" style={{ color: cor }}>
+                    {x.nome}
+                  </span>
+                  <span className="rrc-votos">{nf(x.votos)}</span>
+                </div>
+                <div className="rrc-sub">
+                  {x.intencao}% intenção · {x.cobertura}% cobertura
+                </div>
+                <div className="rrc-temas">
+                  {temas.map((t) => (
+                    <div className="rrc-tema" key={t.tema}>
+                      <span>{t.tema}</span>
+                      <div className="rrc-bar">
+                        <span
+                          style={{
+                            width: `${(t.oportunidade / maxOp) * 100}%`,
+                            background: cor,
+                          }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       <div className="grid-7-5" style={{ marginTop: 12 }}>

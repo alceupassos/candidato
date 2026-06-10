@@ -601,3 +601,35 @@ export const MESSAGE_TEMPLATES: MessageTemplate[] = [
       "Resumo da semana da campanha em {cidade}: agenda, conquistas e próximos passos.",
   },
 ];
+
+// Votos esperados para o candidato por região = eleitorado × intenção × cobertura.
+export type ExpectedVotes = {
+  id: RegionId;
+  nome: string;
+  votos: number;
+  intencao: number;
+  cobertura: number;
+  eleitorado: number;
+};
+
+export function getExpectedVotesByRegion(): {
+  regioes: ExpectedVotes[];
+  total: number;
+} {
+  const regioes = REGIONS.map((r) => {
+    const eleitorado = regionEleitorado(r);
+    const votos = Math.round(
+      eleitorado * (r.intencaoVoto / 100) * (r.cobertura / 100),
+    );
+    return {
+      id: r.id as RegionId,
+      nome: r.nome,
+      votos,
+      intencao: r.intencaoVoto,
+      cobertura: r.cobertura,
+      eleitorado,
+    };
+  }).sort((a, b) => b.votos - a.votos);
+  const total = regioes.reduce((s, r) => s + r.votos, 0);
+  return { regioes, total };
+}

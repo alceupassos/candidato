@@ -3885,3 +3885,19 @@ body.cfg-contrast { --texto-sec: #aab; }
   .topbar-right .premium-btn span:not(.top-icon) { display: none; }
   .mbn-item span { font-size: 9px; }
 }
+
+/* ── Raio-X por região (Dashboard) ── */
+.raiox-region-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.raiox-rcard { text-align: left; background: #15151d; border: 1px solid var(--cinza-borda); border-radius: 12px; padding: 12px; cursor: pointer; transition: transform .15s, border-color .15s; }
+.raiox-rcard:hover { transform: translateY(-3px); border-color: rgba(34,197,94,0.3); }
+.rrc-top { display: flex; align-items: baseline; justify-content: space-between; }
+.rrc-nome { font-weight: 800; font-size: 13px; }
+.rrc-votos { font-family: var(--font-mono), monospace; font-weight: 700; color: var(--branco); font-size: 15px; }
+.rrc-sub { color: var(--texto-sec); font-size: 11px; margin: 2px 0 8px; }
+.rrc-temas { display: flex; flex-direction: column; gap: 5px; }
+.rrc-tema { font-size: 11px; color: #c2c2d2; }
+.rrc-tema span { display: block; margin-bottom: 2px; }
+.rrc-bar { height: 5px; background: #2a2a38; border-radius: 3px; overflow: hidden; }
+.rrc-bar span { display: block; height: 100%; border-radius: 3px; }
+@media (max-width: 900px) { .raiox-region-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .raiox-region-grid { grid-template-columns: 1fr; } }

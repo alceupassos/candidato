@@ -550,7 +550,10 @@ export function CampaignCockpit() {
                 onRegionChange={setActiveRegion}
               />
             ) : activeSection === "dashboard" ? (
-              <DashboardSection region={activeRegion} />
+              <DashboardSection
+                region={activeRegion}
+                onRegionChange={setActiveRegion}
+              />
             ) : activeSection === "influenciadores" ? (
               <InfluenciadoresSection />
             ) : activeSection === "candidatos" ? (
