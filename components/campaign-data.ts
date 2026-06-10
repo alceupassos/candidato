@@ -64,6 +64,10 @@ export const pageTitles = {
     "Ranking de Redes Sociais",
     "X · Instagram · YouTube · Facebook · figuras nacionais e colunistas",
   ],
+  posts: [
+    "Posts por Candidato & Rede",
+    "Último post por X · Instagram · YouTube · TikTok · Facebook",
+  ],
   pesquisas: [
     "Pesquisas Eleitorais",
     "Institutos · Rankings · Histórico e Projeções",

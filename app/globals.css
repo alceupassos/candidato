@@ -3908,3 +3908,13 @@ body.cfg-contrast { --texto-sec: #aab; }
 .hp-eng-row { display: flex; justify-content: space-between; font-size: 10px; color: var(--texto-sec); margin-bottom: 2px; }
 .hp-eng-bar { height: 5px; background: #2a2a38; border-radius: 3px; overflow: hidden; margin-bottom: 6px; }
 .hp-eng-bar span { display: block; height: 100%; border-radius: 3px; }
+
+/* ── Posts por rede ── */
+.posts-tbl th, .posts-tbl td { vertical-align: middle; }
+.post-cand { display: flex; align-items: center; gap: 9px; }
+.post-foto { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; object-position: top center; background: #2a2a38; flex-shrink: 0; }
+.post-cand strong { display: block; color: var(--branco); font-size: 12px; }
+.post-cand small { color: var(--texto-sec); font-size: 10px; }
+.post-cell { cursor: pointer; }
+.post-dot { display: inline-block; width: 13px; height: 13px; border-radius: 50%; box-shadow: 0 0 0 3px rgba(255,255,255,0.05); transition: transform .15s, box-shadow .15s; }
+.post-cell:hover .post-dot { transform: scale(1.35); box-shadow: 0 0 12px currentColor; }

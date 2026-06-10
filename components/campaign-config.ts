@@ -15,6 +15,7 @@ export const navigationGroups = [
     label: "Monitoramento",
     items: [
       { id: "social", icon: "share-2", label: "Ranking Redes" },
+      { id: "posts", icon: "newspaper", label: "Posts por Rede" },
       { id: "redes", icon: "smartphone", label: "Redes Sociais" },
       { id: "midia", icon: "radio-tower", label: "Mídia & Imprensa" },
       { id: "influenciadores", icon: "users-round", label: "Influenciadores" },
