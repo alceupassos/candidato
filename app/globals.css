@@ -3809,3 +3809,41 @@ body.cfg-contrast { --texto-sec: #aab; }
 .survey-q { background: rgba(255,255,255,0.03); border-left: 3px solid #22c55e; border-radius: 8px; padding: 10px 12px; color: var(--branco); font-size: 14px; font-weight: 600; }
 @media (max-width: 900px) { .cal-grid { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 520px) { .cal-grid { grid-template-columns: repeat(2, 1fr); } }
+
+/* ════════════════════════════════════════════════════════════
+   MOBILE FIX — rolagem natural do documento (corrige tela travada)
+   ════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  html, body {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    height: auto !important;
+    -webkit-text-size-adjust: 100%;
+    overscroll-behavior-y: none;
+  }
+  #app, #app.logado {
+    display: block !important;
+    height: auto !important;
+    min-height: 100dvh;
+  }
+  #main {
+    display: block !important;
+    height: auto !important;
+    overflow: visible !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  #content {
+    overflow: visible !important;
+    height: auto !important;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 88px !important; /* espaço para a bottom-nav */
+  }
+  /* topbar gruda no topo enquanto rola */
+  #topbar, .topbar {
+    position: sticky; top: 0; z-index: 40;
+    backdrop-filter: blur(8px);
+  }
+  /* trava o fundo só quando o drawer está aberto */
+  #app.sidebar-open { overflow: hidden; }
+}
