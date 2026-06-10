@@ -12,6 +12,7 @@ import {
   NETWORKS,
   SOCIAL_FIGURES,
   espectroColor,
+  getFiguraResumo,
   getMentionsByState,
   getSpectrumSplit,
   getUltimoPost,
@@ -214,6 +215,7 @@ export function SocialSection() {
                 foto: r.figure.avatarAsset,
                 cor: espectroColor(r.figure.espectro),
                 post: getUltimoPost(r.figure),
+                resumo: getFiguraResumo(r.figure),
               };
               return (
                 <div

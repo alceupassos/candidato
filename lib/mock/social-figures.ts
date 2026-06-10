@@ -351,3 +351,42 @@ export function getUltimoPost(f: Figure): UltimoPost {
     link: PERFIL[f.id] ?? `https://www.google.com/search?q=${encodeURIComponent(f.nome)}`,
   };
 }
+
+// Resumo explicativo da figura para o hover (o que é + como está).
+export type FiguraResumo = {
+  descricao: string;
+  pos: number; // engajamento positivo %
+  neg: number; // engajamento negativo %
+  tendencia: string;
+};
+
+export function getFiguraResumo(f: Figure): FiguraResumo {
+  const pos = f.sentimento;
+  const neg = Math.max(0, 100 - f.sentimento - 8);
+  const espectroNome =
+    f.espectro === "direita"
+      ? "campo da direita"
+      : f.espectro === "esquerda"
+        ? "campo da esquerda"
+        : f.espectro === "centro"
+          ? "centro"
+          : "colunismo/imprensa";
+  const forca =
+    f.engajamento >= 6
+      ? "engajamento muito alto"
+      : f.engajamento >= 4
+        ? "bom engajamento"
+        : "engajamento moderado";
+  const tend =
+    f.crescimento7d >= 1.2
+      ? "em forte ascensão"
+      : f.crescimento7d >= 0.6
+        ? "crescendo"
+        : "estável";
+  return {
+    descricao: `${f.nome} (${f.grupo}) — ${espectroNome}. ${forca}, ${tend} nos últimos 7 dias.`,
+    pos,
+    neg,
+    tendencia: tend,
+  };
+}

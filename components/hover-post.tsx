@@ -3,12 +3,20 @@
 import { useState } from "react";
 import type { UltimoPost } from "@/lib/mock/types";
 
+export type HoverResumo = {
+  descricao: string;
+  pos: number;
+  neg: number;
+  tendencia: string;
+};
+
 export type HoverItem = {
   titulo: string;
   subtitulo?: string;
   foto?: string;
   cor?: string;
   post: UltimoPost;
+  resumo?: HoverResumo;
 };
 
 type HoverState = { item: HoverItem; x: number; y: number } | null;
@@ -66,6 +74,35 @@ export function HoverPost({ hover }: { hover: HoverState }) {
           {p.rede}
         </span>
       </div>
+      {item.resumo ? (
+        <div className="hp-resumo">
+          <div className="hp-resumo-desc">{item.resumo.descricao}</div>
+          <div className="hp-eng">
+            <div className="hp-eng-row">
+              <span>Engajamento positivo</span>
+              <span style={{ color: "#22c55e", fontWeight: 700 }}>
+                {item.resumo.pos}%
+              </span>
+            </div>
+            <div className="hp-eng-bar">
+              <span
+                style={{ width: `${item.resumo.pos}%`, background: "#22c55e" }}
+              />
+            </div>
+            <div className="hp-eng-row">
+              <span>Engajamento negativo</span>
+              <span style={{ color: "#ef4444", fontWeight: 700 }}>
+                {item.resumo.neg}%
+              </span>
+            </div>
+            <div className="hp-eng-bar">
+              <span
+                style={{ width: `${item.resumo.neg}%`, background: "#ef4444" }}
+              />
+            </div>
+          </div>
+        </div>
+      ) : null}
       <div className="hp-texto">“{p.texto}”</div>
       <div className="hp-meta">
         <span>{p.data}</span>

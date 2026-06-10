@@ -3901,3 +3901,10 @@ body.cfg-contrast { --texto-sec: #aab; }
 .rrc-bar span { display: block; height: 100%; border-radius: 3px; }
 @media (max-width: 900px) { .raiox-region-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 520px) { .raiox-region-grid { grid-template-columns: 1fr; } }
+
+/* ── Hover resumo (Ranking Redes) ── */
+.hp-resumo { margin-bottom: 8px; }
+.hp-resumo-desc { font-size: 11px; color: #c2c2d2; line-height: 1.4; margin-bottom: 7px; }
+.hp-eng-row { display: flex; justify-content: space-between; font-size: 10px; color: var(--texto-sec); margin-bottom: 2px; }
+.hp-eng-bar { height: 5px; background: #2a2a38; border-radius: 3px; overflow: hidden; margin-bottom: 6px; }
+.hp-eng-bar span { display: block; height: 100%; border-radius: 3px; }
