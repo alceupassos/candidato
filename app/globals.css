@@ -4016,3 +4016,19 @@ body.cfg-no-anim #content .kpi-card { animation: none !important; }
 .oraculo-skel span:last-child { width: 64%; }
 @keyframes oraShimmer { to { background-position: -200% 0; } }
 body.cfg-no-anim .oraculo-orb, body.cfg-no-anim .oraculo-skel span { animation: none !important; }
+
+/* ── Mensagem para a Região (Raio-X) ── */
+.msg-dif-title, .msg-dif-list-title { font-size: 11px; color: var(--texto-sec); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
+.msg-dif { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.msg-dif-chip { display: inline-flex; align-items: center; gap: 6px; background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); color: #fca5a5; border-radius: 999px; padding: 4px 10px; font-size: 12px; font-weight: 700; }
+.msg-dif-chip small { color: #ef4444; font-family: var(--font-mono, monospace); }
+.msg-disc-list { display: flex; flex-direction: column; gap: 8px; }
+.msg-disc { background: #15151d; border: 1px solid var(--cinza-borda); border-left: 3px solid #22c55e; border-radius: 8px; padding: 9px 12px; }
+.msg-disc-tema { display: block; color: #22c55e; font-weight: 800; font-size: 12px; margin-bottom: 2px; }
+.msg-disc-txt { color: #d6d6e2; font-size: 13px; line-height: 1.4; }
+.reg-news { display: flex; flex-direction: column; gap: 8px; }
+.reg-news-item { display: block; background: #15151d; border: 1px solid var(--cinza-borda); border-radius: 8px; padding: 9px 12px; transition: border-color .15s, transform .15s; }
+.reg-news-item:hover { border-color: rgba(96,165,250,0.4); transform: translateX(2px); }
+.reg-news-tema { display: inline-block; font-size: 9px; font-weight: 800; color: #60a5fa; text-transform: uppercase; letter-spacing: .4px; margin-bottom: 3px; }
+.reg-news-tit { display: block; color: var(--branco); font-size: 13px; font-weight: 600; line-height: 1.35; }
+.reg-news-veic { display: block; font-size: 10px; color: var(--texto-sec); margin-top: 3px; }

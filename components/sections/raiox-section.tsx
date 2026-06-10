@@ -15,6 +15,10 @@ import {
   getPriorityMatrix,
 } from "@/lib/mock/priorities";
 import { REGIONS, getRegion } from "@/lib/mock/rj-regions";
+import {
+  getDiscursoRecomendado,
+  getRegionalNews,
+} from "@/lib/mock/regional-news";
 import type { RegionId } from "@/lib/mock/types";
 
 export function RaioxSection({ region }: { region: RegionId }) {
@@ -22,6 +26,8 @@ export function RaioxSection({ region }: { region: RegionId }) {
   const nomeRegiao = r?.nome ?? "Todo o RJ";
   const matrix = useMemo(() => getPriorityMatrix(region), [region]);
   const ranking = useMemo(() => getOpportunityRanking(region), [region]);
+  const discurso = useMemo(() => getDiscursoRecomendado(region), [region]);
+  const noticias = useMemo(() => getRegionalNews(region), [region]);
 
   const is3D = useIs3D();
   const scatterOpt = useMemo(() => priorityScatterOption(matrix), [matrix]);
@@ -54,6 +60,56 @@ export function RaioxSection({ region }: { region: RegionId }) {
       </div>
 
       <Oraculo section="raiox" context={`Região ${nomeRegiao}`} />
+
+      {/* Mensagem para a Região: dificuldades + discurso + notícias */}
+      <div className="grid-7-5" style={{ marginTop: 12 }}>
+        <div className="card">
+          <div className="card-header">
+            <div className="card-title">O que falar em {nomeRegiao}</div>
+            <span className="card-badge badge-real">discurso recomendado</span>
+          </div>
+          <div className="msg-region">
+            <div className="msg-dif-title">Principais dificuldades</div>
+            <div className="msg-dif">
+              {ranking.slice(0, 3).map((t) => (
+                <span className="msg-dif-chip" key={t.tema}>
+                  {t.tema}
+                  <small>{Math.round(t.oportunidade)}</small>
+                </span>
+              ))}
+            </div>
+            <div className="msg-disc-list">
+              {discurso.map((d) => (
+                <div className="msg-disc" key={d.tema}>
+                  <span className="msg-disc-tema">{d.tema}</span>
+                  <span className="msg-disc-txt">{d.texto}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="card">
+          <div className="card-header">
+            <div className="card-title">Notícias da Região</div>
+            <span className="card-badge badge-est">monitoramento</span>
+          </div>
+          <div className="reg-news">
+            {noticias.map((n, i) => (
+              <a
+                className="reg-news-item"
+                key={i}
+                href={n.link}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span className="reg-news-tema">{n.tema}</span>
+                <span className="reg-news-tit">{n.titulo}</span>
+                <span className="reg-news-veic">{n.veiculo} ↗</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
 
       <div className="kpi-row">
         <div className="kpi-card">
