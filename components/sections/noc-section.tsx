@@ -15,6 +15,7 @@ import {
 } from "@/components/echart-options";
 import { MotionReport } from "@/remotion/MotionReport";
 import { Oraculo } from "@/components/oraculo";
+import { PainelCandidato } from "@/components/painel-candidato";
 import {
   RACES,
   getPresidentialByState,
@@ -168,6 +169,8 @@ export function NocSection({ region, onRegionChange }: NocProps) {
           </div>
         ))}
       </div>
+
+      <PainelCandidato region={region} compact />
 
       <Oraculo section="noc" context={`Cargo ${race}, região ${nomeRegiao}`} />
 

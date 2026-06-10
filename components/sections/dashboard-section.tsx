@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import { EChart } from "@/components/echart";
 import { Oraculo } from "@/components/oraculo";
+import { PainelCandidato } from "@/components/painel-candidato";
 import {
   barOption,
   donutOption,
@@ -117,6 +118,8 @@ export function DashboardSection({
           <span className="dot-live" /> ao vivo
         </span>
       </div>
+
+      <PainelCandidato region={region} />
 
       <Oraculo section="dashboard" context={`Região ${nomeRegiao}`} />
 

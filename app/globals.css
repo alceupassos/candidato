@@ -4048,3 +4048,43 @@ body.cfg-no-anim .oraculo-orb, body.cfg-no-anim .oraculo-skel span { animation: 
 .sit-tema { font-size: 10px; color: var(--texto-sec); }
 @media (max-width: 900px) { .situacao-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 520px) { .situacao-grid { grid-template-columns: 1fr; } }
+
+/* ── Painel do Candidato (Dashboard/NOC) ── */
+.painel-cand { display: grid; grid-template-columns: 1.1fr 1fr 1.1fr; gap: 12px; margin-top: 12px; }
+.pc-block {
+  background:
+    radial-gradient(120% 130% at 0% 0%, rgba(34,197,94,0.08), rgba(34,197,94,0) 55%),
+    linear-gradient(160deg, #181820, #111118);
+  border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 14px 16px;
+  position: relative; overflow: hidden;
+}
+.pc-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.pc-title { font-family: var(--font-sora, inherit); font-weight: 800; font-size: 14px; color: var(--branco); }
+.pc-tag { font-size: 10px; font-weight: 700; color: var(--texto-sec); display: inline-flex; align-items: center; gap: 5px; }
+/* Vaga */
+.pc-vaga { display: flex; align-items: center; gap: 6px; }
+.pc-gauge { flex: 0 0 46%; min-width: 0; }
+.pc-vaga-info { flex: 1; min-width: 0; }
+.pc-status { font-weight: 800; font-size: 13px; letter-spacing: .4px; }
+.pc-vaga-num { font-size: 14px; color: #d6d6e2; margin: 3px 0; }
+.pc-vaga-num strong { font-family: var(--font-mono, monospace); font-size: 20px; color: var(--branco); }
+.pc-vaga-sub { font-size: 11px; color: var(--texto-sec); }
+/* Momentum */
+.pc-mom-delta { font-family: var(--font-mono, monospace); font-weight: 800; font-size: 30px; line-height: 1; display: flex; align-items: baseline; gap: 8px; }
+.pc-mom-delta small { font-size: 11px; color: var(--texto-sec); font-weight: 600; }
+.pc-arrow { animation: pcArrow 1.6s ease-in-out infinite; }
+@keyframes pcArrow { 0%,100% { transform: translateY(0); opacity: .85; } 50% { transform: translateY(-3px); opacity: 1; } }
+.pc-spark { margin-top: 2px; }
+/* Head-to-head */
+.pc-h2h { display: flex; flex-direction: column; gap: 6px; }
+.pc-h2h-row { display: grid; grid-template-columns: 1fr 64px 36px; align-items: center; gap: 8px; }
+.pc-h2h-row.alvo .pc-h2h-nome { color: #22c55e; font-weight: 800; }
+.pc-h2h-nome { font-size: 12px; color: #c2c2d2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pc-h2h-nome small { color: var(--texto-sec); }
+.pc-h2h-bar { height: 8px; background: #2a2a38; border-radius: 4px; overflow: hidden; }
+.pc-h2h-bar span { display: block; height: 100%; border-radius: 4px; transition: width .4s ease; }
+.pc-h2h-val { font-family: var(--font-mono, monospace); font-size: 12px; color: var(--branco); text-align: right; }
+.pc-h2h-row.alvo { background: rgba(34,197,94,0.07); border-radius: 8px; padding: 2px 4px; margin: 0 -4px; }
+.painel-cand.compact .pc-mom-delta { font-size: 24px; }
+@media (max-width: 1100px) { .painel-cand { grid-template-columns: 1fr; } }
+body.cfg-no-anim .pc-arrow { animation: none !important; }
