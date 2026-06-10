@@ -23,7 +23,10 @@
       property="og:description"
       content="Pesquisas internas ao vivo, monitor de adversários e simulação de cenários. Implantação em dias. Fale com o Alceu."
     />
-    <meta property="og:image" content="hero.png" />
+    <meta
+      property="og:image"
+      content="https://candidato.angra.io/ai/hero-warroom.png"
+    />
     <style>
       :root {
         --lbg: #05070a;
@@ -69,7 +72,7 @@
             rgba(5, 7, 10, 0.35) 100%
           ),
           linear-gradient(0deg, rgba(5, 7, 10, 0.65) 0%, transparent 30%),
-          url("hero.png") right center / cover no-repeat #05070a;
+          url("/ai/hero-warroom.png") right center / cover no-repeat #05070a;
       }
       .wrap {
         max-width: 1100px;
@@ -174,6 +177,36 @@
         height: 21px;
         fill: currentColor;
       }
+      .btn2 {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        margin-top: 12px;
+        font-weight: 800;
+        font-size: 15px;
+        padding: 15px 30px;
+        border-radius: 13px;
+        text-decoration: none;
+        color: var(--green);
+        border: 1.5px solid var(--green);
+        background: rgba(34, 197, 94, 0.06);
+        transition:
+          background 0.2s,
+          transform 0.2s;
+      }
+      .btn2:hover {
+        background: rgba(34, 197, 94, 0.16);
+        transform: translateY(-2px);
+      }
+      .btn2 svg {
+        width: 18px;
+        height: 18px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 2.2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
       .alt {
         display: block;
         margin-top: 14px;
@@ -222,7 +255,7 @@
               rgba(5, 7, 10, 0.55) 70%,
               rgba(5, 7, 10, 0.25) 100%
             ),
-            url("hero.png") 70% top / cover no-repeat #05070a;
+            url("/ai/hero-warroom.png") 70% top / cover no-repeat #05070a;
           padding-top: 46vh;
         }
         .box {
@@ -317,6 +350,12 @@
                 />
               </svg>
               Falar com o Alceu · (11) 97232-2293
+            </a>
+            <a class="btn2" href="/info">
+              Mais informações
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
             </a>
             <span class="alt"
               >Resposta no mesmo dia · ou conheça tudo em
