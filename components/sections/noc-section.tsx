@@ -20,6 +20,9 @@ import {
   getRaceRanking,
   getRaceTimeline,
   getRaceIntencaoRejeicao,
+  getSenatorsByState,
+  getGovernorByState,
+  ufNome,
 } from "@/lib/mock/races";
 import {
   getOpportunityRanking,
@@ -36,6 +39,7 @@ const nameToId = new Map(REGIONS.map((r) => [r.nome, r.id]));
 export function NocSection({ region, onRegionChange }: NocProps) {
   const [race, setRace] = useState<RaceId>("dep-federal");
   const [tick, setTick] = useState(0);
+  const [selUf, setSelUf] = useState("RJ");
 
   // Pulso "ao vivo": atualiza a cada 2.5s.
   useEffect(() => {
@@ -243,14 +247,71 @@ export function NocSection({ region, onRegionChange }: NocProps) {
         </div>
       </div>
 
-      <div className="card" style={{ marginTop: 12 }}>
-        <div className="card-header">
-          <div className="card-title">Mapa Nacional — Corrida Presidencial</div>
-          <span className="card-badge badge-real">
-            intenção do líder por estado
-          </span>
+      <div className="grid-7-5" style={{ marginTop: 12 }}>
+        <div className="card">
+          <div className="card-header">
+            <div className="card-title">
+              Mapa Nacional — Corrida Presidencial (Lula lidera)
+            </div>
+            <span className="card-badge badge-real">
+              clique no estado p/ senadores
+            </span>
+          </div>
+          <BrazilMap
+            data={presidentialByState}
+            max={58}
+            height={420}
+            onSelect={(uf) => setSelUf(uf)}
+          />
         </div>
-        <BrazilMap data={presidentialByState} max={58} height={420} />
+        <div className="card">
+          <div className="card-header">
+            <div className="card-title">Governo & Senado — {ufNome(selUf)}</div>
+            <span className="card-badge badge-est">{selUf}</span>
+          </div>
+          {(() => {
+            const gov = getGovernorByState(selUf);
+            return (
+              <div className="gov-card">
+                <span className="gov-badge">GOVERNADOR</span>
+                <span className="sen-nome">{gov.nome}</span>
+                <span className="sen-part">{gov.partido}</span>
+                <span className="sen-status">{gov.status}</span>
+              </div>
+            );
+          })()}
+          <div
+            className="sen-list-title"
+            style={{
+              fontSize: 11,
+              color: "var(--texto-sec)",
+              margin: "10px 0 6px",
+              textTransform: "uppercase",
+              letterSpacing: 0.5,
+            }}
+          >
+            Senadores / pré-candidatos
+          </div>
+          <div className="sen-list">
+            {getSenatorsByState(selUf).map((s) => (
+              <div className="sen-row" key={s.nome}>
+                <span className="sen-nome">{s.nome}</span>
+                <span className="sen-part">{s.partido}</span>
+                <span className="sen-status">{s.status}</span>
+              </div>
+            ))}
+          </div>
+          <div
+            style={{
+              marginTop: 10,
+              fontSize: 11,
+              color: "var(--texto-sec)",
+            }}
+          >
+            Presidencial por estado: intenção do líder nacional (Lula)
+            projetada.
+          </div>
+        </div>
       </div>
 
       <div className="grid-7-5" style={{ marginTop: 12 }}>

@@ -15,17 +15,17 @@ export const RACES: { id: RaceId; nome: string; escopo: string }[] = [
 const BASE: Record<RaceId, RaceCandidate[]> = {
   presidente: [
     {
-      nome: "Tarcísio de Freitas",
-      partido: "Republicanos",
-      intencao: 39,
-      rejeicao: 41,
+      nome: "Lula",
+      partido: "PT",
+      intencao: 40,
+      rejeicao: 43,
       cor: COLORS.azul,
     },
     {
-      nome: "Lula",
-      partido: "PT",
+      nome: "Tarcísio de Freitas",
+      partido: "Republicanos",
       intencao: 33,
-      rejeicao: 44,
+      rejeicao: 41,
       cor: COLORS.vermelho,
     },
     {
@@ -406,5 +406,103 @@ export function getRaceIntencaoRejeicao(
         data: ranking.map((c) => c.rejeicao),
       },
     ],
+  };
+}
+
+// Senadores / pré-candidatos ao Senado por estado (clique no mapa do NOC).
+// RJ com dados reais; demais estados: titulares reais quando viável, senão demonstrativo.
+export type Senador = { nome: string; partido: string; status: string };
+
+const SENADORES: Record<string, Senador[]> = {
+  RJ: [
+    { nome: "Flávio Bolsonaro", partido: "PL", status: "titular · concorre 2026" },
+    { nome: "Carlos Portinho", partido: "PL", status: "titular · vaga 2026" },
+    { nome: "Romário", partido: "PL", status: "titular (até 2031)" },
+    { nome: "Cláudio Castro", partido: "PL", status: "pré-candidato 2026" },
+    { nome: "Marcelo Crivella", partido: "Republicanos", status: "pré-candidato 2026" },
+    { nome: "Sóstenes Cavalcante", partido: "PL", status: "cogitado 2026" },
+    { nome: "Lindbergh Farias", partido: "PT", status: "pré-candidato 2026" },
+  ],
+  SP: [
+    { nome: "Marcos Pontes", partido: "PL", status: "titular" },
+    { nome: "Mara Gabrilli", partido: "PSD", status: "titular · vaga 2026" },
+    { nome: "Eduardo Suplicy", partido: "PT", status: "cogitado 2026" },
+  ],
+  MG: [
+    { nome: "Rodrigo Pacheco", partido: "PSD", status: "titular · vaga 2026" },
+    { nome: "Cleitinho", partido: "Republicanos", status: "titular" },
+    { nome: "Carlos Viana", partido: "Podemos", status: "titular · vaga 2026" },
+  ],
+  RS: [
+    { nome: "Paulo Paim", partido: "PT", status: "titular · vaga 2026" },
+    { nome: "Hamilton Mourão", partido: "Republicanos", status: "titular" },
+    { nome: "Luis Carlos Heinze", partido: "PP", status: "titular · vaga 2026" },
+  ],
+  BA: [
+    { nome: "Jaques Wagner", partido: "PT", status: "titular" },
+    { nome: "Otto Alencar", partido: "PSD", status: "titular · vaga 2026" },
+    { nome: "Ângelo Coronel", partido: "PSD", status: "titular · vaga 2026" },
+  ],
+  PR: [
+    { nome: "Sergio Moro", partido: "União", status: "titular" },
+    { nome: "Flávio Arns", partido: "PSB", status: "titular · vaga 2026" },
+    { nome: "Oriovisto Guimarães", partido: "Podemos", status: "titular · vaga 2026" },
+  ],
+};
+
+const UF_NOME: Record<string, string> = {
+  AC: "Acre", AL: "Alagoas", AP: "Amapá", AM: "Amazonas", BA: "Bahia",
+  CE: "Ceará", DF: "Distrito Federal", ES: "Espírito Santo", GO: "Goiás",
+  MA: "Maranhão", MT: "Mato Grosso", MS: "Mato Grosso do Sul", MG: "Minas Gerais",
+  PA: "Pará", PB: "Paraíba", PR: "Paraná", PE: "Pernambuco", PI: "Piauí",
+  RJ: "Rio de Janeiro", RN: "Rio Grande do Norte", RS: "Rio Grande do Sul",
+  RO: "Rondônia", RR: "Roraima", SC: "Santa Catarina", SP: "São Paulo",
+  SE: "Sergipe", TO: "Tocantins",
+};
+
+export function ufNome(uf: string): string {
+  return UF_NOME[uf] ?? uf;
+}
+
+export function getSenatorsByState(uf: string): Senador[] {
+  if (SENADORES[uf]) return SENADORES[uf];
+  // Fallback demonstrativo determinístico.
+  const partidos = ["PL", "PT", "PSD", "MDB", "União"];
+  let h = 0;
+  for (let i = 0; i < uf.length; i++) h = (h * 31 + uf.charCodeAt(i)) % 997;
+  return [
+    { nome: `Senador titular ${uf}-1`, partido: partidos[h % 5], status: "titular (demonstrativo)" },
+    { nome: `Senador titular ${uf}-2`, partido: partidos[(h + 2) % 5], status: "vaga 2026 (demonstrativo)" },
+    { nome: `Pré-candidato ${uf}`, partido: partidos[(h + 4) % 5], status: "pré-candidato 2026 (demonstrativo)" },
+  ];
+}
+
+// Governadores por estado (atuais 2023–2026 + status 2026).
+export type Governador = { nome: string; partido: string; status: string };
+
+const GOVERNADORES: Record<string, Governador> = {
+  RJ: { nome: "Cláudio Castro", partido: "PL", status: "governador · reeleição 2026" },
+  SP: { nome: "Tarcísio de Freitas", partido: "Republicanos", status: "governador · pré-candidato a presidente" },
+  MG: { nome: "Romeu Zema", partido: "Novo", status: "governador (2º mandato)" },
+  RS: { nome: "Eduardo Leite", partido: "PSDB", status: "governador · reeleição 2026" },
+  BA: { nome: "Jerônimo Rodrigues", partido: "PT", status: "governador · reeleição 2026" },
+  PR: { nome: "Ratinho Jr.", partido: "PSD", status: "governador (2º mandato)" },
+  PE: { nome: "Raquel Lyra", partido: "PSD", status: "governadora · reeleição 2026" },
+  CE: { nome: "Elmano de Freitas", partido: "PT", status: "governador · reeleição 2026" },
+  GO: { nome: "Ronaldo Caiado", partido: "União", status: "governador · pré-candidato a presidente" },
+  DF: { nome: "Ibaneis Rocha", partido: "MDB", status: "governador (2º mandato)" },
+  SC: { nome: "Jorginho Mello", partido: "PL", status: "governador · reeleição 2026" },
+  ES: { nome: "Renato Casagrande", partido: "PSB", status: "governador (2º mandato)" },
+};
+
+export function getGovernorByState(uf: string): Governador {
+  if (GOVERNADORES[uf]) return GOVERNADORES[uf];
+  const partidos = ["PL", "PT", "PSD", "MDB", "União", "PSB"];
+  let h = 0;
+  for (let i = 0; i < uf.length; i++) h = (h * 31 + uf.charCodeAt(i)) % 991;
+  return {
+    nome: `Governador ${uf}`,
+    partido: partidos[h % partidos.length],
+    status: "atual · disputa 2026 (demonstrativo)",
   };
 }
